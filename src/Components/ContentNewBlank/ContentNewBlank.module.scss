@@ -1,0 +1,22 @@
+.heading {
+  width: 100%;
+  text-align: center;
+  margin-top: 50px;
+  color: rgb(53, 13, 235);
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  padding: 0 50px;
+  margin: auto;
+  width: 100%;
+  height: 70vh;
+
+  svg {
+    font-size: 40px;
+    color: #fff;
+  }
+}
