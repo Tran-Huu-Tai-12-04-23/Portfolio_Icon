@@ -1,7 +1,8 @@
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faClose, faSearch } from "@fortawesome/free-solid-svg-icons";
-import styles from "./Header.module.scss";
+import styles from "./HeaderHome.module.scss";
+import logo_tdtu from "~/assets/img/icon__tdtu.png";
 
 function Header() {
   return (
@@ -24,8 +25,9 @@ function Header() {
       </div>
       <img
         className={clsx(styles.icon__university)}
-        src='https://www.google.com/u/0/ac/images/logo.gif?uid=113248074350656852211&service=google_gsuite'
-      />
+        src={logo_tdtu}
+        alt='tdtu'
+      ></img>
     </div>
   );
 }

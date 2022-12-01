@@ -1,0 +1,16 @@
+.content {
+  display: flex;
+  margin: 100px 0 0 50px;
+  justify-content: space-between;
+}
+
+.wrapper_template {
+  width: 70%;
+  -webkit-box-shadow: 4px -3px 15px 5px #ccc;
+  box-shadow: 4px -3px 15px 5px #ccc;
+  height: 86vh;
+  overflow: scroll;
+  .wrapper_template_content {
+    height: 1000px;
+  }
+}

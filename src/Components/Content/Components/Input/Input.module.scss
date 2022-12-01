@@ -1,0 +1,43 @@
+.wrapper {
+  position: relative;
+  height: 50px;
+  input {
+    width: 100%;
+    height: 100%;
+  }
+  .normal {
+    outline: none;
+    padding: 12px;
+    font-size: 24px;
+
+    &:focus {
+      border: 2px solid var(--primary);
+    }
+  }
+  .icon_left,
+  .icon_right {
+    position: absolute;
+    font-size: 16px;
+    transform: translateY(-50%);
+    color: rgb(18, 133, 168);
+    border-radius: 50%;
+    background-color: var(--primary);
+    z-index: 10000;
+    display: none;
+  }
+
+  .icon_right {
+    right: -4px;
+    top: 50%;
+  }
+  .icon_left {
+    left: -4px;
+    top: 50%;
+  }
+
+  &:hover .icon_right,
+  &:hover .icon_left {
+    display: block;
+    cursor: pointer;
+  }
+}

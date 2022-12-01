@@ -1,15 +1,16 @@
 import clsx from "clsx";
+import styles from "./Home.module.scss";
 
-import Header from "./Header";
+import Header from "./HeaderHome";
 import ContentNewBlank from "~/Components/ContentNewBlank";
 
-function ChooseTemplatePage() {
+function Home() {
   return (
-    <div>
+    <div className={clsx(styles.wrapper)}>
       <Header />
       <ContentNewBlank />
     </div>
   );
 }
 
-export default ChooseTemplatePage;
+export default Home;

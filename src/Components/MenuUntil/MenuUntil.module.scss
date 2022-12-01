@@ -1,0 +1,41 @@
+.wrapper {
+  position: relative;
+  width: 28%;
+  -webkit-box-shadow: 4px -3px 15px 5px #000000;
+  box-shadow: 4px -3px 15px 5px #000000;
+  height: 86vh;
+
+  .title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid var(--primary);
+  }
+
+  .hidden {
+    display: none;
+  }
+}
+
+.nav_icon {
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  padding: 10px 14px;
+  border-radius: 50%;
+  background-color: #ccc;
+  color: var(--primary);
+
+  &:hover {
+    filter: brightness(0.8);
+    cursor: pointer;
+  }
+}
+.translate_x {
+  .nav_icon {
+    transform: translateX(-20px);
+  }
+}
+.translate_x {
+  transform: translateX(100%);
+}

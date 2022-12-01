@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import clsx from "clsx";
 
 import { publicRoutes } from "./Routes";
@@ -8,9 +8,17 @@ function App() {
   return (
     <div className={clsx(styles.wrapper)}>
       <Router>
-        {publicRoutes.map((page) => {
-          return <Link to={page.path}>{page.layout}</Link>;
-        })}
+        <Routes>
+          {publicRoutes.map((page, index) => {
+            return (
+              <Route
+                key={index}
+                path={page.path}
+                element={page.element}
+              ></Route>
+            );
+          })}
+        </Routes>
       </Router>
     </div>
   );
