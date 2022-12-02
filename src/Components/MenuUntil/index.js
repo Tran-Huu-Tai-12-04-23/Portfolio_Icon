@@ -9,22 +9,35 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import styles from "./MenuUntil.module.scss";
 
-function MenuUntil() {
+function MenuUntil({ state, valueState }) {
   const [show, setShow] = useState(true);
   const [showMenuUtil, setShowMenuUtil] = useState(true);
-
   const handleChangeMenu = () => {
     setShow(!show);
     setShowMenuUtil(!showMenuUtil);
+    if (show === true) {
+      state("0");
+    } else {
+      state("28%");
+    }
   };
 
   return (
     <div
+      style={{
+        width: valueState,
+      }}
       className={clsx(styles.wrapper, {
         [styles.translate_x]: !showMenuUtil,
       })}
     >
-      <h1 className={clsx(styles.title)}>Insert</h1>
+      <h1
+        className={clsx(styles.title, {
+          [styles.hidden]: !show,
+        })}
+      >
+        Insert
+      </h1>
 
       <div className={clsx(styles.nav_icon)} onClick={() => handleChangeMenu()}>
         <FontAwesomeIcon

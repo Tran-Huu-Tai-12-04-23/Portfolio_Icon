@@ -1,16 +1,19 @@
 .content {
   display: flex;
-  margin: 100px 0 0 50px;
+  margin: 100px 0 0 0;
   justify-content: space-between;
 }
 
 .wrapper_template {
-  width: 70%;
+  margin: 0 50px;
   -webkit-box-shadow: 4px -3px 15px 5px #ccc;
   box-shadow: 4px -3px 15px 5px #ccc;
   height: 86vh;
   overflow: scroll;
+  transition: all 0.4s ease-in-out;
+
   .wrapper_template_content {
     height: 1000px;
+    width: 100%;
   }
 }

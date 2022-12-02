@@ -11,9 +11,11 @@ import { useState } from "react";
 import styles from "./Input.module.scss";
 
 function Input({ text }) {
-  const classNames = clsx(styles.normal, { [styles.text]: text });
-
+  const initValueIput = "Enter text !!";
+  const [textInput, setTextInput] = useState(initValueIput);
+  const [border, setBoder] = useState(true);
   const [size, setSize] = useState({ x: 200 });
+
   const handler = (mouseDownEvent) => {
     const startSize = size;
     const startPosition = { x: mouseDownEvent.pageX };
@@ -30,6 +32,28 @@ function Input({ text }) {
     document.body.addEventListener("mousemove", onMouseMove);
     document.body.addEventListener("mouseup", onMouseUp, { once: true });
   };
+  const handleChangeValue = (e) => {
+    setTextInput(e.target.value);
+    if (textInput.trim() === "") {
+      setTextInput(initValueIput);
+    }
+  };
+  const handleChangeBorder = (e) => {
+    if (e.target.value === "") {
+      setTextInput(initValueIput);
+    }
+    if (e.target.value !== initValueIput && e.target.value !== "") {
+      setBoder(!border);
+    }
+  };
+
+  const classNames = clsx(
+    styles.normal,
+    { [styles.text]: text },
+    {
+      [styles.dotted]: border,
+    }
+  );
 
   return (
     <div
@@ -48,7 +72,13 @@ function Input({ text }) {
         icon={faArrowRight}
         onMouseDown={handler}
       ></FontAwesomeIcon>
-      <input className={classNames} type='text'></input>
+      <input
+        value={textInput}
+        className={classNames}
+        onChange={(e) => handleChangeValue(e)}
+        onBlur={(e) => handleChangeBorder(e)}
+        type='text'
+      ></input>
     </div>
   );
 }
