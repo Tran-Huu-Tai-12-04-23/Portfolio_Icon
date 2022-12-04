@@ -1,17 +1,12 @@
 import {
-  faBackspace,
-  faComment,
   faComputer,
-  faEllipsis,
   faEllipsisVertical,
   faFile,
   faGears,
-  faHomeAlt,
   faHomeLg,
   faLink,
   faRotateLeft,
   faRotateRight,
-  faSearch,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

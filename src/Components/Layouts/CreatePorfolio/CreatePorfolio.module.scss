@@ -2,18 +2,55 @@
   display: flex;
   margin: 100px 0 0 0;
   justify-content: space-between;
+  padding-bottom: 50px;
 }
 
 .wrapper_template {
   margin: 0 50px;
   -webkit-box-shadow: 4px -3px 15px 5px #ccc;
   box-shadow: 4px -3px 15px 5px #ccc;
-  height: 86vh;
-  overflow: scroll;
+  height: 80vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
   transition: all 0.4s ease-in-out;
 
-  .wrapper_template_content {
-    height: 1000px;
-    width: 100%;
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    display: none;
   }
+
+  &::-webkit-scrollbar {
+    width: 12px;
+    background-color: #f5f5f5;
+    display: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: var(--primary);
+    display: none;
+  }
+
+  .wrapper_template_content {
+    min-height: 100%;
+    // height: 1000px;
+    max-width: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+}
+
+.show_scroll {
+  &::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-thumb,
+  &::-webkit-scrollbar {
+    display: block;
+  }
+}
+
+.dragging {
+  opacity: 0.5;
 }

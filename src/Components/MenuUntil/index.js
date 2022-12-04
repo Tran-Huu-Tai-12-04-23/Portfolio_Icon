@@ -1,7 +1,8 @@
 import { useState } from "react";
 
+import { Item } from "~/Components";
+
 import {
-  faArrowAltCircleDown,
   faArrowAltCircleLeft,
   faArrowAltCircleRight,
 } from "@fortawesome/free-solid-svg-icons";
@@ -38,7 +39,13 @@ function MenuUntil({ state, valueState }) {
       >
         Insert
       </h1>
-
+      <div className={clsx(styles.content)} id='menu_1'>
+        <Item draggable='true' type='input' id='item_1' />
+        <Item draggable='true' type='img' id='item_2' />
+        <Item draggable='true' type='div' id='item_3' />
+        <Item draggable='true' type='a' href='facebook.com' id='item_4' />
+        <Item draggable='true' type='h1' id='item_5' />
+      </div>
       <div className={clsx(styles.nav_icon)} onClick={() => handleChangeMenu()}>
         <FontAwesomeIcon
           className={clsx(styles.btn_left_menu, {

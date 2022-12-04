@@ -1,3 +1,3 @@
-import Input from "./Components/Input";
+import Item from "~/Components/Content/Components/Item";
 
-export { Input };
+export { Item };
