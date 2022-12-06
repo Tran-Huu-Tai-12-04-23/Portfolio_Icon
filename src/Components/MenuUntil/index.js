@@ -1,18 +1,26 @@
 import { useState } from "react";
 
-import { Item } from "~/Components";
-
 import {
   faArrowAltCircleLeft,
   faArrowAltCircleRight,
+  faBox,
+  faImage,
+  faLink,
+  faMobileButton,
+  faTabletButton,
+  faTextSlash,
+  faTextWidth,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import clsx from "clsx";
 import styles from "./MenuUntil.module.scss";
+import { BoxMenu } from "~/Components";
 
 function MenuUntil({ state, valueState }) {
   const [show, setShow] = useState(true);
   const [showMenuUtil, setShowMenuUtil] = useState(true);
+
   const handleChangeMenu = () => {
     setShow(!show);
     setShowMenuUtil(!showMenuUtil);
@@ -39,12 +47,9 @@ function MenuUntil({ state, valueState }) {
       >
         Insert
       </h1>
-      <div className={clsx(styles.content)} id='menu_1'>
-        <Item draggable='true' type='input' id='item_1' />
-        <Item draggable='true' type='img' id='item_2' />
-        <Item draggable='true' type='div' id='item_3' />
-        <Item draggable='true' type='a' href='facebook.com' id='item_4' />
-        <Item draggable='true' type='h1' id='item_5' />
+      {/* //contenm */}
+      <div className={clsx(styles.content)}>
+        <BoxMenu></BoxMenu>
       </div>
       <div className={clsx(styles.nav_icon)} onClick={() => handleChangeMenu()}>
         <FontAwesomeIcon

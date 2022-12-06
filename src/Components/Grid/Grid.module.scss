@@ -2,4 +2,16 @@
   position: relative;
   height: 100%;
   width: 100%;
+
+  a,
+  div,
+  input,
+  button,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    position: absolute;
+  }
 }

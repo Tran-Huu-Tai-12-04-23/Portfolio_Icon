@@ -1,10 +1,11 @@
 import { Tooltip } from "react-tippy";
 import "react-tippy/dist/tippy.css";
 
-function TipSuggest({ children, content, classNames }) {
+function TipSuggest({ children, content, classNames, html, trigger }) {
   return (
     <Tooltip
-      // trigger='click'
+      html={html}
+      trigger={trigger}
       className={classNames}
       title={content}
       position='bottom'

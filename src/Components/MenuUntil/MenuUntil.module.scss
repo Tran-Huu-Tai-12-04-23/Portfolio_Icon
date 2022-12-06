@@ -14,15 +14,13 @@
   .content {
     margin: 24px;
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
+    display: flex;
+    flex-wrap: wrapper;
 
-    a,
-    h1,
-    input,
-    div,
-    button {
-      margin: 24px 0;
+    span {
+      display: block;
+      padding: 12px;
     }
   }
 

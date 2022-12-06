@@ -6,7 +6,9 @@ import Template from "./Template";
 import TipSuggest from "./TipSuggest";
 import Button from "./Button";
 import Grid from "./Grid";
-import Item from "./Content/Components/Item";
+import Item from "./Item";
+import BoxMenu from "./BoxMenu";
+import Overlay from "./Overlay";
 
 import Template1Content from "./TemplatesContent/Template1Content";
 import Template2Content from "./TemplatesContent/Template2Content";
@@ -23,4 +25,6 @@ export {
   Template2Content,
   Template3Content,
   Item,
+  BoxMenu,
+  Overlay,
 };
