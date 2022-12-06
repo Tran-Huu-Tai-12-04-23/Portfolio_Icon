@@ -9,6 +9,7 @@ import Grid from "./Grid";
 import Item from "./Item";
 import BoxMenu from "./BoxMenu";
 import Overlay from "./Overlay";
+import Resizebale from "./Resizeabale";
 
 import Template1Content from "./TemplatesContent/Template1Content";
 import Template2Content from "./TemplatesContent/Template2Content";
@@ -27,4 +28,5 @@ export {
   Item,
   BoxMenu,
   Overlay,
+  Resizebale,
 };

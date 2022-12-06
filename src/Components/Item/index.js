@@ -1,7 +1,9 @@
 import clsx from "clsx";
 import { useDrag } from "react-dnd";
 import { useState } from "react";
+import { ResizableBox as ReactResizableBox } from "react-resizable";
 
+import "react-resizable/css/styles.css";
 import styles from "./Item.module.scss";
 
 function Item({
@@ -10,6 +12,9 @@ function Item({
   inGrid = false,
   stylesItem,
   icon,
+  width = 200,
+  height = 50,
+  resizable = true,
   children,
 }) {
   var left = stylesItem ? stylesItem.left : 0;
@@ -25,8 +30,7 @@ function Item({
     }),
     [id, left, top, inGrid]
   );
-  const initialState = type === "input" ? true : false;
-  const [allowChangeValue, setAllowChangeValue] = useState(initialState);
+
   const [value, setValue] = useState("Enter text !!!");
 
   const classNamesItem = clsx(
@@ -42,10 +46,10 @@ function Item({
       [styles.h1]: type === "h1",
     },
     {
-      [styles.img]: type == "img",
+      [styles.img]: type === "img",
     },
     {
-      [styles.div]: type == "div",
+      [styles.div]: type === "div",
     },
     {
       [styles.icon]: icon,
@@ -68,17 +72,38 @@ function Item({
   }
 
   return (
-    <Type
-      id={id}
-      ref={drag}
-      className={classNamesItem}
-      style={{ ...stylesItem }}
-      value={value}
-      onChange={handleChangeValue}
-      onBlur={handleBlurInput}
-    >
-      {children}
-    </Type>
+    <>
+      {resizable ? (
+        <ReactResizableBox
+          width={width}
+          height={height}
+          style={{ ...stylesItem }}
+        >
+          <Type
+            ref={drag}
+            id={id}
+            className={classNamesItem}
+            value={value}
+            onChange={handleChangeValue}
+            onBlur={handleBlurInput}
+          >
+            {children}
+          </Type>
+        </ReactResizableBox>
+      ) : (
+        <Type
+          id={id}
+          ref={drag}
+          className={classNamesItem}
+          style={{ ...stylesItem }}
+          value={value}
+          onChange={handleChangeValue}
+          onBlur={handleBlurInput}
+        >
+          {children}
+        </Type>
+      )}
+    </>
   );
 }
 

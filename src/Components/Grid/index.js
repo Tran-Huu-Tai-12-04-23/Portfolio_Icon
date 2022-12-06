@@ -12,6 +12,7 @@ function Grid(props) {
       if (item.inGrid) {
         const delta = monitor.getDifferenceFromInitialOffset();
         let { left, top } = getOffetItemDrag(item.id);
+        console.log(`check left: ${left} top: ${top} `);
         left = Math.round(left + delta.x);
         top = Math.round(top + delta.y);
         moveItem(item.id, left, top, item.inGrid, item.type);
@@ -58,7 +59,7 @@ function Grid(props) {
 
   const getOffetItemDrag = useCallback(
     (id) => {
-      const item = document.getElementById(id);
+      const item = document.getElementById(id).parentElement;
       // console.log(item);
       const left = item.offsetLeft;
       const top = item.offsetTop;
@@ -72,10 +73,10 @@ function Grid(props) {
         `left: ${left} top: ${top}  inGrid: ${inGrid} id: ${id} type: ${type}`
       );
 
-      const item = document.getElementById(id);
+      const item = document.getElementById(id).parentElement;
       item.style.left = `${left}px`;
       item.style.top = `${top}px`;
-      // console.log(item);
+      console.log(item);
     },
     [isOver]
   );

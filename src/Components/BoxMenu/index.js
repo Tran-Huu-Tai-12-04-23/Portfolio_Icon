@@ -14,6 +14,7 @@ function BoxMenu() {
   return (
     <div className={clsx(styles.wrapper)} id='menu_1'>
       <Item
+        resizable={false}
         id='item_text'
         draggable='true'
         type='input'
@@ -26,6 +27,7 @@ function BoxMenu() {
         <FontAwesomeIcon icon={faTextWidth}></FontAwesomeIcon>
       </Item>
       <Item
+        resizable={false}
         id='item_link'
         type='a'
         draggable='true'
