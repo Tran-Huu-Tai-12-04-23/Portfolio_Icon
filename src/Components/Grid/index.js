@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import { useCallback, useMemo, useState } from "react";
-import { useDrop } from "react-dnd";
+import { useCallback, useState, useEffect } from "react";
+import { useDrop, useDragDropManager } from "react-dnd";
 
 import styles from "./Grid.module.scss";
 import { Item } from "~/Components";
@@ -80,6 +80,9 @@ function Grid(props) {
     },
     [isOver]
   );
+
+  // let dragging = useDragDropManager().monitor.isDragging();
+  // console.log(dragging);
 
   return (
     <div ref={drop} className={clsx(styles.wrapper)} id={props.id}>

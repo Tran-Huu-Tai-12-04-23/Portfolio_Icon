@@ -1,18 +1,14 @@
+import clsx from "clsx";
+import styles from "./Overlay.module.scss";
+
 function Overlay() {
+  const id = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   return (
-    <div
-      className='overlay'
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        height: "100%",
-        width: "100%",
-        zIndex: 1,
-        opacity: 0.5,
-        backgroundColor: "#000",
-      }}
-    />
+    <>
+      {id.map((id) => {
+        return <span key={id} className={clsx(styles.overlay)}></span>;
+      })}
+    </>
   );
 }
 

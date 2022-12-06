@@ -5,6 +5,7 @@ import { ResizableBox as ReactResizableBox } from "react-resizable";
 
 import "react-resizable/css/styles.css";
 import styles from "./Item.module.scss";
+import { Overlay } from "~/Components";
 
 function Item({
   type = "div",
@@ -15,6 +16,7 @@ function Item({
   width = 200,
   height = 50,
   resizable = true,
+  bg,
   children,
 }) {
   var left = stylesItem ? stylesItem.left : 0;
@@ -26,6 +28,7 @@ function Item({
       item: { id, left, top, inGrid, type },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
+        opacity: monitor.isDragging() ? 0.4 : 1,
       }),
     }),
     [id, left, top, inGrid]
@@ -53,6 +56,9 @@ function Item({
     },
     {
       [styles.icon]: icon,
+    },
+    {
+      [styles.item_grid]: inGrid,
     }
   );
 
@@ -86,22 +92,27 @@ function Item({
             value={value}
             onChange={handleChangeValue}
             onBlur={handleBlurInput}
+            style={{
+              backgroundColor: isDragging ? "rgba(255, 59, 92, 0.8)" : bg,
+            }}
           >
             {children}
           </Type>
         </ReactResizableBox>
       ) : (
-        <Type
-          id={id}
-          ref={drag}
-          className={classNamesItem}
-          style={{ ...stylesItem }}
-          value={value}
-          onChange={handleChangeValue}
-          onBlur={handleBlurInput}
-        >
-          {children}
-        </Type>
+        <>
+          <Type
+            id={id}
+            ref={drag}
+            className={classNamesItem}
+            style={{ ...stylesItem }}
+            value={value}
+            onChange={handleChangeValue}
+            onBlur={handleBlurInput}
+          >
+            {children}
+          </Type>
+        </>
       )}
     </>
   );
