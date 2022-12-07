@@ -1,14 +1,20 @@
 import clsx from "clsx";
 import { useDrag } from "react-dnd";
-import { useState } from "react";
+import { useState, useEffect, useReducer } from "react";
 import { ResizableBox as ReactResizableBox } from "react-resizable";
 
-import "react-resizable/css/styles.css";
+import "./resizeable.css";
 import styles from "./Item.module.scss";
 import { Overlay } from "~/Components";
 
+import reducer from "~/reducer";
+import initState from "~/reducer/initState";
+import action from "~/reducer/actions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+
 function Item({
-  type = "div",
+  type,
   id,
   inGrid = false,
   stylesItem,
@@ -16,7 +22,7 @@ function Item({
   width = 200,
   height = 50,
   resizable = true,
-  bg,
+  href = "huutai.com",
   children,
 }) {
   var left = stylesItem ? stylesItem.left : 0;
@@ -24,7 +30,7 @@ function Item({
 
   const [{ isDragging }, drag] = useDrag(
     () => ({
-      type: "Item",
+      type: inGrid ? "ITEM_IN_GRID" : "Item",
       item: { id, left, top, inGrid, type },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
@@ -33,26 +39,30 @@ function Item({
     }),
     [id, left, top, inGrid]
   );
-
+  const [state, dispath] = useReducer(reducer, initState);
   const [value, setValue] = useState("Enter text !!!");
+  const [isLink, setIsLink] = useState(false);
+  const [Type, setType] = useState("div");
+  const [linkImg, setLinkImg] = useState("");
 
   const classNamesItem = clsx(
     styles.wrapper,
     styles.normal,
+    styles.text,
     {
-      [styles.input]: type === "input",
+      [styles.input_text]: type === "input",
     },
     {
-      [styles.a]: type === "a",
+      [styles.link]: type === "a",
     },
     {
-      [styles.h1]: type === "h1",
+      [styles.heading]: type === "h1",
     },
     {
-      [styles.img]: type === "img",
+      [styles.input_file]: type === "img",
     },
     {
-      [styles.div]: type === "div",
+      [styles.box]: type === "div",
     },
     {
       [styles.icon]: icon,
@@ -71,11 +81,50 @@ function Item({
     }
   };
 
-  let Type = type;
+  const hanleShowInputImg = (e) => {
+    const reader = new FileReader();
+    var url;
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        url = reader.result;
+        setLinkImg(url);
+      }
+    };
 
-  if (icon) {
-    Type = "div";
-  }
+    reader.readAsDataURL(e.target.files[0]);
+  };
+
+  const propsTypeLink = {
+    href: null,
+    target: null,
+    onClick: null,
+    type: "text",
+  };
+
+  useEffect(() => {
+    if (type) {
+      setType(type);
+    }
+    if (type === "a") {
+      setType("input");
+      setValue("Enter link!!");
+    }
+    if (type === "img") {
+      setType("input");
+      propsTypeLink.type = "file";
+    }
+
+    if (href && type === "a" && isLink) {
+      propsTypeLink.href = href;
+      propsTypeLink.target = "_blank";
+    }
+    if (icon) {
+      setType("div");
+    }
+    if (linkImg) {
+      setType("img");
+    }
+  }, [linkImg]);
 
   return (
     <>
@@ -89,15 +138,18 @@ function Item({
             ref={drag}
             id={id}
             className={classNamesItem}
-            value={value}
-            onChange={handleChangeValue}
+            src={type === "img" ? linkImg : ""}
+            value={type !== "img" ? value : undefined}
+            onChange={type === "img" ? hanleShowInputImg : handleChangeValue}
             onBlur={handleBlurInput}
             style={{
-              backgroundColor: isDragging ? "rgba(255, 59, 92, 0.8)" : bg,
+              backgroundColor: isDragging
+                ? "rgba(255, 59, 92, 0.8)"
+                : state.backgroundColor,
             }}
-          >
-            {children}
-          </Type>
+            type={type === "img" ? "file" : "text"}
+            accept={type !== "img" ? null : "image/*"}
+          ></Type>
         </ReactResizableBox>
       ) : (
         <>
@@ -105,7 +157,7 @@ function Item({
             id={id}
             ref={drag}
             className={classNamesItem}
-            style={{ ...stylesItem }}
+            style={{ ...stylesItem, opacity: isDragging ? "0.5" : "1" }}
             value={value}
             onChange={handleChangeValue}
             onBlur={handleBlurInput}

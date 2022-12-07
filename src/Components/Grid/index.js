@@ -3,11 +3,11 @@ import { useCallback, useState, useEffect } from "react";
 import { useDrop, useDragDropManager } from "react-dnd";
 
 import styles from "./Grid.module.scss";
-import { Item } from "~/Components";
+import { Item, Trash } from "~/Components";
 
 function Grid(props) {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
-    accept: "Item",
+    accept: ["ITEM_IN_GRID", "Item"],
     drop(item, monitor) {
       if (item.inGrid) {
         const delta = monitor.getDifferenceFromInitialOffset();
@@ -32,6 +32,7 @@ function Grid(props) {
   }));
 
   const [items, setItems] = useState([]);
+  const [backgroundColor, setBackgroundColor] = useState("#fff");
 
   const addItem = useCallback(
     (
@@ -81,31 +82,55 @@ function Grid(props) {
     [isOver]
   );
 
-  // let dragging = useDragDropManager().monitor.isDragging();
-  // console.log(dragging);
+  let isDragging = useDragDropManager().monitor.isDragging();
+  useEffect(() => {
+    const trash = document.getElementById("trash");
+    trash.style.display = isDragging ? "flex" : "none";
+  }, [useDragDropManager().monitor.isDragging()]);
+
+  const isActive = canDrop && isOver;
+  useEffect(() => {
+    setBackgroundColor(
+      isActive
+        ? "rgba(102, 102, 255, 0.5)"
+        : canDrop
+        ? "rgba(255, 102, 153, 0.5)"
+        : "#fff"
+    );
+  }, [{ isActive, canDrop }]);
 
   return (
-    <div ref={drop} className={clsx(styles.wrapper)} id={props.id}>
-      {items &&
-        items.map((item, index) => {
-          return (
-            <Item
-              key={index}
-              id={`input_grid_${index + 1}`}
-              inGrid={true}
-              type={item.type}
-              stylesItem={{
-                backgroundColor: "#ccc",
-                top: item.top,
-                left: item.left,
-                width: item.width,
-                height: item.height,
-              }}
-            ></Item>
-          );
-        })}
-      {props.children}
-    </div>
+    <>
+      <div
+        ref={drop}
+        style={{
+          backgroundColor,
+        }}
+        className={clsx(styles.wrapper)}
+        id={props.id}
+      >
+        {items &&
+          items.map((item, index) => {
+            return (
+              <Item
+                key={index}
+                id={`input_grid_${index + 1}`}
+                inGrid={true}
+                type={item.type}
+                stylesItem={{
+                  backgroundColor: "#ccc",
+                  top: item.top,
+                  left: item.left,
+                  width: item.width,
+                  height: item.height,
+                }}
+              ></Item>
+            );
+          })}
+        {props.children}
+      </div>
+      <Trash id={"trash"}></Trash>
+    </>
   );
 }
 
