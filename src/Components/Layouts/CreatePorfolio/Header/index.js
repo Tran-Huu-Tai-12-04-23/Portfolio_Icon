@@ -19,12 +19,13 @@ import { Link } from "react-router-dom";
 
 function Header() {
   const [title, setTitle] = useState("Trang web không có tiêu đề");
-  const handleDataTitle = (value) => {
-    setTitle(value);
+  const handleDataTitle = (e) => {
+    document.title = e.target.value;
+    setTitle(e.target.value);
   };
 
-  const handleDataTitleEmpty = (value) => {
-    if (value === "") {
+  const handleDataTitleEmpty = (e) => {
+    if (e.target.value === "") {
       setTitle("Trang web không có tiêu đề");
     }
   };
@@ -47,10 +48,8 @@ function Header() {
         <TipSuggest classNames={clsx(styles.input)} content='Edit'>
           <input
             value={title}
-            onChange={(e) => handleDataTitle(e.target.value)}
-            onBlur={(e) => {
-              handleDataTitleEmpty(e.target.value);
-            }}
+            onChange={handleDataTitle}
+            onBlur={handleDataTitleEmpty}
           ></input>
         </TipSuggest>
       </div>

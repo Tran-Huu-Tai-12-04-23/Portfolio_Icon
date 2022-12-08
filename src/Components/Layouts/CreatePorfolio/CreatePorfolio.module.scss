@@ -36,7 +36,7 @@
 
   .wrapper_template_content {
     min-height: 100%;
-    // height: 1000px;
+    height: 1000px;
     max-width: 100%;
     width: 100%;
     overflow: hidden;
@@ -53,4 +53,16 @@
 
 .dragging {
   opacity: 0.5;
+}
+
+.go_to_top {
+  position: absolute;
+  bottom: 12%;
+  right: 22%;
+  font-size: 80;
+  background-color: #ccc;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
 }

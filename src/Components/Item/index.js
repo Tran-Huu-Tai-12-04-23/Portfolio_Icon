@@ -156,7 +156,7 @@ function Item({
             onChange={type === "img" ? hanleShowInputImg : handleChangeValue}
             onBlur={handleBlurInput}
             style={{
-              backgroundColor: isDragging ? "rgba(255, 59, 92, 0.8)" : "#fff",
+              backgroundColor: isDragging ? "rgba(255, 59, 92, 0.8)" : "#ccc",
             }}
             type={type === "img" ? "file" : "text"}
             accept={type !== "img" ? null : "image/*"}

@@ -3,6 +3,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { useDrop, useDragDropManager } from "react-dnd";
 import clsx from "clsx";
+import { FcEmptyTrash } from "react-icons/fc";
 
 import styles from "./Trash.module.scss";
 
@@ -32,7 +33,14 @@ function Trash({ id }) {
       }}
       className={clsx(styles.wrapper)}
     >
-      <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+      <FcEmptyTrash
+        style={{
+          transition: "all 0.3s ease-in-out",
+          fontSize: "80px",
+          transform: isOver ? "scale(1.2)" : "",
+          transform: isOver ? "translateY(20px)" : "",
+        }}
+      ></FcEmptyTrash>
     </div>
   );
 }

@@ -9,7 +9,6 @@ function Template({ icon, background, content }) {
   return (
     <div className={clsx(styles.wrapper)}>
       <span className={clsx(styles.tip_suggest)}>{content}</span>
-
       <Tag src={background}>{icon}</Tag>
     </div>
   );

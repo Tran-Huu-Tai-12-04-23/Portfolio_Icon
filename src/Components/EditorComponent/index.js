@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,77 +7,141 @@ import {
   faPalette,
 } from "@fortawesome/free-solid-svg-icons";
 
+import { GoTextSize } from "react-icons/go";
+import { BiFontFamily, BiColorFill } from "react-icons/bi";
+import { AiOutlineBorder } from "react-icons/ai";
+import { IoColorPalette } from "react-icons/io5";
+import { FcFullTrash } from "react-icons/fc";
+
 import styles from "./EditorComponent.module.scss";
+import { colors, fontFamilys } from "./datas";
 
 function EditorComponent() {
-  const colors = [
-    "#000",
-    "#fff",
-    "#FF0000",
-    "#FF00CC",
-    "#00FF00",
-    "#FF66FF",
-    "#FF9900",
-    "#33CCFF",
-  ];
+  const [fontFamily, setFontFamily] = useState("Font - family");
+  const [fontSize, setFontSize] = useState(0);
 
-  useEffect(() => {
-    renderColorOptions();
-    renderFontSize();
-  }, []);
-
-  const renderColorOptions = () => {
-    const colorOptions = document.getElementById("color_options");
-    const listsItems = colorOptions.querySelectorAll("li");
-    var index = 0;
-    for (var it of listsItems) {
-      it.style.backgroundColor = colors[index];
-      it.setAttribute("data-color", colors[index]);
-      index++;
-    }
+  const renderOptionColors = () => {
+    return colors.map((color, index) => {
+      return (
+        <li
+          key={index}
+          data-color={color}
+          style={{
+            backgroundColor: color,
+          }}
+        ></li>
+      );
+    });
   };
 
   const renderFontSize = () => {
-    const item = document.getElementById("font_size_options");
-    const listItems = item.querySelectorAll("li");
-    var index = 2;
-    for (var it of listItems) {
-      it.textContent = index;
-      it.setAttribute("data-font-size", index);
-      index += 4;
-    }
+    const numberFontSize = Array.from(Array(41).keys());
+    return numberFontSize.map((size, index) => {
+      return (
+        <li key={index} data-font-size={size}>
+          {size}
+        </li>
+      );
+    });
+  };
+
+  const renderFontFamily = () => {
+    return fontFamilys.map((fontFamily, index) => {
+      return (
+        <li key={index} data-font-family={fontFamily + ", sans-serif"}>
+          {fontFamily}
+        </li>
+      );
+    });
+  };
+
+  const renderOptionBorderColors = () => {
+    return colors.map((color, index) => {
+      return (
+        <li
+          key={index}
+          data-border-color={color}
+          style={{
+            backgroundColor: color,
+          }}
+        ></li>
+      );
+    });
+  };
+  const renderOptionBackGroundColor = () => {
+    return colors.map((color, index) => {
+      return (
+        <li
+          key={index}
+          data-background-color={color}
+          style={{
+            backgroundColor: color,
+          }}
+        ></li>
+      );
+    });
   };
 
   return (
     <div className={clsx(styles.wrapper)}>
+      <div className={clsx(styles.icon, styles.icon_background_color)}>
+        <BiColorFill></BiColorFill>
+        <FontAwesomeIcon
+          className={clsx(styles.icon__arrow_down)}
+          icon={faChevronDown}
+        ></FontAwesomeIcon>
+        <ul
+          className={clsx(styles.background_color_options)}
+          id='background_color_options'
+        >
+          {renderOptionBackGroundColor()}
+        </ul>
+      </div>
       <div className={clsx(styles.icon, styles.icon_color)}>
-        <FontAwesomeIcon icon={faPalette}></FontAwesomeIcon>
-        <FontAwesomeIcon icon={faChevronDown}></FontAwesomeIcon>
+        <IoColorPalette></IoColorPalette>
+        <FontAwesomeIcon
+          className={clsx(styles.icon__arrow_down)}
+          icon={faChevronDown}
+        ></FontAwesomeIcon>
         <ul className={clsx(styles.color_options)} id='color_options'>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
+          {renderOptionColors()}
         </ul>
       </div>
+      <div className={clsx(styles.icon, styles.icon_border_color)}>
+        <AiOutlineBorder></AiOutlineBorder>
+        <FontAwesomeIcon
+          className={clsx(styles.icon__arrow_down)}
+          icon={faChevronDown}
+        ></FontAwesomeIcon>
+        <ul
+          className={clsx(styles.border_color_options)}
+          id='border_color_options'
+        >
+          {renderOptionBorderColors()}
+        </ul>
+      </div>
+
       <div className={clsx(styles.icon, styles.icon_font_size)}>
-        <input type='text'></input>
-        <FontAwesomeIcon icon={faChevronDown}></FontAwesomeIcon>
+        <GoTextSize></GoTextSize>
+        <FontAwesomeIcon
+          className={clsx(styles.icon__arrow_down)}
+          icon={faChevronDown}
+        ></FontAwesomeIcon>
         <ul className={clsx(styles.font_size_options)} id='font_size_options'>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
+          {renderFontSize()}
         </ul>
       </div>
+      <div className={clsx(styles.icon, styles.icon_font_style)}>
+        <BiFontFamily></BiFontFamily>
+        <FontAwesomeIcon
+          className={clsx(styles.icon__arrow_down)}
+          icon={faChevronDown}
+        ></FontAwesomeIcon>
+        <ul className={clsx(styles.font_style_options)} id='font_style_options'>
+          {renderFontFamily()}
+        </ul>
+      </div>
+      <FcFullTrash className={clsx(styles.icon_trash)}></FcFullTrash>
     </div>
   );
 }

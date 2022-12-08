@@ -3,7 +3,7 @@ import { useCallback, useState, useEffect } from "react";
 import { useDrop, useDragDropManager } from "react-dnd";
 
 import styles from "./Grid.module.scss";
-import { Item, Trash, EditorComponent } from "~/Components";
+import { Item, EditorComponent } from "~/Components";
 
 function Grid(props) {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -129,7 +129,6 @@ function Grid(props) {
           })}
         {props.children}
       </div>
-      <Trash id={"trash"}></Trash>
     </>
   );
 }
