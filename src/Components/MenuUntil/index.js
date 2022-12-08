@@ -3,13 +3,6 @@ import { useState } from "react";
 import {
   faArrowAltCircleLeft,
   faArrowAltCircleRight,
-  faBox,
-  faImage,
-  faLink,
-  faMobileButton,
-  faTabletButton,
-  faTextSlash,
-  faTextWidth,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 

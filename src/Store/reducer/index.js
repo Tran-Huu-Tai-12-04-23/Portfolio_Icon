@@ -2,6 +2,12 @@ import { contantActions } from "~/Contansts";
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case contantActions.SET_COLOR: {
+      return {
+        ...state,
+        color: action.payload,
+      };
+    }
     case contantActions.SET_BACKGROUND_COLOR: {
       console.log(`Setting background color ${action.payload}`);
       break;

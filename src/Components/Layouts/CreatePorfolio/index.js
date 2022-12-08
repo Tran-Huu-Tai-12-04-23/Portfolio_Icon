@@ -4,6 +4,7 @@ import styles from "./CreatePorfolio.module.scss";
 
 import Header from "./Header";
 import MenuUntil from "~/Components/MenuUntil";
+import { EditorComponent } from "~/Components";
 
 function CreatePorfolio({ children }) {
   const [widthContent, setWidthContent] = useState("100%");
@@ -40,6 +41,7 @@ function CreatePorfolio({ children }) {
           </div>
         </div>
         <MenuUntil state={setWidthMenu} valueState={widthMenu} />
+        <EditorComponent></EditorComponent>
       </div>
     </div>
   );

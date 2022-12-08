@@ -8,5 +8,6 @@ const initState = {
   height: "100%",
   width: "100%",
   color: "#000",
+  font: "Times New Roman",
 };
 export default initState;

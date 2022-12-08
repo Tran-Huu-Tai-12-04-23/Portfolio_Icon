@@ -1,17 +1,24 @@
 import clsx from "clsx";
 import { useDrag } from "react-dnd";
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect, useContext } from "react";
 import { ResizableBox as ReactResizableBox } from "react-resizable";
 
 import "./resizeable.css";
 import styles from "./Item.module.scss";
 import { Overlay } from "~/Components";
-
-import reducer from "~/reducer";
-import initState from "~/reducer/initState";
-import action from "~/reducer/actions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { ContextReducer } from "~/Store/Context";
+import {
+  setBackgroundColor,
+  setTop,
+  setLeft,
+  setBorderColor,
+  setMargin,
+  setPadding,
+  setHeight,
+  setWidth,
+  setColor,
+  setFont,
+} from "~/Store/reducer/actions";
 
 function Item({
   type,
@@ -39,7 +46,7 @@ function Item({
     }),
     [id, left, top, inGrid]
   );
-  const [state, dispath] = useReducer(reducer, initState);
+
   const [value, setValue] = useState("Enter text !!!");
   const [isLink, setIsLink] = useState(false);
   const [Type, setType] = useState("div");
@@ -126,6 +133,12 @@ function Item({
     }
   }, [linkImg]);
 
+  const [state, dispatch] = useContext(ContextReducer);
+  //examaple
+  useEffect(() => {
+    dispatch(setColor("red"));
+  }, []);
+
   return (
     <>
       {resizable ? (
@@ -143,9 +156,7 @@ function Item({
             onChange={type === "img" ? hanleShowInputImg : handleChangeValue}
             onBlur={handleBlurInput}
             style={{
-              backgroundColor: isDragging
-                ? "rgba(255, 59, 92, 0.8)"
-                : state.backgroundColor,
+              backgroundColor: isDragging ? "rgba(255, 59, 92, 0.8)" : "#fff",
             }}
             type={type === "img" ? "file" : "text"}
             accept={type !== "img" ? null : "image/*"}

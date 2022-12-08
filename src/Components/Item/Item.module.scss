@@ -5,7 +5,7 @@
   height: 100%;
   color: #fff;
   background-color: var(--primary_color_component);
-  z-index: 10000;
+  // z-index: 10000;
 }
 
 .normal {
@@ -50,15 +50,6 @@
   }
 }
 
-.icon {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 12px;
-}
-
 .input_file {
   border: 1px solid #ff0033;
   width: 100%;
@@ -90,4 +81,17 @@
   background-color: "#CD5C5C";
 }
 .heading {
+}
+
+// css when item have prop icon
+.icon {
+  width: 100px;
+  height: 40px;
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: grab  ;
 }

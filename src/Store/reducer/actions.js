@@ -53,3 +53,9 @@ export const setColor = (payload) => {
     payload,
   };
 };
+export const setFont = (payload) => {
+  return {
+    type: contantActions.SET_FONT,
+    payload,
+  };
+};

@@ -10,6 +10,7 @@ import Item from "./Item";
 import BoxMenu from "./BoxMenu";
 import Overlay from "./Overlay";
 import Trash from "./Trash";
+import EditorComponent from "./EditorComponent";
 
 import Template1Content from "./TemplatesContent/Template1Content";
 import Template2Content from "./TemplatesContent/Template2Content";
@@ -29,4 +30,5 @@ export {
   BoxMenu,
   Overlay,
   Trash,
+  EditorComponent,
 };
