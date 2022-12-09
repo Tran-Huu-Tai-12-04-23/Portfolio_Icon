@@ -1,19 +1,20 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useDrop, useDragDropManager } from "react-dnd";
 import clsx from "clsx";
 import { FcEmptyTrash } from "react-icons/fc";
 
 import styles from "./Trash.module.scss";
+import { ContextItemsIngrid } from "~/Store/Context";
 
 function Trash({ id }) {
+  //item in grid
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: "ITEM_IN_GRID",
     drop(item, monitor) {
       if (item.inGrid) {
-        const indexComponent = document.getElementById(item.id).parentElement;
-        indexComponent.remove();
+        setIdRemoved(item.id);
       }
     },
     collect: (monitor) => ({
@@ -21,6 +22,16 @@ function Trash({ id }) {
       canDrop: monitor.canDrop(),
     }),
   }));
+
+  const [items, setItems] = useContext(ContextItemsIngrid);
+  const [idRemoved, setIdRemoved] = useState();
+
+  useEffect(() => {
+    const newItems = items.filter((item) => {
+      return item.id !== idRemoved;
+    });
+    setItems(newItems);
+  }, [idRemoved]);
 
   return (
     <div

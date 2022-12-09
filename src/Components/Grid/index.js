@@ -1,11 +1,16 @@
 import clsx from "clsx";
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState, useEffect, useContext } from "react";
 import { useDrop, useDragDropManager } from "react-dnd";
+import uuid from "react-uuid";
 
 import styles from "./Grid.module.scss";
 import { Item } from "~/Components";
+import { ContextItemsIngrid } from "~/Store/Context";
 
 function Grid(props) {
+  const [items, setItems] = useContext(ContextItemsIngrid);
+  const [backgroundColor, setBackgroundColor] = useState("#fff");
+
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ["ITEM_IN_GRID", "Item"],
     drop(item, monitor) {
@@ -22,7 +27,7 @@ function Grid(props) {
         let left = delta.x - 200;
         let top = delta.y - 116;
         console.log(`left: ${left} top: ${top}`);
-        addItem(item.type, left, top);
+        addItem(item.type, left, top, uuid());
       }
     },
     collect: (monitor) => ({
@@ -31,14 +36,12 @@ function Grid(props) {
     }),
   }));
 
-  const [items, setItems] = useState([]);
-  const [backgroundColor, setBackgroundColor] = useState("#fff");
-
   const addItem = useCallback(
     (
       type,
       left = "200px",
       top = "100px",
+      id,
       width = "200px",
       height = "100px"
     ) => {
@@ -51,6 +54,7 @@ function Grid(props) {
             top,
             width,
             height,
+            id,
             inGrid: true,
           },
         ];
@@ -113,8 +117,8 @@ function Grid(props) {
           items.map((item, index) => {
             return (
               <Item
-                key={index}
-                id={`input_grid_${index + 1}`}
+                key={item.id}
+                id={item.id}
                 inGrid={true}
                 type={item.type}
                 stylesItem={{
