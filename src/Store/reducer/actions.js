@@ -23,6 +23,18 @@ export const setBorderColor = (payload) => {
     payload,
   };
 };
+export const setBorderRadius = (payload) => {
+  return {
+    type: contantActions.SET_BORDER_RADIUS,
+    payload,
+  };
+};
+export const setBorderStyle = (payload) => {
+  return {
+    type: contantActions.SET_BORDER_STYLE,
+    payload,
+  };
+};
 export const setMargin = (payload) => {
   return {
     type: contantActions.SET_MAGRIN,

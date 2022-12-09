@@ -3,6 +3,7 @@ const initState = {
   top: undefined,
   left: undefined,
   border_color: undefined,
+  border_radius: undefined,
   margin: undefined,
   padding: undefined,
   height: undefined,

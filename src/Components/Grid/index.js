@@ -22,12 +22,13 @@ function Grid(props) {
         top = Math.round(top + delta.y);
         moveItem(item.id, left, top, item.inGrid, item.type);
       } else {
-        console.log(item);
+        const wrapper = document.getElementById("content_porfolio");
+        const valueScrollTop = wrapper.scrollTop;
         const delta = monitor.getClientOffset();
         let left = delta.x - 200;
         let top = delta.y - 116;
         console.log(`left: ${left} top: ${top}`);
-        addItem(item.type, left, top, uuid());
+        addItem(item.type, left, top + valueScrollTop, uuid());
       }
     },
     collect: (monitor) => ({

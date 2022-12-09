@@ -9,6 +9,9 @@ export const colors = [
   "#33CCFF",
 ];
 export const fontFamilys = [
+  "Poppins",
+  "Monospace",
+  "Sf mono",
   "Acme",
   "Alegreya",
   "Alegreya+Sans",
@@ -29,4 +32,14 @@ export const fontFamilys = [
   "Crete+Round",
   "Crimson+Text",
   "Cuprum",
+];
+
+export const borderStyles = [
+  "hidden",
+  "dotted",
+  "dashed",
+  "solid",
+  "groove",
+  "outset",
+  "double",
 ];

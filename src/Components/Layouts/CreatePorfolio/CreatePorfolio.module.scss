@@ -3,6 +3,8 @@
   margin: 100px 0 0 0;
   justify-content: space-between;
   padding-bottom: 50px;
+  scroll-behavior: smooth;
+  transition: all 0.5s ease-in-out;
 }
 
 .wrapper_template {

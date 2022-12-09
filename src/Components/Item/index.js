@@ -20,6 +20,9 @@ import {
   setFont,
   setIdIemSlected,
   setFontSize,
+  setBorderRadius,
+  setFontFamily,
+  setBorderStyle,
 } from "~/Store/reducer/actions";
 import { ContextShowEditorComponent } from "~/Store/Context";
 
@@ -145,8 +148,12 @@ function Item({
       itemSlected.style.color = state.color;
       itemSlected.style.backgroundColor = state.background_color;
       itemSlected.style.fontSize = state.font_size;
+      itemSlected.style.fontFamily = state.font_family;
+      itemSlected.style.borderRadius = state.border_radius;
+      itemSlected.style.borderStyle = state.border_style;
+      itemSlected.style.borderColor = state.border_color;
     }
-    console.log("run state");
+    console.log(state);
   }, [state]);
 
   //use context get state show and hidden editor component
@@ -158,17 +165,21 @@ function Item({
     dispatch(setColor(item.style.color));
     dispatch(setBackgroundColor(item.style.backgroundColor));
     dispatch(setFontSize(item.style.fontSize));
+    dispatch(setFontFamily(item.style.fontFamily));
+    dispatch(setBorderRadius(item.style.borderRadius));
+    dispatch(setBorderStyle(item.style.borderStyle));
+    dispatch(setBorderColor(item.style.borderColor));
   };
 
   const hanleEditorComponent = (e) => {
-    dispatch(setIdIemSlected(e.target.id));
     loadStyleComponentInInitstate(e.target);
+    dispatch(setIdIemSlected(e.target.id));
     setEditorComponent(!showEditorComponent);
   };
 
   const hanleSelectItemToEdit = (e) => {
-    dispatch(setIdIemSlected(e.target.id));
     loadStyleComponentInInitstate(e.target);
+    dispatch(setIdIemSlected(e.target.id));
   };
 
   return (

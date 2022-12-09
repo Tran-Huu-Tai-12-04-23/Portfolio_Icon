@@ -6,23 +6,30 @@ import {
   faChevronUp,
   faPalette,
 } from "@fortawesome/free-solid-svg-icons";
+import { BsBorderWidth } from "react-icons/bs";
 
 import { GoTextSize } from "react-icons/go";
 import { BiFontFamily, BiColorFill } from "react-icons/bi";
 import { AiOutlineBorder, AiOutlineFontColors } from "react-icons/ai";
 import { FcFullTrash } from "react-icons/fc";
+import { RxBorderStyle } from "react-icons/rx";
 
 import styles from "./EditorComponent.module.scss";
-import { colors, fontFamilys } from "./datas";
-import { ContextReducer } from "~/Store/Context";
+import { colors, fontFamilys, borderStyles } from "./datas";
+import { ContextReducer, ContextItemsIngrid } from "~/Store/Context";
 import {
   setBackgroundColor,
   setColor,
+  setFontFamily,
   setFontSize,
+  setBorderRadius,
+  setBorderStyle,
+  setBorderColor,
 } from "~/Store/reducer/actions";
 
 function EditorComponent({ style }) {
   const [state, dispatch] = useContext(ContextReducer);
+  const [items, setItems] = useContext(ContextItemsIngrid);
 
   const renderOptionColors = () => {
     return colors.map((color, index) => {
@@ -61,7 +68,13 @@ function EditorComponent({ style }) {
   const renderFontFamily = () => {
     return fontFamilys.map((fontFamily, index) => {
       return (
-        <li key={index} data-font-family={fontFamily + ", sans-serif"}>
+        <li
+          key={index}
+          onClick={(e) => {
+            dispatch(setFontFamily(fontFamily));
+          }}
+          data-font-family={fontFamily + ", sans-serif"}
+        >
           {fontFamily}
         </li>
       );
@@ -73,6 +86,9 @@ function EditorComponent({ style }) {
       return (
         <li
           key={index}
+          onClick={(e) => {
+            dispatch(setBorderColor(color));
+          }}
           data-border-color={color}
           style={{
             backgroundColor: color,
@@ -96,6 +112,49 @@ function EditorComponent({ style }) {
           }}
         ></li>
       );
+    });
+  };
+
+  const renderOptionBorderRadius = () => {
+    const numberBorderRadius = Array.from(Array(10).keys());
+    return numberBorderRadius.map((item, index) => {
+      return (
+        <li
+          onClick={(e) => {
+            dispatch(setBorderRadius(`${item * 8}px`));
+          }}
+          key={index}
+          data-border-radius={item * 8}
+          style={{
+            borderRadius: `${item * 8}px`,
+          }}
+        ></li>
+      );
+    });
+  };
+
+  const renderBorderStyle = () => {
+    return borderStyles.map((style, index) => {
+      return (
+        <li
+          onClick={(e) => {
+            dispatch(setBorderStyle(style));
+          }}
+          key={index}
+          data-border-style={style}
+          style={{
+            border: `2px ${style} #000`,
+          }}
+        ></li>
+      );
+    });
+  };
+
+  const removeItemsIngrid = () => {
+    setItems(() => {
+      return items.filter((item) => {
+        return item.id !== state.id_item_slected;
+      });
     });
   };
 
@@ -153,6 +212,32 @@ function EditorComponent({ style }) {
           {renderFontSize()}
         </ul>
       </div>
+      <div className={clsx(styles.icon, styles.icon_border_radius)}>
+        <BsBorderWidth></BsBorderWidth>
+        <FontAwesomeIcon
+          className={clsx(styles.icon__arrow_down)}
+          icon={faChevronDown}
+        ></FontAwesomeIcon>
+        <ul
+          className={clsx(styles.border_raidus_options)}
+          id='border_raidus_options'
+        >
+          {renderOptionBorderRadius()}
+        </ul>
+      </div>
+      <div className={clsx(styles.icon, styles.icon_border_style)}>
+        <RxBorderStyle></RxBorderStyle>
+        <FontAwesomeIcon
+          className={clsx(styles.icon__arrow_down)}
+          icon={faChevronDown}
+        ></FontAwesomeIcon>
+        <ul
+          className={clsx(styles.border_style_options)}
+          id='border_style_options'
+        >
+          {renderBorderStyle()}
+        </ul>
+      </div>
       <div className={clsx(styles.icon, styles.icon_font_style)}>
         <BiFontFamily></BiFontFamily>
         <FontAwesomeIcon
@@ -164,10 +249,7 @@ function EditorComponent({ style }) {
         </ul>
       </div>
       <FcFullTrash
-        onClick={() => {
-          const itemRemove = document.getElementById(state.id_item_slected);
-          if (itemRemove) itemRemove.parentElement.remove();
-        }}
+        onClick={removeItemsIngrid}
         className={clsx(styles.icon_trash)}
       ></FcFullTrash>
     </div>

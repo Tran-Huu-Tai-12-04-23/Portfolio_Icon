@@ -37,6 +37,12 @@ function CreatePorfolio({ children }) {
     wrapperContentTemplate.scrollTop = 0;
   };
 
+  useEffect(() => {
+    if (items.length <= 0) {
+      setEditorComponent(false);
+    }
+  }, [items]);
+
   return (
     <ContextItemsIngrid.Provider value={[items, setItems]}>
       <ContextShowEditorComponent.Provider

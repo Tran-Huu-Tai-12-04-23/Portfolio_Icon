@@ -20,6 +20,30 @@ const reducer = (state, action) => {
         font_size: action.payload,
       };
     }
+    case contantActions.SET_FONT_FAMILY: {
+      return {
+        ...state,
+        font_family: action.payload,
+      };
+    }
+    case contantActions.SET_BORDER_RADIUS: {
+      return {
+        ...state,
+        border_radius: action.payload,
+      };
+    }
+    case contantActions.SET_BORDER_STYLE: {
+      return {
+        ...state,
+        border_style: action.payload,
+      };
+    }
+    case contantActions.SET_BORDER_COLOR: {
+      return {
+        ...state,
+        border_color: action.payload,
+      };
+    }
     case contantActions.SET_ID_ITEM: {
       return {
         ...state,
