@@ -12,7 +12,6 @@
   border-radius: 12px;
   box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.59);
   z-index: 1000000;
-  transition: all 0.4s ease-in-out;
 
   input {
     min-width: 60px;
@@ -215,7 +214,7 @@ svg {
   right: -10%;
   font-size: 40px;
   cursor: pointer;
-  transition: all 0.4s ease-in-out;
+  animation: wiggle 0.4s ease-in-out;
 
   &:hover {
     transform: scale(1.6);

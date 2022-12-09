@@ -18,7 +18,10 @@ import {
   setWidth,
   setColor,
   setFont,
+  setIdIemSlected,
+  setFontSize,
 } from "~/Store/reducer/actions";
+import { ContextShowEditorComponent } from "~/Store/Context";
 
 function Item({
   type,
@@ -135,9 +138,38 @@ function Item({
 
   const [state, dispatch] = useContext(ContextReducer);
   //examaple
+
   useEffect(() => {
-    dispatch(setColor("red"));
-  }, []);
+    const itemSlected = document.getElementById(state.id_item_slected);
+    if (itemSlected) {
+      itemSlected.style.color = state.color;
+      itemSlected.style.backgroundColor = state.background_color;
+      itemSlected.style.fontSize = state.font_size;
+    }
+    console.log("run state");
+  }, [state]);
+
+  //use context get state show and hidden editor component
+  const [showEditorComponent, setEditorComponent] = useContext(
+    ContextShowEditorComponent
+  );
+
+  const loadStyleComponentInInitstate = (item) => {
+    dispatch(setColor(item.style.color));
+    dispatch(setBackgroundColor(item.style.backgroundColor));
+    dispatch(setFontSize(item.style.fontSize));
+  };
+
+  const hanleEditorComponent = (e) => {
+    dispatch(setIdIemSlected(e.target.id));
+    loadStyleComponentInInitstate(e.target);
+    setEditorComponent(!showEditorComponent);
+  };
+
+  const hanleSelectItemToEdit = (e) => {
+    dispatch(setIdIemSlected(e.target.id));
+    loadStyleComponentInInitstate(e.target);
+  };
 
   return (
     <>
@@ -150,13 +182,15 @@ function Item({
           <Type
             ref={drag}
             id={id}
+            onDoubleClick={hanleEditorComponent}
+            onClick={hanleSelectItemToEdit}
             className={classNamesItem}
             src={type === "img" ? linkImg : ""}
             value={type !== "img" ? value : undefined}
             onChange={type === "img" ? hanleShowInputImg : handleChangeValue}
             onBlur={handleBlurInput}
             style={{
-              backgroundColor: isDragging ? "rgba(255, 59, 92, 0.8)" : "#ccc",
+              opacity: isDragging ? "0.5" : "1",
             }}
             type={type === "img" ? "file" : "text"}
             accept={type !== "img" ? null : "image/*"}

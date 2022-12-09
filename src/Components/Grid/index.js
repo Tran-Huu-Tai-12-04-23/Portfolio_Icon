@@ -3,7 +3,7 @@ import { useCallback, useState, useEffect } from "react";
 import { useDrop, useDragDropManager } from "react-dnd";
 
 import styles from "./Grid.module.scss";
-import { Item, EditorComponent } from "~/Components";
+import { Item } from "~/Components";
 
 function Grid(props) {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -118,7 +118,6 @@ function Grid(props) {
                 inGrid={true}
                 type={item.type}
                 stylesItem={{
-                  backgroundColor: "#ccc",
                   top: item.top,
                   left: item.left,
                   width: item.width,

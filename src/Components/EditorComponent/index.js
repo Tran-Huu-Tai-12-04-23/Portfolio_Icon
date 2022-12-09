@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,22 +9,29 @@ import {
 
 import { GoTextSize } from "react-icons/go";
 import { BiFontFamily, BiColorFill } from "react-icons/bi";
-import { AiOutlineBorder } from "react-icons/ai";
-import { IoColorPalette } from "react-icons/io5";
+import { AiOutlineBorder, AiOutlineFontColors } from "react-icons/ai";
 import { FcFullTrash } from "react-icons/fc";
 
 import styles from "./EditorComponent.module.scss";
 import { colors, fontFamilys } from "./datas";
+import { ContextReducer } from "~/Store/Context";
+import {
+  setBackgroundColor,
+  setColor,
+  setFontSize,
+} from "~/Store/reducer/actions";
 
-function EditorComponent() {
-  const [fontFamily, setFontFamily] = useState("Font - family");
-  const [fontSize, setFontSize] = useState(0);
+function EditorComponent({ style }) {
+  const [state, dispatch] = useContext(ContextReducer);
 
   const renderOptionColors = () => {
     return colors.map((color, index) => {
       return (
         <li
           key={index}
+          onClick={(e) => {
+            dispatch(setColor(color));
+          }}
           data-color={color}
           style={{
             backgroundColor: color,
@@ -38,7 +45,13 @@ function EditorComponent() {
     const numberFontSize = Array.from(Array(41).keys());
     return numberFontSize.map((size, index) => {
       return (
-        <li key={index} data-font-size={size}>
+        <li
+          key={index}
+          onClick={(e) => {
+            dispatch(setFontSize(`${size}px`));
+          }}
+          data-font-size={size}
+        >
           {size}
         </li>
       );
@@ -68,10 +81,14 @@ function EditorComponent() {
       );
     });
   };
+
   const renderOptionBackGroundColor = () => {
     return colors.map((color, index) => {
       return (
         <li
+          onClick={(e) => {
+            dispatch(setBackgroundColor(color));
+          }}
           key={index}
           data-background-color={color}
           style={{
@@ -83,7 +100,12 @@ function EditorComponent() {
   };
 
   return (
-    <div className={clsx(styles.wrapper)}>
+    <div
+      className={clsx(styles.wrapper)}
+      style={{
+        display: style.display,
+      }}
+    >
       <div className={clsx(styles.icon, styles.icon_background_color)}>
         <BiColorFill></BiColorFill>
         <FontAwesomeIcon
@@ -98,7 +120,7 @@ function EditorComponent() {
         </ul>
       </div>
       <div className={clsx(styles.icon, styles.icon_color)}>
-        <IoColorPalette></IoColorPalette>
+        <AiOutlineFontColors></AiOutlineFontColors>
         <FontAwesomeIcon
           className={clsx(styles.icon__arrow_down)}
           icon={faChevronDown}
@@ -141,7 +163,13 @@ function EditorComponent() {
           {renderFontFamily()}
         </ul>
       </div>
-      <FcFullTrash className={clsx(styles.icon_trash)}></FcFullTrash>
+      <FcFullTrash
+        onClick={() => {
+          const itemRemove = document.getElementById(state.id_item_slected);
+          if (itemRemove) itemRemove.parentElement.remove();
+        }}
+        className={clsx(styles.icon_trash)}
+      ></FcFullTrash>
     </div>
   );
 }

@@ -8,5 +8,7 @@ export const contantActions = {
   SET_HEIGHT: "set_height",
   SET_WIDTH: "set_width",
   SET_COLOR: "set_color",
-  SET_FONT: "set_font",
+  SET_FONT_SIZE: "set_font_size",
+  SET_FONT_FAMILY: "set_font_family",
+  SET_ID_ITEM: "set_id",
 };

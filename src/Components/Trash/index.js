@@ -22,8 +22,6 @@ function Trash({ id }) {
     }),
   }));
 
-  const [backgroundColor, setBackgroundColor] = useState("#fff");
-
   return (
     <div
       id={id}

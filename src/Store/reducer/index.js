@@ -9,8 +9,22 @@ const reducer = (state, action) => {
       };
     }
     case contantActions.SET_BACKGROUND_COLOR: {
-      console.log(`Setting background color ${action.payload}`);
-      break;
+      return {
+        ...state,
+        background_color: action.payload,
+      };
+    }
+    case contantActions.SET_FONT_SIZE: {
+      return {
+        ...state,
+        font_size: action.payload,
+      };
+    }
+    case contantActions.SET_ID_ITEM: {
+      return {
+        ...state,
+        id_item_slected: action.payload,
+      };
     }
     default:
       throw new Error("Invalid action type");

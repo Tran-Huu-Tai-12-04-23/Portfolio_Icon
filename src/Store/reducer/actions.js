@@ -53,9 +53,21 @@ export const setColor = (payload) => {
     payload,
   };
 };
-export const setFont = (payload) => {
+export const setFontSize = (payload) => {
   return {
-    type: contantActions.SET_FONT,
+    type: contantActions.SET_FONT_SIZE,
+    payload,
+  };
+};
+export const setFontFamily = (payload) => {
+  return {
+    type: contantActions.SET_FONT_FAMILY,
+    payload,
+  };
+};
+export const setIdIemSlected = (payload) => {
+  return {
+    type: contantActions.SET_ID_ITEM,
     payload,
   };
 };
