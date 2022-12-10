@@ -26,6 +26,12 @@ const reducer = (state, action) => {
         font_family: action.payload,
       };
     }
+    case contantActions.SET_FONT_WEIGHT: {
+      return {
+        ...state,
+        font_weight: action.payload,
+      };
+    }
     case contantActions.SET_BORDER_RADIUS: {
       return {
         ...state,
@@ -42,6 +48,18 @@ const reducer = (state, action) => {
       return {
         ...state,
         border_color: action.payload,
+      };
+    }
+    case contantActions.SET_BORDER_SIZE: {
+      return {
+        ...state,
+        border_size: action.payload,
+      };
+    }
+    case contantActions.SET_ALIGN_CENTER: {
+      return {
+        ...state,
+        align_center: action.payload,
       };
     }
     case contantActions.SET_ID_ITEM: {

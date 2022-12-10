@@ -5,6 +5,7 @@ export const contantActions = {
   SET_BORDER_COLOR: "set_border_color",
   SET_BORDER_RADIUS: "set_border_radius",
   SET_BORDER_STYLE: "set_border_style",
+  SET_BORDER_SIZE: "set_border_size",
   SET_MAGRIN: "set_margin",
   SET_PADDING: "set_padding",
   SET_HEIGHT: "set_height",
@@ -12,5 +13,7 @@ export const contantActions = {
   SET_COLOR: "set_color",
   SET_FONT_SIZE: "set_font_size",
   SET_FONT_FAMILY: "set_font_family",
+  SET_FONT_WEIGHT: "set_font_weight",
+  SET_ALIGN_CENTER: "set_align_center",
   SET_ID_ITEM: "set_id",
 };

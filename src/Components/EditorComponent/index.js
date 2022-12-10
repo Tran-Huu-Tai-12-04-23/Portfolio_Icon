@@ -7,12 +7,15 @@ import {
   faPalette,
 } from "@fortawesome/free-solid-svg-icons";
 import { BsBorderWidth } from "react-icons/bs";
+import { TbBorderRadius } from "react-icons/tb";
 
 import { GoTextSize } from "react-icons/go";
 import { BiFontFamily, BiColorFill } from "react-icons/bi";
 import { AiOutlineBorder, AiOutlineFontColors } from "react-icons/ai";
 import { FcFullTrash } from "react-icons/fc";
 import { RxBorderStyle } from "react-icons/rx";
+import { FaBold } from "react-icons/fa";
+import { FiAlignCenter } from "react-icons/fi";
 
 import styles from "./EditorComponent.module.scss";
 import { colors, fontFamilys, borderStyles } from "./datas";
@@ -25,6 +28,9 @@ import {
   setBorderRadius,
   setBorderStyle,
   setBorderColor,
+  setFontWeight,
+  setAlignCenter,
+  setBorderSize,
 } from "~/Store/reducer/actions";
 
 function EditorComponent({ style }) {
@@ -132,6 +138,26 @@ function EditorComponent({ style }) {
       );
     });
   };
+  const renderOptionBorderSize = () => {
+    const numberBorderSize = Array.from(Array(10).keys());
+    return numberBorderSize.map((size, index) => {
+      return (
+        <div
+          key={index}
+          onClick={(e) => {
+            dispatch(setBorderSize(`${size + 1}px`));
+          }}
+        >
+          <li
+            data-border-size={size + 1}
+            style={{
+              height: `${size + 1}px`,
+            }}
+          ></li>
+        </div>
+      );
+    });
+  };
 
   const renderBorderStyle = () => {
     return borderStyles.map((style, index) => {
@@ -212,8 +238,9 @@ function EditorComponent({ style }) {
           {renderFontSize()}
         </ul>
       </div>
+
       <div className={clsx(styles.icon, styles.icon_border_radius)}>
-        <BsBorderWidth></BsBorderWidth>
+        <TbBorderRadius></TbBorderRadius>
         <FontAwesomeIcon
           className={clsx(styles.icon__arrow_down)}
           icon={faChevronDown}
@@ -223,6 +250,19 @@ function EditorComponent({ style }) {
           id='border_raidus_options'
         >
           {renderOptionBorderRadius()}
+        </ul>
+      </div>
+      <div className={clsx(styles.icon, styles.icon_border_size)}>
+        <BsBorderWidth></BsBorderWidth>
+        <FontAwesomeIcon
+          className={clsx(styles.icon__arrow_down)}
+          icon={faChevronDown}
+        ></FontAwesomeIcon>
+        <ul
+          className={clsx(styles.border_size_options)}
+          id='border_size_options'
+        >
+          {renderOptionBorderSize()}
         </ul>
       </div>
       <div className={clsx(styles.icon, styles.icon_border_style)}>
@@ -237,6 +277,25 @@ function EditorComponent({ style }) {
         >
           {renderBorderStyle()}
         </ul>
+      </div>
+      <div
+        className={clsx(styles.icon, styles.icon_font_weight)}
+        onClick={(e) => {
+          dispatch(setFontWeight(!state.font_weight));
+        }}
+      >
+        <FaBold></FaBold>
+      </div>
+      <div
+        className={clsx(styles.icon, styles.icon_align_center)}
+        style={{
+          marginRight: 12,
+        }}
+        onClick={(e) => {
+          dispatch(setAlignCenter(!state.align_center));
+        }}
+      >
+        <FiAlignCenter></FiAlignCenter>
       </div>
       <div className={clsx(styles.icon, styles.icon_font_style)}>
         <BiFontFamily></BiFontFamily>

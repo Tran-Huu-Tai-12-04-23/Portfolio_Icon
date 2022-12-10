@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import clsx from "clsx";
 import styles from "./CreatePorfolio.module.scss";
 import { MdKeyboardArrowUp } from "react-icons/md";
+import { VscAdd } from "react-icons/vsc";
 
 import Header from "./Header";
 import MenuUntil from "~/Components/MenuUntil";
@@ -18,6 +19,26 @@ function CreatePorfolio({ children }) {
   const [showScroll, setShowScroll] = useState(false);
   const [goToTop, setGoToTop] = useState(false);
   const [showEditorComponent, setEditorComponent] = useState(false);
+  const [showAddHeight, setShowAddHeight] = useState(false);
+  const [heightContent, setHeightContent] = useState(0);
+  const [heightContentChange, setHeightContentChange] = useState(0);
+
+  useEffect(() => {
+    const content = document.getElementById("content_porfolio");
+    if (content) {
+      setHeightContent(content.offsetHeight);
+    }
+  }, []);
+
+  useEffect(
+    useCallback(() => {
+      const content = document.getElementById("wrapper_template_content");
+      if (content) {
+        content.style.height = `${heightContent}px`;
+      }
+    }),
+    [heightContent]
+  );
 
   const hanleShowScroll = (e) => {
     if (e.currentTarget.scrollTop === 0) {
@@ -62,12 +83,60 @@ function CreatePorfolio({ children }) {
               }}
               onScroll={hanleShowScroll}
             >
-              <div className={clsx(styles.wrapper_template_content)}>
+              <div
+                className={clsx(styles.wrapper_template_content)}
+                id='wrapper_template_content'
+              >
                 {children}
                 {/* <Grid space={2} gap='12px' backgroundColor='#ccc'></Grid> */}
               </div>
             </div>
-            <MenuUntil state={setWidthMenu} valueState={widthMenu} />
+            <MenuUntil state={setWidthMenu} valueState={widthMenu}>
+              <div className={clsx(styles.wrapper_icon_add_height_content)}>
+                <TipSuggest
+                  content='Add height page, click'
+                  position={"top"}
+                  styles={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                >
+                  <VscAdd
+                    className={clsx(styles.icon_add_height_content)}
+                    onClick={(e) => {
+                      setShowAddHeight(!showAddHeight);
+                    }}
+                  ></VscAdd>
+                </TipSuggest>
+                <div
+                  className={clsx(styles.form_enter_height)}
+                  style={{
+                    display: showAddHeight ? "block" : "none",
+                  }}
+                >
+                  <input
+                    type='number'
+                    onChange={(e) => {
+                      setHeightContentChange(e.target.value);
+                    }}
+                    value={heightContentChange}
+                    placeholder='Please enter number !!'
+                  />
+                  <button
+                    onClick={(e) => {
+                      console.log(heightContent);
+                      setHeightContent((prev) => {
+                        return prev + parseInt(heightContentChange);
+                      });
+                      setHeightContentChange(0);
+                      setShowAddHeight(!showAddHeight);
+                    }}
+                  >
+                    Enter
+                  </button>
+                </div>
+              </div>
+            </MenuUntil>
             <EditorComponent
               style={{ display: showEditorComponent ? "flex" : "none" }}
             ></EditorComponent>

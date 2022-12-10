@@ -17,6 +17,12 @@ export const setLeft = (payload) => {
     payload,
   };
 };
+export const setAlignCenter = (payload) => {
+  return {
+    type: contantActions.SET_ALIGN_CENTER,
+    payload,
+  };
+};
 export const setBorderColor = (payload) => {
   return {
     type: contantActions.SET_BORDER_COLOR,
@@ -32,6 +38,12 @@ export const setBorderRadius = (payload) => {
 export const setBorderStyle = (payload) => {
   return {
     type: contantActions.SET_BORDER_STYLE,
+    payload,
+  };
+};
+export const setBorderSize = (payload) => {
+  return {
+    type: contantActions.SET_BORDER_SIZE,
     payload,
   };
 };
@@ -68,6 +80,12 @@ export const setColor = (payload) => {
 export const setFontSize = (payload) => {
   return {
     type: contantActions.SET_FONT_SIZE,
+    payload,
+  };
+};
+export const setFontWeight = (payload) => {
+  return {
+    type: contantActions.SET_FONT_WEIGHT,
     payload,
   };
 };

@@ -7,6 +7,7 @@ import {
   faImage,
 } from "@fortawesome/free-solid-svg-icons";
 import clsx from "clsx";
+import { BsFillMenuButtonFill } from "react-icons/bs";
 
 import styles from "./BoxMenu.module.scss";
 import { Item, TipSuggest } from "~/Components";
@@ -81,6 +82,31 @@ function BoxMenu() {
           }}
         >
           <FontAwesomeIcon icon={faImage}></FontAwesomeIcon>
+        </Item>
+      </TipSuggest>
+      <TipSuggest
+        content='Button'
+        position={"top"}
+        styles={{
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        <Item
+          resizable={false}
+          id='item_button'
+          type='button'
+          draggable='true'
+          className={clsx(styles.item_button)}
+          icon
+          stylesItem={{
+            position: "unset",
+            border: "none",
+            backgroundColor: "var(--primary_color_component)",
+            textAlign: "center",
+          }}
+        >
+          <BsFillMenuButtonFill></BsFillMenuButtonFill>
         </Item>
       </TipSuggest>
     </div>

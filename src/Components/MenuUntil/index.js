@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Children, useState } from "react";
 
 import {
   faArrowAltCircleLeft,
@@ -10,7 +10,7 @@ import clsx from "clsx";
 import styles from "./MenuUntil.module.scss";
 import { BoxMenu } from "~/Components";
 
-function MenuUntil({ state, valueState }) {
+function MenuUntil({ state, valueState, children }) {
   const [show, setShow] = useState(true);
   const [showMenuUtil, setShowMenuUtil] = useState(true);
 
@@ -58,6 +58,7 @@ function MenuUntil({ state, valueState }) {
           icon={faArrowAltCircleRight}
         ></FontAwesomeIcon>
       </div>
+      {children}
     </div>
   );
 }

@@ -23,8 +23,11 @@ import {
   setBorderRadius,
   setFontFamily,
   setBorderStyle,
+  setAlignCenter,
+  setBorderSize,
 } from "~/Store/reducer/actions";
 import { ContextShowEditorComponent } from "~/Store/Context";
+import { BiCloudSnow } from "react-icons/bi";
 
 function Item({
   type,
@@ -126,16 +129,20 @@ function Item({
       setType("input");
       propsTypeLink.type = "file";
     }
-
-    if (href && type === "a" && isLink) {
-      propsTypeLink.href = href;
-      propsTypeLink.target = "_blank";
+    if (type === "button") {
+      setType("input");
+      setValue("Enter name button!!");
     }
+
     if (icon) {
       setType("div");
     }
     if (linkImg) {
       setType("img");
+    }
+    if (href && type === "a" && isLink) {
+      propsTypeLink.href = href;
+      propsTypeLink.target = "_blank";
     }
   }, [linkImg]);
 
@@ -152,6 +159,10 @@ function Item({
       itemSlected.style.borderRadius = state.border_radius;
       itemSlected.style.borderStyle = state.border_style;
       itemSlected.style.borderColor = state.border_color;
+      itemSlected.style.fontWeight = state.font_weight ? "bold" : "400";
+      itemSlected.style.textAlign = state.align_center ? "center" : "";
+      console.log(state.border_size);
+      itemSlected.style.borderWidth = state.border_size;
     }
     console.log(state);
   }, [state]);
@@ -169,6 +180,11 @@ function Item({
     dispatch(setBorderRadius(item.style.borderRadius));
     dispatch(setBorderStyle(item.style.borderStyle));
     dispatch(setBorderColor(item.style.borderColor));
+    dispatch(setBorderColor(item.style.fontWeight));
+    const alignText = item.style.textAlign === "center" ? true : false;
+    dispatch(setAlignCenter(alignText));
+    console.log(item.style.borderWidth);
+    dispatch(setBorderSize(item.style.borderWidth));
   };
 
   const hanleEditorComponent = (e) => {
@@ -202,6 +218,7 @@ function Item({
             onBlur={handleBlurInput}
             style={{
               opacity: isDragging ? "0.5" : "1",
+              textAlign: type === "button" ? "center" : "",
             }}
             type={type === "img" ? "file" : "text"}
             accept={type !== "img" ? null : "image/*"}
