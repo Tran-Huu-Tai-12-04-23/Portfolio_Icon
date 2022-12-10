@@ -1,4 +1,5 @@
 export const colors = [
+  "rgba(0,0,0,0)",
   "#000",
   "#fff",
   "#FF0000",

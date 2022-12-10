@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { BsBorderWidth } from "react-icons/bs";
 import { TbBorderRadius } from "react-icons/tb";
-
+import { TfiClose } from "react-icons/tfi";
 import { GoTextSize } from "react-icons/go";
 import { BiFontFamily, BiColorFill } from "react-icons/bi";
 import { AiOutlineBorder, AiOutlineFontColors } from "react-icons/ai";
@@ -32,10 +32,15 @@ import {
   setAlignCenter,
   setBorderSize,
 } from "~/Store/reducer/actions";
+import { TipSuggest } from "~/Components";
+import { ContextShowEditorComponent } from "~/Store/Context";
 
 function EditorComponent({ style }) {
   const [state, dispatch] = useContext(ContextReducer);
   const [items, setItems] = useContext(ContextItemsIngrid);
+  const [showEditorComponent, setEditorComponent] = useContext(
+    ContextShowEditorComponent
+  );
 
   const renderOptionColors = () => {
     return colors.map((color, index) => {
@@ -43,6 +48,7 @@ function EditorComponent({ style }) {
         <li
           key={index}
           onClick={(e) => {
+            e.stopPropagation();
             dispatch(setColor(color));
           }}
           data-color={color}
@@ -62,6 +68,7 @@ function EditorComponent({ style }) {
           key={index}
           onClick={(e) => {
             dispatch(setFontSize(`${size}px`));
+            e.stopPropagation();
           }}
           data-font-size={size}
         >
@@ -77,6 +84,7 @@ function EditorComponent({ style }) {
         <li
           key={index}
           onClick={(e) => {
+            e.stopPropagation();
             dispatch(setFontFamily(fontFamily));
           }}
           data-font-family={fontFamily + ", sans-serif"}
@@ -93,6 +101,7 @@ function EditorComponent({ style }) {
         <li
           key={index}
           onClick={(e) => {
+            e.stopPropagation();
             dispatch(setBorderColor(color));
           }}
           data-border-color={color}
@@ -109,6 +118,7 @@ function EditorComponent({ style }) {
       return (
         <li
           onClick={(e) => {
+            e.stopPropagation();
             dispatch(setBackgroundColor(color));
           }}
           key={index}
@@ -122,36 +132,49 @@ function EditorComponent({ style }) {
   };
 
   const renderOptionBorderRadius = () => {
-    const numberBorderRadius = Array.from(Array(10).keys());
+    const numberBorderRadius = Array.from(Array(5).keys());
     return numberBorderRadius.map((item, index) => {
+      var radius = `${item * 8}px`;
+      if (item === 4) {
+        radius = "50%";
+      }
       return (
         <li
           onClick={(e) => {
-            dispatch(setBorderRadius(`${item * 8}px`));
+            e.stopPropagation();
+            dispatch(setBorderRadius(radius));
           }}
           key={index}
-          data-border-radius={item * 8}
+          data-border-radius={radius}
           style={{
-            borderRadius: `${item * 8}px`,
+            borderRadius: radius,
+            marginBottom: "4px",
+            height: "30px",
           }}
         ></li>
       );
     });
   };
   const renderOptionBorderSize = () => {
-    const numberBorderSize = Array.from(Array(10).keys());
+    const numberBorderSize = Array.from(Array(6).keys());
     return numberBorderSize.map((size, index) => {
       return (
         <div
           key={index}
           onClick={(e) => {
-            dispatch(setBorderSize(`${size + 1}px`));
+            e.stopPropagation();
+            dispatch(setBorderSize(`${size}px`));
+          }}
+          style={{
+            border: "1px solid #6699FF",
+            borderRadius: "12px",
+            marginBottom: "4px",
           }}
         >
           <li
-            data-border-size={size + 1}
+            data-border-size={size}
             style={{
-              height: `${size + 1}px`,
+              height: `${size}px`,
             }}
           ></li>
         </div>
@@ -164,6 +187,7 @@ function EditorComponent({ style }) {
       return (
         <li
           onClick={(e) => {
+            e.stopPropagation();
             dispatch(setBorderStyle(style));
           }}
           key={index}
@@ -191,6 +215,17 @@ function EditorComponent({ style }) {
         display: style.display,
       }}
     >
+      <div
+        className={clsx(styles.wrapper_icon_close)}
+        onClick={() => {
+          setEditorComponent(!showEditorComponent);
+        }}
+      >
+        <TipSuggest content='Color editor'>
+          <TfiClose className={clsx(styles.icon_close)}></TfiClose>
+        </TipSuggest>
+      </div>
+
       <div className={clsx(styles.icon, styles.icon_background_color)}>
         <BiColorFill></BiColorFill>
         <FontAwesomeIcon

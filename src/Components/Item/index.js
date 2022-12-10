@@ -188,15 +188,29 @@ function Item({
   };
 
   const hanleEditorComponent = (e) => {
+    e.stopPropagation();
     loadStyleComponentInInitstate(e.target);
     dispatch(setIdIemSlected(e.target.id));
     setEditorComponent(!showEditorComponent);
   };
 
   const hanleSelectItemToEdit = (e) => {
+    e.stopPropagation();
     loadStyleComponentInInitstate(e.target);
     dispatch(setIdIemSlected(e.target.id));
+    hanleEditorComponent(e);
   };
+
+  useEffect(() => {
+    const handleShowEditorComponent = () => {
+      setEditorComponent(false);
+    };
+    window.addEventListener("click", handleShowEditorComponent);
+
+    return () => {
+      window.removeEventListener("click", handleShowEditorComponent);
+    };
+  }, []);
 
   return (
     <>
@@ -209,7 +223,6 @@ function Item({
           <Type
             ref={drag}
             id={id}
-            onDoubleClick={hanleEditorComponent}
             onClick={hanleSelectItemToEdit}
             className={classNamesItem}
             src={type === "img" ? linkImg : ""}

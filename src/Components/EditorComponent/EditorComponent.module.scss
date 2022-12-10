@@ -5,7 +5,7 @@
   left: 50%;
   top: 60px;
   transform: translateX(-50%);
-  min-width: 40%;
+  min-width: 45%;
   min-height: 40px;
   padding: 0 24px;
   background-color: #669999;
@@ -119,6 +119,7 @@
 
       li {
         font-size: 16px;
+        border-radius: 12px;
         &:hover {
           background-color: rgba(0, 0, 0, 0.2);
         }
@@ -143,6 +144,7 @@
     box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.59);
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     justify-content: space-between;
     border-radius: 12px;
     padding: 12px;
@@ -150,9 +152,14 @@
     display: none;
 
     li {
-      width: 20px;
+      width: 30px;
       height: 20px;
       border-radius: 50%;
+      margin: 4px;
+      border: 1px solid #000;
+      &:hover {
+        border-color: #6699ff;
+      }
     }
   }
 
@@ -297,6 +304,31 @@ svg {
 
   &:hover {
     transform: scale(1.6);
+  }
+}
+
+.wrapper_icon_close {
+  position: absolute;
+  top: 50%;
+  left: -50px;
+  height: 100%;
+  width: 50px;
+  transform: translateY(-50%);
+  padding: 10px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  color: #fff;
+  text-align: center;
+  background-color: transparent;
+
+  svg {
+    color: #000;
+    cursor: pointer;
+    font-size: 24px;
+
+    &:hover {
+      color: var(--primary);
+    }
   }
 }
 
