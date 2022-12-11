@@ -21,3 +21,10 @@ a {
 li {
   list-style-type: none;
 }
+
+textarea::-webkit-scrollbar {
+  display: none;
+}
+textarea {
+  resize: none;
+}

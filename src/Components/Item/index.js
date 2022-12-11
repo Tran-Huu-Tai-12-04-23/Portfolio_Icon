@@ -2,10 +2,11 @@ import clsx from "clsx";
 import { useDrag } from "react-dnd";
 import { useState, useEffect, useContext } from "react";
 import { ResizableBox as ReactResizableBox } from "react-resizable";
+import { RiEdit2Fill } from "react-icons/ri";
 
 import "./resizeable.css";
 import styles from "./Item.module.scss";
-import { Overlay } from "~/Components";
+import { Overlay, TipSuggest } from "~/Components";
 import { ContextReducer } from "~/Store/Context";
 import {
   setBackgroundColor,
@@ -25,6 +26,7 @@ import {
   setBorderStyle,
   setAlignCenter,
   setBorderSize,
+  setUppercase,
 } from "~/Store/reducer/actions";
 import { ContextShowEditorComponent } from "~/Store/Context";
 import { BiCloudSnow } from "react-icons/bi";
@@ -33,6 +35,9 @@ function Item({
   type,
   id,
   inGrid = false,
+  isMutily = false,
+  type1,
+  type2,
   stylesItem,
   icon,
   width = 200,
@@ -47,19 +52,25 @@ function Item({
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: inGrid ? "ITEM_IN_GRID" : "Item",
-      item: { id, left, top, inGrid, type },
+      item: { id, left, top, inGrid, type, isMutily, type1, type2 },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
         opacity: monitor.isDragging() ? 0.4 : 1,
       }),
     }),
-    [id, left, top, inGrid]
+    [id, left, top, inGrid, isMutily]
   );
 
   const [value, setValue] = useState("Enter text !!!");
-  const [isLink, setIsLink] = useState(false);
+  const [linkItemTypeA, setLinkItemTypeA] = useState("");
   const [Type, setType] = useState("div");
   const [linkImg, setLinkImg] = useState("");
+  const [state, dispatch] = useContext(ContextReducer);
+  const [showModal, setShowModal] = useState(true);
+  //use context get state show and hidden editor component
+  const [showEditorComponent, setEditorComponent] = useContext(
+    ContextShowEditorComponent
+  );
 
   const classNamesItem = clsx(
     styles.wrapper,
@@ -90,7 +101,15 @@ function Item({
 
   const handleChangeValue = (e) => {
     setValue(e.target.value);
+    const height = e.target.parentElement.offsetHeight + 2;
+    const changeHeight = e.target.scrollHeight;
+    if (changeHeight > height) {
+      e.target.parentElement.style.height = `${
+        height + (changeHeight - height)
+      }px`;
+    }
   };
+
   const handleBlurInput = (e) => {
     if (e.target.value === "") {
       setValue("Enter text !!!");
@@ -110,6 +129,47 @@ function Item({
     reader.readAsDataURL(e.target.files[0]);
   };
 
+  const loadStyleComponentInInitstate = (item) => {
+    dispatch(setColor(item.style.color));
+    dispatch(setBackgroundColor(item.style.backgroundColor));
+    dispatch(setFontSize(item.style.fontSize));
+    dispatch(setFontFamily(item.style.fontFamily));
+    dispatch(setBorderRadius(item.style.borderRadius));
+    dispatch(setBorderStyle(item.style.borderStyle));
+    dispatch(setBorderColor(item.style.borderColor));
+    dispatch(setBorderColor(item.style.fontWeight));
+    const alignText = item.style.textAlign === "center" ? true : false;
+    dispatch(setAlignCenter(alignText));
+    dispatch(setBorderSize(item.style.borderWidth));
+    const upperCase = item.style.textTransform === "uppercase" ? true : false;
+    dispatch(setUppercase(upperCase));
+  };
+
+  const hanleEditorComponent = (e) => {
+    e.stopPropagation();
+    loadStyleComponentInInitstate(e.target);
+    dispatch(setIdIemSlected(e.target.id));
+    setEditorComponent(!showEditorComponent);
+  };
+
+  const hanleSelectItemToEdit = (e) => {
+    e.stopPropagation();
+    loadStyleComponentInInitstate(e.target);
+    dispatch(setIdIemSlected(e.target.id));
+    hanleEditorComponent(e);
+  };
+
+  const handleEditLink = (e) => {
+    e.stopPropagation();
+    setEditorComponent(true);
+    setShowModal(!showModal);
+    dispatch(
+      setIdIemSlected(
+        e.target.id ? e.target.id : e.target.parentElement.parentElement.id
+      )
+    );
+  };
+
   const propsTypeLink = {
     href: null,
     target: null,
@@ -122,7 +182,7 @@ function Item({
       setType(type);
     }
     if (type === "a") {
-      setType("input");
+      setType("a");
       setValue("Enter link!!");
     }
     if (type === "img") {
@@ -140,15 +200,17 @@ function Item({
     if (linkImg) {
       setType("img");
     }
-    if (href && type === "a" && isLink) {
+    if (type === "input" && !icon) {
+      setType("textarea");
+    }
+    if (href && type === "a") {
       propsTypeLink.href = href;
       propsTypeLink.target = "_blank";
     }
   }, [linkImg]);
 
-  const [state, dispatch] = useContext(ContextReducer);
   //examaple
-
+  //set style for component
   useEffect(() => {
     const itemSlected = document.getElementById(state.id_item_slected);
     if (itemSlected) {
@@ -160,47 +222,19 @@ function Item({
       itemSlected.style.borderStyle = state.border_style;
       itemSlected.style.borderColor = state.border_color;
       itemSlected.style.fontWeight = state.font_weight ? "bold" : "400";
+      // set center text in component
       itemSlected.style.textAlign = state.align_center ? "center" : "";
-      console.log(state.border_size);
+      itemSlected.style.display = state.align_center ? "flex" : "";
+      itemSlected.style.justifyContent = state.align_center ? "center" : "";
+      //end
       itemSlected.style.borderWidth = state.border_size;
+      itemSlected.style.textTransform = state.upper_case_letter
+        ? "uppercase"
+        : "";
     }
-    console.log(state);
   }, [state]);
 
-  //use context get state show and hidden editor component
-  const [showEditorComponent, setEditorComponent] = useContext(
-    ContextShowEditorComponent
-  );
-
-  const loadStyleComponentInInitstate = (item) => {
-    dispatch(setColor(item.style.color));
-    dispatch(setBackgroundColor(item.style.backgroundColor));
-    dispatch(setFontSize(item.style.fontSize));
-    dispatch(setFontFamily(item.style.fontFamily));
-    dispatch(setBorderRadius(item.style.borderRadius));
-    dispatch(setBorderStyle(item.style.borderStyle));
-    dispatch(setBorderColor(item.style.borderColor));
-    dispatch(setBorderColor(item.style.fontWeight));
-    const alignText = item.style.textAlign === "center" ? true : false;
-    dispatch(setAlignCenter(alignText));
-    console.log(item.style.borderWidth);
-    dispatch(setBorderSize(item.style.borderWidth));
-  };
-
-  const hanleEditorComponent = (e) => {
-    e.stopPropagation();
-    loadStyleComponentInInitstate(e.target);
-    dispatch(setIdIemSlected(e.target.id));
-    setEditorComponent(!showEditorComponent);
-  };
-
-  const hanleSelectItemToEdit = (e) => {
-    e.stopPropagation();
-    loadStyleComponentInInitstate(e.target);
-    dispatch(setIdIemSlected(e.target.id));
-    hanleEditorComponent(e);
-  };
-
+  //hanle hidden and show edit component when i click display
   useEffect(() => {
     const handleShowEditorComponent = () => {
       setEditorComponent(false);
@@ -212,6 +246,20 @@ function Item({
     };
   }, []);
 
+  // auto set height when text full width
+  useEffect(() => {
+    const itemSelected = document.getElementById(state.id_item_slected);
+    if (itemSelected) {
+      const height = itemSelected.parentElement.offsetHeight + 2;
+      const changeHeight = itemSelected.scrollHeight;
+      if (changeHeight > height) {
+        itemSelected.parentElement.style.height = `${
+          height + (changeHeight - height)
+        }px`;
+      }
+    }
+  }, [state]);
+
   return (
     <>
       {resizable ? (
@@ -220,22 +268,40 @@ function Item({
           height={height}
           style={{ ...stylesItem }}
         >
-          <Type
-            ref={drag}
-            id={id}
-            onClick={hanleSelectItemToEdit}
-            className={classNamesItem}
-            src={type === "img" ? linkImg : ""}
-            value={type !== "img" ? value : undefined}
-            onChange={type === "img" ? hanleShowInputImg : handleChangeValue}
-            onBlur={handleBlurInput}
-            style={{
-              opacity: isDragging ? "0.5" : "1",
-              textAlign: type === "button" ? "center" : "",
-            }}
-            type={type === "img" ? "file" : "text"}
-            accept={type !== "img" ? null : "image/*"}
-          ></Type>
+          <>
+            <Type
+              ref={drag}
+              id={id}
+              onClick={hanleSelectItemToEdit}
+              className={classNamesItem}
+              src={type === "img" ? linkImg : ""}
+              value={type !== "img" ? value : undefined}
+              onChange={type === "img" ? hanleShowInputImg : handleChangeValue}
+              href={linkItemTypeA ? linkItemTypeA : ""}
+              target={linkItemTypeA ? "_blank" : null}
+              onBlur={handleBlurInput}
+              style={{
+                opacity: isDragging ? "0.5" : "1",
+                textAlign: type === "button" ? "center" : "",
+                backgroundColor: type === "a" ? "#1E90FF" : "#fff",
+              }}
+              type={type === "img" ? "file" : "text"}
+              accept={type !== "img" ? null : "image/*"}
+            >
+              {linkItemTypeA ? linkItemTypeA : null}
+            </Type>
+            {type === "a" ? (
+              <div
+                id={id}
+                className={clsx(styles.item_edit)}
+                onClick={handleEditLink}
+              >
+                <TipSuggest content='Edit link '>
+                  <RiEdit2Fill id={id}></RiEdit2Fill>
+                </TipSuggest>
+              </div>
+            ) : undefined}
+          </>
         </ReactResizableBox>
       ) : (
         <>
@@ -251,6 +317,40 @@ function Item({
             {children}
           </Type>
         </>
+      )}
+      {type === "a" && inGrid && showModal ? (
+        <div className={clsx(styles.modal)}>
+          <div className={clsx(styles.modal_enter_link)}>
+            <h5>Enter link</h5>
+            <input
+              type='link'
+              placeholder='Enter link .'
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              value={linkItemTypeA}
+              onChange={(e) => {
+                setEditorComponent(true);
+                setLinkItemTypeA(e.target.value);
+              }}
+              onKeyPress={(e) => {
+                if (e.which === 13) {
+                  setShowModal(!showModal);
+                }
+              }}
+            ></input>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowModal(!showModal);
+              }}
+            >
+              Enter
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
       )}
     </>
   );

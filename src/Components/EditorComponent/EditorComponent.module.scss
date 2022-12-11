@@ -17,7 +17,7 @@
 
   input {
     min-width: 60px;
-    margin-left: 12px;
+    // margin-left: 12px;
     width: 60px;
     border-radius: 3px;
     border: 1px solid transparent;
@@ -29,7 +29,7 @@
 
   .icon {
     position: relative;
-    padding-left: 12px;
+    // padding-left: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -148,7 +148,8 @@
     justify-content: space-between;
     border-radius: 12px;
     padding: 12px;
-    min-height: 40px;
+    height: 150px;
+    overflow-y: scroll;
     display: none;
 
     li {
@@ -268,6 +269,7 @@
     }
   }
 }
+.color_options,
 .border_size_options,
 .border_style_options,
 .border_raidus_options,

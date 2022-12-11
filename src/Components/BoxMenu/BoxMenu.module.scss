@@ -5,4 +5,28 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  .wrapper_single_component {
+    width: 100%;
+    min-height: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--primary);
+  }
+
+  .mutily_items {
+    margin-top: 24px;
+    width: 100%;
+
+    .wrapper_icon {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      svg {
+        margin-left: 12px;
+        margin-right: 12px;
+      }
+    }
+  }
 }

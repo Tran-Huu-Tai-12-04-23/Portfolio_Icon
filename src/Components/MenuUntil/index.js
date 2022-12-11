@@ -58,7 +58,7 @@ function MenuUntil({ state, valueState, children }) {
           icon={faArrowAltCircleRight}
         ></FontAwesomeIcon>
       </div>
-      {children}
+      {showMenuUtil ? children : <></>}
     </div>
   );
 }

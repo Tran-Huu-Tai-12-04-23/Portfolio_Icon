@@ -16,6 +16,8 @@ import { FcFullTrash } from "react-icons/fc";
 import { RxBorderStyle } from "react-icons/rx";
 import { FaBold } from "react-icons/fa";
 import { FiAlignCenter } from "react-icons/fi";
+import { TbLetterCaseUpper } from "react-icons/tb";
+import { RxWidth } from "react-icons/rx";
 
 import styles from "./EditorComponent.module.scss";
 import { colors, fontFamilys, borderStyles } from "./datas";
@@ -31,6 +33,7 @@ import {
   setFontWeight,
   setAlignCenter,
   setBorderSize,
+  setUppercase,
 } from "~/Store/reducer/actions";
 import { TipSuggest } from "~/Components";
 import { ContextShowEditorComponent } from "~/Store/Context";
@@ -221,7 +224,7 @@ function EditorComponent({ style }) {
           setEditorComponent(!showEditorComponent);
         }}
       >
-        <TipSuggest content='Color editor'>
+        <TipSuggest content='Close editor'>
           <TfiClose className={clsx(styles.icon_close)}></TfiClose>
         </TipSuggest>
       </div>
@@ -316,6 +319,7 @@ function EditorComponent({ style }) {
       <div
         className={clsx(styles.icon, styles.icon_font_weight)}
         onClick={(e) => {
+          e.stopPropagation();
           dispatch(setFontWeight(!state.font_weight));
         }}
       >
@@ -327,11 +331,25 @@ function EditorComponent({ style }) {
           marginRight: 12,
         }}
         onClick={(e) => {
+          e.stopPropagation();
           dispatch(setAlignCenter(!state.align_center));
         }}
       >
         <FiAlignCenter></FiAlignCenter>
       </div>
+      <div
+        className={clsx(styles.icon, styles.icon_upper_letter)}
+        style={{
+          marginRight: 12,
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+          dispatch(setUppercase(!state.upper_case_letter));
+        }}
+      >
+        <TbLetterCaseUpper></TbLetterCaseUpper>
+      </div>
+
       <div className={clsx(styles.icon, styles.icon_font_style)}>
         <BiFontFamily></BiFontFamily>
         <FontAwesomeIcon

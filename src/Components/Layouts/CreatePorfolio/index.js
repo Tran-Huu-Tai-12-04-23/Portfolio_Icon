@@ -119,12 +119,20 @@ function CreatePorfolio({ children }) {
                     onChange={(e) => {
                       setHeightContentChange(e.target.value);
                     }}
+                    onKeyPress={(e) => {
+                      if (e.which === 13) {
+                        setHeightContent((prev) => {
+                          return prev + parseInt(heightContentChange);
+                        });
+                        setHeightContentChange(0);
+                        setShowAddHeight(!showAddHeight);
+                      }
+                    }}
                     value={heightContentChange}
                     placeholder='Please enter number !!'
                   />
                   <button
                     onClick={(e) => {
-                      console.log(heightContent);
                       setHeightContent((prev) => {
                         return prev + parseInt(heightContentChange);
                       });

@@ -65,12 +65,6 @@ export const setHeight = (payload) => {
     payload,
   };
 };
-export const setWidth = (payload) => {
-  return {
-    type: contantActions.SET_WIDTH,
-    payload,
-  };
-};
 export const setColor = (payload) => {
   return {
     type: contantActions.SET_COLOR,
@@ -95,6 +89,13 @@ export const setFontFamily = (payload) => {
     payload,
   };
 };
+export const setUppercase = (payload) => {
+  return {
+    type: contantActions.SET_UPPER_CASE_LETTER,
+    payload,
+  };
+};
+
 export const setIdIemSlected = (payload) => {
   return {
     type: contantActions.SET_ID_ITEM,

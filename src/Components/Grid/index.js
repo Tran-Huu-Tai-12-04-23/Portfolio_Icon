@@ -14,6 +14,7 @@ function Grid(props) {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ["ITEM_IN_GRID", "Item"],
     drop(item, monitor) {
+      console.log(item);
       if (item.inGrid) {
         const delta = monitor.getDifferenceFromInitialOffset();
         let { left, top } = getOffetItemDrag(item.id);
@@ -21,7 +22,7 @@ function Grid(props) {
         left = Math.round(left + delta.x);
         top = Math.round(top + delta.y);
         moveItem(item.id, left, top, item.inGrid, item.type);
-      } else {
+      } else if (item.isMutily === false) {
         const wrapper = document.getElementById("content_porfolio");
         const valueScrollTop = wrapper.scrollTop;
         const delta = monitor.getClientOffset();
@@ -29,6 +30,22 @@ function Grid(props) {
         let top = delta.y - 116;
         console.log(`left: ${left} top: ${top}`);
         addItem(item.type, left, top + valueScrollTop, uuid());
+      } else {
+        const wrapper = document.getElementById("content_porfolio");
+        const valueScrollTop = wrapper.scrollTop;
+        const delta = monitor.getClientOffset();
+        let left = 0;
+        let right = 0;
+        let top = delta.y - 116;
+        console.log(`left: ${left} top: ${top}`);
+        addItemMutily(
+          item.type1,
+          item.type2,
+          left,
+          right,
+          top + valueScrollTop,
+          uuid()
+        );
       }
     },
     collect: (monitor) => ({
@@ -57,11 +74,31 @@ function Grid(props) {
             height,
             id,
             inGrid: true,
+            isMutily: false,
           },
         ];
       });
     }
   );
+
+  const addItemMutily = (type1, type2, left, right, top, id) => {
+    setItems((prev) => {
+      return [
+        ...prev,
+        {
+          type1,
+          type2,
+          right,
+          left,
+          top,
+          width: "100%",
+          id,
+          inGrid: true,
+          isMutily: true,
+        },
+      ];
+    });
+  };
 
   const getOffetItemDrag = useCallback(
     (id) => {
@@ -103,7 +140,7 @@ function Grid(props) {
         : "#fff"
     );
   }, [{ isActive, canDrop }]);
-
+  console.log(items);
   return (
     <>
       <div
@@ -116,20 +153,59 @@ function Grid(props) {
       >
         {items &&
           items.map((item, index) => {
-            return (
-              <Item
-                key={item.id}
-                id={item.id}
-                inGrid={true}
-                type={item.type}
-                stylesItem={{
-                  top: item.top,
-                  left: item.left,
-                  width: item.width,
-                  height: item.height,
-                }}
-              ></Item>
-            );
+            if (item.isMutily) {
+              return (
+                <div
+                  className={clsx(styles.wrapper_mutily_items)}
+                  key={item.id}
+                  id={item.id}
+                  style={{
+                    top: item.top,
+                    left: item.left,
+                    right: item.right,
+                    width: item.width,
+                    height: item.height,
+                  }}
+                >
+                  <Item
+                    inGrid={true}
+                    type={item.type1}
+                    stylesItem={{
+                      top: 0,
+                      left: item.left,
+                      right: "50%",
+                      width: item.width / 2,
+                    }}
+                  ></Item>
+                  <Item
+                    inGrid={true}
+                    type={item.type2}
+                    stylesItem={{
+                      top: 0,
+                      left: "50%",
+                      right: item.right,
+                      width: item.width / 2 - 12,
+                      height: "200px",
+                    }}
+                  ></Item>
+                </div>
+              );
+            } else {
+              return (
+                <Item
+                  key={item.id}
+                  id={item.id}
+                  inGrid={true}
+                  type={item.type}
+                  stylesItem={{
+                    top: item.top,
+                    left: item.left,
+                    width: item.width,
+                    height: item.height,
+                  }}
+                ></Item>
+              );
+            }
           })}
         {props.children}
       </div>

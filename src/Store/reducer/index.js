@@ -62,6 +62,36 @@ const reducer = (state, action) => {
         align_center: action.payload,
       };
     }
+    case contantActions.SET_UPPER_CASE_LETTER: {
+      return {
+        ...state,
+        upper_case_letter: action.payload,
+      };
+    }
+    case contantActions.SET_FULL_WIDTH: {
+      return {
+        ...state,
+        full_width: action.payload,
+      };
+    }
+    case contantActions.SET_PREV_LEFT: {
+      return {
+        ...state,
+        prev_left: action.payload,
+      };
+    }
+    case contantActions.SET_PREV_RIGHT: {
+      return {
+        ...state,
+        prev_right: action.payload,
+      };
+    }
+    case contantActions.SET_PREV_WIDTH: {
+      return {
+        ...state,
+        prev_width: action.payload,
+      };
+    }
     case contantActions.SET_ID_ITEM: {
       return {
         ...state,
