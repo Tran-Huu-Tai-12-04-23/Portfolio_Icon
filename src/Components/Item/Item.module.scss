@@ -27,9 +27,6 @@
   }
 }
 
-.box {
-  border: 1px solid #ccc;
-}
 .link {
   width: 100%;
   height: 100%;
@@ -93,6 +90,9 @@
     border-style: solid !important;
     border-width: 1px !important;
   }
+}
+.box {
+  border: 1px solid #ccc;
 }
 .icon {
   min-width: 90px;

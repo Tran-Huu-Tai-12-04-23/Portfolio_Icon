@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import clsx from "clsx";
 import { BsFillMenuButtonFill } from "react-icons/bs";
-import { TfiText } from "react-icons/tfi";
+import { TfiText, TfiImage } from "react-icons/tfi";
 import { BsBox, BsImage } from "react-icons/bs";
 import { AiOutlineAlignLeft } from "react-icons/ai";
 
@@ -221,6 +221,52 @@ function BoxMenu() {
                   fontSize: 16,
                 }}
               ></AiOutlineAlignLeft>
+            </div>
+          </TipSuggest>
+        </Item>
+        <Item
+          resizable={false}
+          id='item_div'
+          type1='img'
+          type2='input'
+          numberComponents={8}
+          isMulti='true'
+          draggable='true'
+          className={clsx(styles.item_button)}
+          icon
+          stylesItem={{
+            position: "unset",
+            border: "none",
+            backgroundColor: "var(--primary_color_component)",
+            textAlign: "center",
+          }}
+        >
+          <TipSuggest content='Layout about'>
+            <div className={clsx(styles.wrapper_icon)}>
+              <TfiImage
+                style={{
+                  fontWeight: 800,
+                  fontSize: 16,
+                }}
+              ></TfiImage>
+              <TfiImage
+                style={{
+                  fontWeight: 800,
+                  fontSize: 16,
+                }}
+              ></TfiImage>
+              <TfiImage
+                style={{
+                  fontWeight: 800,
+                  fontSize: 16,
+                }}
+              ></TfiImage>
+              <TfiImage
+                style={{
+                  fontWeight: 800,
+                  fontSize: 16,
+                }}
+              ></TfiImage>
             </div>
           </TipSuggest>
         </Item>

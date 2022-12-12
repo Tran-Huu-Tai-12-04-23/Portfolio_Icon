@@ -44,7 +44,7 @@ function CreatePorfolio({ children }) {
   };
 
   useEffect(() => {
-    setTransactionContent(widthMenu === "0" ? "9%" : "0");
+    setTransactionContent(widthMenu === "0" ? "11%" : "0");
   }, [widthMenu]);
 
   const handleGoToTop = (e) => {

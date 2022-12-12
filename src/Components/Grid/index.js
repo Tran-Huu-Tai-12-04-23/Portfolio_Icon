@@ -38,7 +38,6 @@ function Grid(props) {
         let right = 0;
         let top = delta.y - 116;
         console.log(`left: ${left} top: ${top}`);
-        console.log(item);
         addItemMulti(
           item.type1,
           item.type2,
@@ -194,7 +193,7 @@ function Grid(props) {
       >
         {items &&
           items.map((item, index) => {
-            if (item.isMulti && item.type3) {
+            if (item.isMulti) {
               return (
                 <ComponentLayouts key={index} item={item}></ComponentLayouts>
               );

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 import styles from "./Grid.module.scss";
 import { MultiItem, Item } from "~/Components";
+import { BiCloudSnow } from "react-icons/bi";
 
 function ComponentLayouts({ item }) {
   const [widthDisplay, setWidthDisplay] = useState();
@@ -17,6 +18,50 @@ function ComponentLayouts({ item }) {
     }
   });
 
+  const renderItem = () => {
+    const arr = [1, 2, 3, 4];
+    return arr.map((temp, index) => {
+      return (
+        <div
+          key={index}
+          style={{
+            width: "22%",
+            position: "unset",
+          }}
+        >
+          <Item
+            key={item.idItem1}
+            id={item.idItem1}
+            position='unset'
+            inGrid={true}
+            type={item.type1}
+            width={widthDisplay / 4}
+            height={(heightDisplay / 3.5) * 2}
+            draggable={false}
+            stylesItem={{
+              position: "unset",
+              maxWidth: "100%",
+            }}
+          ></Item>
+          <Item
+            key={item.idItem2}
+            id={item.idItem2}
+            position='unset'
+            inGrid={true}
+            width={widthDisplay / 4}
+            height={(heightDisplay * 1) / 3.5}
+            draggable={false}
+            type={item.type2}
+            stylesItem={{
+              position: "unset",
+              maxWidth: "100%",
+            }}
+          ></Item>
+        </div>
+      );
+    });
+  };
+
   const renderComponents = () => {
     if (item.numberComponents === 3) {
       return (
@@ -28,7 +73,7 @@ function ComponentLayouts({ item }) {
           className={clsx(styles.wrapper_multi_items)}
           key={item.id}
           stylesItem={{
-            top: item.top / 1.5,
+            top: item.top,
             left: item.left,
             right: item.right,
             height: heightDisplay,
@@ -99,7 +144,7 @@ function ComponentLayouts({ item }) {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            top: item.top / 1.5,
+            top: item.top,
             left: item.left,
             right: item.right,
             height: heightDisplay,
@@ -161,6 +206,28 @@ function ComponentLayouts({ item }) {
               margin: "12px",
             }}
           ></Item>
+        </MultiItem>
+      );
+    } else if (item.numberComponents === 8) {
+      return (
+        <MultiItem
+          isMulti={true}
+          inGrid={true}
+          top={item.top}
+          id={item.id}
+          className={clsx(styles.wrapper_multi_items)}
+          key={item.id}
+          stylesItem={{
+            display: "flex",
+            justifyContent: "space-around",
+            alignItems: "center",
+            top: item.top,
+            left: item.left,
+            right: item.right,
+            height: heightDisplay,
+          }}
+        >
+          {renderItem()}
         </MultiItem>
       );
     }

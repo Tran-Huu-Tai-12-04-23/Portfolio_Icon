@@ -274,8 +274,6 @@ function Item({
         itemSelected.parentElement.style.height = `${
           height + (changeHeight - height)
         }px`;
-      } else if (changeHeight < height) {
-        console.log(itemSelected.scrollHeight);
       }
     }
   });

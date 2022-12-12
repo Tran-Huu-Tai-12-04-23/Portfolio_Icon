@@ -88,7 +88,6 @@ function MultiItem({ stylesItem, id, top, children, inGrid, isMulti }) {
     }
   }, [state]);
 
-  console.log(stylesItem);
   return (
     <div
       id={id}
