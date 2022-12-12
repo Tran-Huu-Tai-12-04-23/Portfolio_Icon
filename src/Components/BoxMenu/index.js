@@ -140,13 +140,15 @@ function BoxMenu() {
           </Item>
         </TipSuggest>
       </div>
-      <div className={clsx(styles.mutily_items)}>
+      <div className={clsx(styles.multi_items)}>
         <Item
           resizable={false}
           id='item_div'
           type1='img'
           type2='input'
-          isMutily='true'
+          type3='input'
+          numberComponents={3}
+          isMulti='true'
           draggable='true'
           className={clsx(styles.item_button)}
           icon
@@ -159,6 +161,54 @@ function BoxMenu() {
         >
           <TipSuggest content='Layout about'>
             <div className={clsx(styles.wrapper_icon)}>
+              <BsImage
+                style={{
+                  fontWeight: 800,
+                  fontSize: 16,
+                }}
+              ></BsImage>
+              <AiOutlineAlignLeft
+                style={{
+                  fontWeight: 800,
+                  fontSize: 16,
+                }}
+              ></AiOutlineAlignLeft>
+            </div>
+          </TipSuggest>
+        </Item>
+        <Item
+          resizable={false}
+          id='item_div'
+          type1='img'
+          type2='input'
+          type3='img'
+          type4='input'
+          numberComponents={4}
+          isMulti='true'
+          draggable='true'
+          className={clsx(styles.item_button)}
+          icon
+          stylesItem={{
+            position: "unset",
+            border: "none",
+            backgroundColor: "var(--primary_color_component)",
+            textAlign: "center",
+          }}
+        >
+          <TipSuggest content='Layout about'>
+            <div className={clsx(styles.wrapper_icon)}>
+              <BsImage
+                style={{
+                  fontWeight: 800,
+                  fontSize: 16,
+                }}
+              ></BsImage>
+              <AiOutlineAlignLeft
+                style={{
+                  fontWeight: 800,
+                  fontSize: 16,
+                }}
+              ></AiOutlineAlignLeft>
               <BsImage
                 style={{
                   fontWeight: 800,

@@ -13,7 +13,7 @@ import { GoTextSize } from "react-icons/go";
 import { BiFontFamily, BiColorFill } from "react-icons/bi";
 import { AiOutlineBorder, AiOutlineFontColors } from "react-icons/ai";
 import { FcFullTrash } from "react-icons/fc";
-import { RxBorderStyle } from "react-icons/rx";
+import { RxBorderStyle, RxLineHeight } from "react-icons/rx";
 import { FaBold } from "react-icons/fa";
 import { FiAlignCenter } from "react-icons/fi";
 import { TbLetterCaseUpper } from "react-icons/tb";
@@ -34,6 +34,7 @@ import {
   setAlignCenter,
   setBorderSize,
   setUppercase,
+  setLineHeight,
 } from "~/Store/reducer/actions";
 import { TipSuggest } from "~/Components";
 import { ContextShowEditorComponent } from "~/Store/Context";
@@ -72,6 +73,24 @@ function EditorComponent({ style }) {
           onClick={(e) => {
             dispatch(setFontSize(`${size}px`));
             e.stopPropagation();
+          }}
+          data-font-size={size}
+        >
+          {size}
+        </li>
+      );
+    });
+  };
+
+  const renderLineHeights = () => {
+    const numberFontSize = Array.from(Array(41).keys());
+    return numberFontSize.map((size, index) => {
+      return (
+        <li
+          key={index}
+          onClick={(e) => {
+            e.stopPropagation();
+            dispatch(setLineHeight(`${size}px`));
           }}
           data-font-size={size}
         >
@@ -206,7 +225,7 @@ function EditorComponent({ style }) {
   const removeItemsIngrid = () => {
     setItems(() => {
       return items.filter((item) => {
-        return item.id !== state.id_item_slected;
+        return item.id !== state.id_item_selected;
       });
     });
   };
@@ -216,6 +235,9 @@ function EditorComponent({ style }) {
       className={clsx(styles.wrapper)}
       style={{
         display: style.display,
+      }}
+      onClick={(e) => {
+        e.stopPropagation();
       }}
     >
       <div
@@ -274,6 +296,16 @@ function EditorComponent({ style }) {
         ></FontAwesomeIcon>
         <ul className={clsx(styles.font_size_options)} id='font_size_options'>
           {renderFontSize()}
+        </ul>
+      </div>
+      <div className={clsx(styles.icon, styles.icon_font_size)}>
+        <RxLineHeight></RxLineHeight>
+        <FontAwesomeIcon
+          className={clsx(styles.icon__arrow_down)}
+          icon={faChevronDown}
+        ></FontAwesomeIcon>
+        <ul className={clsx(styles.font_size_options)} id='font_size_options'>
+          {renderLineHeights()}
         </ul>
       </div>
 

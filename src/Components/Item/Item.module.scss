@@ -1,9 +1,10 @@
+.wrapper_multi_items,
 .wrapper {
   position: absolute;
   width: 100%;
   height: 100%;
-  border: 1px solid transparent;
   font-size: 14px;
+  line-height: 16px;
   // z-index: 10000;
 }
 
@@ -81,6 +82,18 @@
 }
 
 // css when item have prop icon
+
+.wrapper {
+  border-style: solid;
+  border-color: transparent;
+  // border-width: 1px;
+
+  &:hover {
+    border-color: #0000ff !important;
+    border-style: solid !important;
+    border-width: 1px !important;
+  }
+}
 .icon {
   min-width: 90px;
   height: 40px;
@@ -93,19 +106,9 @@
   flex-wrap: wrap;
   cursor: grab;
   background-color: var(--primary_color_component);
+  border-style: none;
   svg {
     color: #fff;
-  }
-}
-
-.wrapper {
-  border-style: solid;
-  border-width: 1px;
-
-  &:hover {
-    border-color: #0000ff !important;
-    border-style: solid;
-    border-width: 1px;
   }
 }
 
@@ -194,4 +197,10 @@
   &:hover {
     background-color: var(--primary_color_component);
   }
+}
+
+.wrapper_multi_items {
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
 }

@@ -4,48 +4,62 @@ import { useDrop, useDragDropManager } from "react-dnd";
 import uuid from "react-uuid";
 
 import styles from "./Grid.module.scss";
-import { Item } from "~/Components";
+import { Item, MultiItem } from "~/Components";
 import { ContextItemsIngrid } from "~/Store/Context";
+import ComponentLayouts from "./ComponentLayouts";
 
 function Grid(props) {
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [backgroundColor, setBackgroundColor] = useState("#fff");
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
-    accept: ["ITEM_IN_GRID", "Item"],
+    accept: ["ITEM_IN_GRID", "Item", "MULTI_ITEM"],
     drop(item, monitor) {
-      console.log(item);
-      if (item.inGrid) {
+      if (item.inGrid && item.isMulti === false) {
         const delta = monitor.getDifferenceFromInitialOffset();
-        let { left, top } = getOffetItemDrag(item.id);
+        let { left, top } = getOffsetItemDrag(item.id, item.isMulti);
         console.log(`check left: ${left} top: ${top} `);
         left = Math.round(left + delta.x);
         top = Math.round(top + delta.y);
         moveItem(item.id, left, top, item.inGrid, item.type);
-      } else if (item.isMutily === false) {
-        const wrapper = document.getElementById("content_porfolio");
+      } else if (item.inGrid === false && item.isMulti === false) {
+        const wrapper = document.getElementById("content_portfolio");
         const valueScrollTop = wrapper.scrollTop;
         const delta = monitor.getClientOffset();
         let left = delta.x - 200;
         let top = delta.y - 116;
         console.log(`left: ${left} top: ${top}`);
         addItem(item.type, left, top + valueScrollTop, uuid());
-      } else {
-        const wrapper = document.getElementById("content_porfolio");
+      } else if (item.inGrid === false && item.isMulti) {
+        const wrapper = document.getElementById("content_portfolio");
         const valueScrollTop = wrapper.scrollTop;
         const delta = monitor.getClientOffset();
         let left = 0;
         let right = 0;
         let top = delta.y - 116;
         console.log(`left: ${left} top: ${top}`);
-        addItemMutily(
+        console.log(item);
+        addItemMulti(
           item.type1,
           item.type2,
+          item.type3,
+          item.type4,
           left,
           right,
           top + valueScrollTop,
-          uuid()
+          uuid(),
+          uuid(),
+          uuid(),
+          uuid(),
+          uuid(),
+          item.numberComponents
         );
+      } else {
+        const delta = monitor.getDifferenceFromInitialOffset();
+        let { top } = getOffsetItemDrag(item.id, item.isMulti);
+        console.log(`top: ${top} `);
+        top = Math.round(top + delta.y);
+        moveItemMulti(item.id, top, item.inGrid, item.isMulti);
       }
     },
     collect: (monitor) => ({
@@ -74,55 +88,82 @@ function Grid(props) {
             height,
             id,
             inGrid: true,
-            isMutily: false,
+            isMulti: false,
           },
         ];
       });
     }
   );
 
-  const addItemMutily = (type1, type2, left, right, top, id) => {
+  const addItemMulti = (
+    type1,
+    type2,
+    type3,
+    type4,
+    left,
+    right,
+    top,
+    id,
+    idItem1,
+    idItem2,
+    idItem3,
+    idItem4,
+    numberComponents
+  ) => {
     setItems((prev) => {
       return [
         ...prev,
         {
           type1,
           type2,
+          type3,
+          type4,
+          numberComponents,
+          idItem1,
+          idItem2,
+          idItem3,
+          idItem4,
           right,
           left,
           top,
           width: "100%",
           id,
           inGrid: true,
-          isMutily: true,
+          isMulti: true,
         },
       ];
     });
   };
 
-  const getOffetItemDrag = useCallback(
-    (id) => {
-      const item = document.getElementById(id).parentElement;
-      // console.log(item);
-      const left = item.offsetLeft;
-      const top = item.offsetTop;
+  const getOffsetItemDrag = useCallback(
+    (id, isMulti) => {
+      const item = document.getElementById(id);
+      let top, left;
+      if (isMulti === false) {
+        left = item.parentElement.offsetLeft;
+        top = item.parentElement.offsetTop;
+      } else {
+        left = item.offsetLeft;
+        top = item.offsetTop;
+      }
       return { left, top };
     },
     [isOver]
   );
-  const moveItem = useCallback(
-    (id, left, top, inGrid, type) => {
-      console.log(
-        `left: ${left} top: ${top}  inGrid: ${inGrid} id: ${id} type: ${type}`
-      );
+  const moveItem = useCallback((id, left, top, inGrid, type) => {
+    console.log(
+      `left: ${left} top: ${top}  inGrid: ${inGrid} id: ${id} type: ${type}`
+    );
 
-      const item = document.getElementById(id).parentElement;
-      item.style.left = `${left}px`;
-      item.style.top = `${top}px`;
-      console.log(item);
-    },
-    [isOver]
-  );
+    const item = document.getElementById(id).parentElement;
+    item.style.left = `${left}px`;
+    item.style.top = `${top}px`;
+  });
+  const moveItemMulti = useCallback((id, top, inGrid, isMulti) => {
+    console.log(`top: ${top}  inGrid: ${inGrid} id: ${id} isMulti: ${isMulti}`);
+    const item = document.getElementById(id);
+    item.style.top = `${top}px`;
+  });
 
   let isDragging = useDragDropManager().monitor.isDragging();
   useEffect(() => {
@@ -140,7 +181,7 @@ function Grid(props) {
         : "#fff"
     );
   }, [{ isActive, canDrop }]);
-  console.log(items);
+
   return (
     <>
       <div
@@ -153,42 +194,9 @@ function Grid(props) {
       >
         {items &&
           items.map((item, index) => {
-            if (item.isMutily) {
+            if (item.isMulti && item.type3) {
               return (
-                <div
-                  className={clsx(styles.wrapper_mutily_items)}
-                  key={item.id}
-                  id={item.id}
-                  style={{
-                    top: item.top,
-                    left: item.left,
-                    right: item.right,
-                    width: item.width,
-                    height: item.height,
-                  }}
-                >
-                  <Item
-                    inGrid={true}
-                    type={item.type1}
-                    stylesItem={{
-                      top: 0,
-                      left: item.left,
-                      right: "50%",
-                      width: item.width / 2,
-                    }}
-                  ></Item>
-                  <Item
-                    inGrid={true}
-                    type={item.type2}
-                    stylesItem={{
-                      top: 0,
-                      left: "50%",
-                      right: item.right,
-                      width: item.width / 2 - 12,
-                      height: "200px",
-                    }}
-                  ></Item>
-                </div>
+                <ComponentLayouts key={index} item={item}></ComponentLayouts>
               );
             } else {
               return (

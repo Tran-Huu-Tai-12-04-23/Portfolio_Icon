@@ -14,9 +14,8 @@ import {
 
 function CreatePorfolio({ children }) {
   const [items, setItems] = useState([]);
-  const [transactionContent, settransactionContent] = useState("0");
-  const [widthMenu, setWidthMenu] = useState("18%");
-  const [showScroll, setShowScroll] = useState(false);
+  const [transactionContent, setTransactionContent] = useState("0");
+  const [widthMenu, setWidthMenu] = useState("22%");
   const [goToTop, setGoToTop] = useState(false);
   const [showEditorComponent, setEditorComponent] = useState(false);
   const [showAddHeight, setShowAddHeight] = useState(false);
@@ -24,7 +23,7 @@ function CreatePorfolio({ children }) {
   const [heightContentChange, setHeightContentChange] = useState(0);
 
   useEffect(() => {
-    const content = document.getElementById("content_porfolio");
+    const content = document.getElementById("content_portfolio");
     if (content) {
       setHeightContent(content.offsetHeight);
     }
@@ -40,21 +39,16 @@ function CreatePorfolio({ children }) {
     [heightContent]
   );
 
-  const hanleShowScroll = (e) => {
-    if (e.currentTarget.scrollTop === 0) {
-      setShowScroll(false);
-    } else {
-      setShowScroll(true);
-    }
+  const handleShowScroll = (e) => {
     setGoToTop(e.currentTarget.scrollTop > 200 ? true : false);
   };
 
   useEffect(() => {
-    settransactionContent(widthMenu === "0" ? "9%" : "0");
+    setTransactionContent(widthMenu === "0" ? "9%" : "0");
   }, [widthMenu]);
 
-  const hanleGoToTop = (e) => {
-    const wrapperContentTemplate = document.getElementById("content_porfolio");
+  const handleGoToTop = (e) => {
+    const wrapperContentTemplate = document.getElementById("content_portfolio");
     wrapperContentTemplate.scrollTop = 0;
   };
 
@@ -73,15 +67,13 @@ function CreatePorfolio({ children }) {
           <Header />
           <div className={clsx(styles.content)}>
             <div
-              id={"content_porfolio"}
-              className={clsx(styles.wrapper_template, {
-                [styles.show_scroll]: showScroll,
-              })}
+              id={"content_portfolio"}
+              className={clsx(styles.wrapper_template)}
               style={{
-                width: "80%",
+                width: "76%",
                 transform: `translateX(${transactionContent})`,
               }}
-              onScroll={hanleShowScroll}
+              onScroll={handleShowScroll}
             >
               <div
                 className={clsx(styles.wrapper_template_content)}
@@ -150,7 +142,7 @@ function CreatePorfolio({ children }) {
             ></EditorComponent>
             <Trash id={"trash"}></Trash>
             <MdKeyboardArrowUp
-              onClick={hanleGoToTop}
+              onClick={handleGoToTop}
               className={clsx(styles.go_to_top)}
               style={{
                 display: goToTop ? "block" : "none",

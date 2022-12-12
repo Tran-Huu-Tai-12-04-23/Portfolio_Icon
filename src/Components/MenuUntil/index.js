@@ -20,7 +20,7 @@ function MenuUntil({ state, valueState, children }) {
     if (show === true) {
       state("0");
     } else {
-      state("18%");
+      state("22%");
     }
   };
 

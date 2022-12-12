@@ -11,9 +11,10 @@ const initState = {
   color: undefined,
   font_family: undefined,
   font_size: undefined,
+  line_height: undefined,
   font_weight: false,
   align_center: false,
   upper_case_letter: false,
-  id_item_slected: "",
+  id_item_selected: "",
 };
 export default initState;

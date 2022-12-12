@@ -11,7 +11,7 @@ import { ContextItemsIngrid } from "~/Store/Context";
 function Trash({ id }) {
   //item in grid
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
-    accept: "ITEM_IN_GRID",
+    accept: ["ITEM_IN_GRID", "MULTI_ITEM"],
     drop(item, monitor) {
       if (item.inGrid) {
         setIdRemoved(item.id);

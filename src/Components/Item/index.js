@@ -10,16 +10,9 @@ import { Overlay, TipSuggest } from "~/Components";
 import { ContextReducer } from "~/Store/Context";
 import {
   setBackgroundColor,
-  setTop,
-  setLeft,
   setBorderColor,
-  setMargin,
-  setPadding,
-  setHeight,
-  setWidth,
   setColor,
-  setFont,
-  setIdIemSlected,
+  setIdItemSelected,
   setFontSize,
   setBorderRadius,
   setFontFamily,
@@ -27,6 +20,7 @@ import {
   setAlignCenter,
   setBorderSize,
   setUppercase,
+  setLineHeight,
 } from "~/Store/reducer/actions";
 import { ContextShowEditorComponent } from "~/Store/Context";
 import { BiCloudSnow } from "react-icons/bi";
@@ -35,14 +29,21 @@ function Item({
   type,
   id,
   inGrid = false,
-  isMutily = false,
+  isMulti = false,
   type1,
   type2,
+  type3,
+  type4,
+  numberComponents,
   stylesItem,
+  fontSize = "14px",
+  heading = false,
   icon,
   width = 200,
   height = 50,
   resizable = true,
+  draggable = true,
+  position = "absolute",
   href = "huutai.com",
   children,
 }) {
@@ -52,13 +53,25 @@ function Item({
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: inGrid ? "ITEM_IN_GRID" : "Item",
-      item: { id, left, top, inGrid, type, isMutily, type1, type2 },
+      item: {
+        id,
+        left,
+        top,
+        inGrid,
+        type,
+        isMulti,
+        type1,
+        type2,
+        type3,
+        type4,
+        numberComponents,
+      },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
         opacity: monitor.isDragging() ? 0.4 : 1,
       }),
     }),
-    [id, left, top, inGrid, isMutily]
+    [id, left, top, inGrid, isMulti]
   );
 
   const [value, setValue] = useState("Enter text !!!");
@@ -116,7 +129,7 @@ function Item({
     }
   };
 
-  const hanleShowInputImg = (e) => {
+  const handleShowInputImg = (e) => {
     const reader = new FileReader();
     var url;
     reader.onload = () => {
@@ -129,7 +142,7 @@ function Item({
     reader.readAsDataURL(e.target.files[0]);
   };
 
-  const loadStyleComponentInInitstate = (item) => {
+  const loadStyleComponentInInitState = (item) => {
     dispatch(setColor(item.style.color));
     dispatch(setBackgroundColor(item.style.backgroundColor));
     dispatch(setFontSize(item.style.fontSize));
@@ -143,20 +156,21 @@ function Item({
     dispatch(setBorderSize(item.style.borderWidth));
     const upperCase = item.style.textTransform === "uppercase" ? true : false;
     dispatch(setUppercase(upperCase));
+    dispatch(setLineHeight(item.style.lineHeight));
   };
 
-  const hanleEditorComponent = (e) => {
+  const handleEditorComponent = (e) => {
     e.stopPropagation();
-    loadStyleComponentInInitstate(e.target);
-    dispatch(setIdIemSlected(e.target.id));
+    loadStyleComponentInInitState(e.target);
+    dispatch(setIdItemSelected(e.target.id));
     setEditorComponent(!showEditorComponent);
   };
 
-  const hanleSelectItemToEdit = (e) => {
+  const handleSelectItemToEdit = (e) => {
     e.stopPropagation();
-    loadStyleComponentInInitstate(e.target);
-    dispatch(setIdIemSlected(e.target.id));
-    hanleEditorComponent(e);
+    loadStyleComponentInInitState(e.target);
+    dispatch(setIdItemSelected(e.target.id));
+    handleEditorComponent(e);
   };
 
   const handleEditLink = (e) => {
@@ -164,7 +178,7 @@ function Item({
     setEditorComponent(true);
     setShowModal(!showModal);
     dispatch(
-      setIdIemSlected(
+      setIdItemSelected(
         e.target.id ? e.target.id : e.target.parentElement.parentElement.id
       )
     );
@@ -207,34 +221,37 @@ function Item({
       propsTypeLink.href = href;
       propsTypeLink.target = "_blank";
     }
+    if (heading) {
+      setValue("Enter title");
+    }
   }, [linkImg]);
 
-  //examaple
   //set style for component
   useEffect(() => {
-    const itemSlected = document.getElementById(state.id_item_slected);
-    if (itemSlected) {
-      itemSlected.style.color = state.color;
-      itemSlected.style.backgroundColor = state.background_color;
-      itemSlected.style.fontSize = state.font_size;
-      itemSlected.style.fontFamily = state.font_family;
-      itemSlected.style.borderRadius = state.border_radius;
-      itemSlected.style.borderStyle = state.border_style;
-      itemSlected.style.borderColor = state.border_color;
-      itemSlected.style.fontWeight = state.font_weight ? "bold" : "400";
+    const itemSelected = document.getElementById(state.id_item_selected);
+    if (itemSelected) {
+      itemSelected.style.color = state.color;
+      itemSelected.style.backgroundColor = state.background_color;
+      itemSelected.style.fontSize = state.font_size;
+      itemSelected.style.fontFamily = state.font_family;
+      itemSelected.style.borderRadius = state.border_radius;
+      itemSelected.style.borderStyle = state.border_style;
+      itemSelected.style.borderColor = state.border_color;
+      itemSelected.style.fontWeight = state.font_weight ? "bold" : "400";
       // set center text in component
-      itemSlected.style.textAlign = state.align_center ? "center" : "";
-      itemSlected.style.display = state.align_center ? "flex" : "";
-      itemSlected.style.justifyContent = state.align_center ? "center" : "";
+      itemSelected.style.textAlign = state.align_center ? "center" : "";
+      itemSelected.style.display = state.align_center ? "flex" : "";
+      itemSelected.style.justifyContent = state.align_center ? "center" : "";
       //end
-      itemSlected.style.borderWidth = state.border_size;
-      itemSlected.style.textTransform = state.upper_case_letter
+      itemSelected.style.borderWidth = state.border_size;
+      itemSelected.style.textTransform = state.upper_case_letter
         ? "uppercase"
         : "";
+      itemSelected.style.lineHeight = state.line_height;
     }
   }, [state]);
 
-  //hanle hidden and show edit component when i click display
+  //handle hidden and show edit component when i click display
   useEffect(() => {
     const handleShowEditorComponent = () => {
       setEditorComponent(false);
@@ -248,17 +265,20 @@ function Item({
 
   // auto set height when text full width
   useEffect(() => {
-    const itemSelected = document.getElementById(state.id_item_slected);
+    const itemSelected = document.getElementById(state.id_item_selected);
     if (itemSelected) {
+      console.log(itemSelected.scrollHeight);
       const height = itemSelected.parentElement.offsetHeight + 2;
       const changeHeight = itemSelected.scrollHeight;
       if (changeHeight > height) {
         itemSelected.parentElement.style.height = `${
           height + (changeHeight - height)
         }px`;
+      } else if (changeHeight < height) {
+        console.log(itemSelected.scrollHeight);
       }
     }
-  }, [state]);
+  });
 
   return (
     <>
@@ -270,13 +290,13 @@ function Item({
         >
           <>
             <Type
-              ref={drag}
               id={id}
-              onClick={hanleSelectItemToEdit}
+              ref={draggable ? drag : null}
+              onClick={handleSelectItemToEdit}
               className={classNamesItem}
               src={type === "img" ? linkImg : ""}
               value={type !== "img" ? value : undefined}
-              onChange={type === "img" ? hanleShowInputImg : handleChangeValue}
+              onChange={type === "img" ? handleShowInputImg : handleChangeValue}
               href={linkItemTypeA ? linkItemTypeA : ""}
               target={linkItemTypeA ? "_blank" : null}
               onBlur={handleBlurInput}
@@ -284,6 +304,9 @@ function Item({
                 opacity: isDragging ? "0.5" : "1",
                 textAlign: type === "button" ? "center" : "",
                 backgroundColor: type === "a" ? "#1E90FF" : "#fff",
+                fontSize: fontSize,
+                padding: type !== "img" ? "12px 0" : "",
+                position: position,
               }}
               type={type === "img" ? "file" : "text"}
               accept={type !== "img" ? null : "image/*"}
