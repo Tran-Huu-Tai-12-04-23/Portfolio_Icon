@@ -7,7 +7,7 @@ import { RiEdit2Fill } from "react-icons/ri";
 import "./resizeable.css";
 import styles from "./Item.module.scss";
 import { Overlay, TipSuggest } from "~/Components";
-import { ContextReducer } from "~/Store/Context";
+import { ContextReducer, ContextItemsIngrid } from "~/Store/Context";
 import {
   setBackgroundColor,
   setBorderColor,
@@ -47,6 +47,8 @@ function Item({
   href = "huutai.com",
   children,
 }) {
+  const [items, setItems] = useContext(ContextItemsIngrid);
+
   var left = stylesItem ? stylesItem.left : 0;
   var top = stylesItem ? stylesItem.top : 0;
 
@@ -65,6 +67,7 @@ function Item({
         type3,
         type4,
         numberComponents,
+        items,
       },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
@@ -76,6 +79,7 @@ function Item({
 
   const [value, setValue] = useState("Enter text !!!");
   const [linkItemTypeA, setLinkItemTypeA] = useState("");
+  const [nameItemLink, setNameItemLink] = useState("");
   const [Type, setType] = useState("div");
   const [linkImg, setLinkImg] = useState("");
   const [state, dispatch] = useContext(ContextReducer);
@@ -257,7 +261,7 @@ function Item({
       setEditorComponent(false);
     };
     window.addEventListener("click", handleShowEditorComponent);
-
+    dispatch(setIdItemSelected(""));
     return () => {
       window.removeEventListener("click", handleShowEditorComponent);
     };
@@ -267,7 +271,6 @@ function Item({
   useEffect(() => {
     const itemSelected = document.getElementById(state.id_item_selected);
     if (itemSelected) {
-      console.log(itemSelected.scrollHeight);
       const height = itemSelected.parentElement.offsetHeight + 2;
       const changeHeight = itemSelected.scrollHeight;
       if (changeHeight > height) {
@@ -309,7 +312,7 @@ function Item({
               type={type === "img" ? "file" : "text"}
               accept={type !== "img" ? null : "image/*"}
             >
-              {linkItemTypeA ? linkItemTypeA : null}
+              {nameItemLink ? nameItemLink : null}
             </Type>
             {type === "a" ? (
               <div
@@ -342,10 +345,29 @@ function Item({
       {type === "a" && inGrid && showModal ? (
         <div className={clsx(styles.modal)}>
           <div className={clsx(styles.modal_enter_link)}>
-            <h5>Enter link</h5>
+            <h5>Add link</h5>
+            <span>Name</span>
             <input
               type='link'
-              placeholder='Enter link .'
+              placeholder='Name'
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              value={nameItemLink}
+              onChange={(e) => {
+                setEditorComponent(true);
+                setNameItemLink(e.target.value);
+              }}
+              onKeyPress={(e) => {
+                if (e.which === 13) {
+                  setShowModal(!showModal);
+                }
+              }}
+            ></input>
+            <span>Link</span>
+            <input
+              type='link'
+              placeholder='Link .'
               onClick={(e) => {
                 e.stopPropagation();
               }}

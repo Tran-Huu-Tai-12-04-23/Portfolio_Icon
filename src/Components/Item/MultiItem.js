@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDrag } from "react-dnd";
 import clsx from "clsx";
 
@@ -17,12 +17,21 @@ import {
   setBorderSize,
   setUppercase,
 } from "~/Store/reducer/actions";
+import { ContextItemsIngrid } from "~/Store/Context";
 
 function MultiItem({ stylesItem, id, top, children, inGrid, isMulti }) {
+  const [items, setItems] = useContext(ContextItemsIngrid);
+  const [heightWrapperContent, setHeightWrapperContent] = useState(200);
+  const [topWrapperContent, setTopWrapperContent] = useState(top);
+  const [state, dispatch] = useContext(ContextReducer);
+  const [showEditorComponent, setEditorComponent] = useContext(
+    ContextShowEditorComponent
+  );
+
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: "MULTI_ITEM",
-      item: { id, top, inGrid, isMulti },
+      item: { id, top, inGrid, isMulti, items },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
         opacity: monitor.isDragging() ? 0.4 : 1,
@@ -31,16 +40,11 @@ function MultiItem({ stylesItem, id, top, children, inGrid, isMulti }) {
     [id, top, inGrid, isMulti]
   );
 
-  const [state, dispatch] = useContext(ContextReducer);
-  const [showEditorComponent, setEditorComponent] = useContext(
-    ContextShowEditorComponent
-  );
-
   const handleSelectItemToEdit = (e) => {
     e.stopPropagation();
     loadStyleComponentInInitState(e.target);
     dispatch(setIdItemSelected(e.target.id));
-    handleEditorComponent(e);
+    setEditorComponent(!showEditorComponent);
   };
   const loadStyleComponentInInitState = (item) => {
     dispatch(setColor(item.style.color));
@@ -56,12 +60,6 @@ function MultiItem({ stylesItem, id, top, children, inGrid, isMulti }) {
     dispatch(setBorderSize(item.style.borderWidth));
     const upperCase = item.style.textTransform === "uppercase" ? true : false;
     dispatch(setUppercase(upperCase));
-  };
-  const handleEditorComponent = (e) => {
-    e.stopPropagation();
-    loadStyleComponentInInitState(e.target);
-    dispatch(setIdItemSelected(e.target.id));
-    setEditorComponent(!showEditorComponent);
   };
 
   //set style for component
@@ -88,6 +86,34 @@ function MultiItem({ stylesItem, id, top, children, inGrid, isMulti }) {
     }
   }, [state]);
 
+  //set top again
+  useEffect(() => {
+    setTopWrapperContent(top);
+  }, [top]);
+
+  const mouseDown = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    let prevY = e.clientY;
+    let changeY;
+    let heightChange;
+    const mouseMove = (e) => {
+      // setHeightWrapperContent((prev) => {
+      //   return prev + e.clientY - prev;
+      // });
+      console.log("checl" + e.clientY);
+      setTopWrapperContent(e.clientY);
+    };
+
+    const mouseUp = (e) => {
+      window.removeEventListener("mousemove", mouseMove);
+      window.removeEventListener("mouseup", mouseUp);
+    };
+
+    window.addEventListener("mousemove", mouseMove);
+    window.addEventListener("mouseup", mouseUp);
+  };
+
   return (
     <div
       id={id}
@@ -96,8 +122,18 @@ function MultiItem({ stylesItem, id, top, children, inGrid, isMulti }) {
       className={clsx(styles.wrapper_multi_items)}
       style={{
         ...stylesItem,
+        height: heightWrapperContent,
+        top: topWrapperContent,
       }}
     >
+      <span
+        className={clsx(styles.add_height_top)}
+        onMouseDown={mouseDown}
+      ></span>
+      <span
+        onMouseDown={mouseDown}
+        className={clsx(styles.add_height_bottom)}
+      ></span>
       {children}
     </div>
   );

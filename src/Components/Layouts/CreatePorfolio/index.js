@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import clsx from "clsx";
 import styles from "./CreatePorfolio.module.scss";
 import { MdKeyboardArrowUp } from "react-icons/md";
@@ -10,6 +10,7 @@ import { EditorComponent, Trash, TipSuggest } from "~/Components";
 import {
   ContextShowEditorComponent,
   ContextItemsIngrid,
+  ElementContentPortfolio,
 } from "~/Store/Context";
 
 function CreatePorfolio({ children }) {
@@ -21,23 +22,23 @@ function CreatePorfolio({ children }) {
   const [showAddHeight, setShowAddHeight] = useState(false);
   const [heightContent, setHeightContent] = useState(0);
   const [heightContentChange, setHeightContentChange] = useState(0);
+  const [showTrash, setShowTrash] = useState(false);
 
+  const contentPortfolio = useRef();
+  const wrapperTemplateContent = useRef();
+
+  //get height element id content_portfolio
   useEffect(() => {
-    const content = document.getElementById("content_portfolio");
-    if (content) {
-      setHeightContent(content.offsetHeight);
+    if (contentPortfolio.current) {
+      setHeightContent(contentPortfolio.current.offsetHeight);
     }
   }, []);
 
-  useEffect(
-    useCallback(() => {
-      const content = document.getElementById("wrapper_template_content");
-      if (content) {
-        content.style.height = `${heightContent}px`;
-      }
-    }),
-    [heightContent]
-  );
+  useEffect(() => {
+    if (wrapperTemplateContent.current) {
+      wrapperTemplateContent.current.style.height = `${heightContent}px`;
+    }
+  }, [heightContent]);
 
   const handleShowScroll = (e) => {
     setGoToTop(e.currentTarget.scrollTop > 200 ? true : false);
@@ -48,8 +49,9 @@ function CreatePorfolio({ children }) {
   }, [widthMenu]);
 
   const handleGoToTop = (e) => {
-    const wrapperContentTemplate = document.getElementById("content_portfolio");
-    wrapperContentTemplate.scrollTop = 0;
+    if (contentPortfolio.current) {
+      contentPortfolio.current.scrollTop = 0;
+    }
   };
 
   useEffect(() => {
@@ -67,6 +69,7 @@ function CreatePorfolio({ children }) {
           <Header />
           <div className={clsx(styles.content)}>
             <div
+              ref={contentPortfolio}
               id={"content_portfolio"}
               className={clsx(styles.wrapper_template)}
               style={{
@@ -76,10 +79,15 @@ function CreatePorfolio({ children }) {
               onScroll={handleShowScroll}
             >
               <div
+                ref={wrapperTemplateContent}
                 className={clsx(styles.wrapper_template_content)}
                 id='wrapper_template_content'
               >
-                {children}
+                <ElementContentPortfolio.Provider
+                  value={[contentPortfolio, setShowTrash]}
+                >
+                  {children}
+                </ElementContentPortfolio.Provider>
                 {/* <Grid space={2} gap='12px' backgroundColor='#ccc'></Grid> */}
               </div>
             </div>
@@ -140,7 +148,9 @@ function CreatePorfolio({ children }) {
             <EditorComponent
               style={{ display: showEditorComponent ? "flex" : "none" }}
             ></EditorComponent>
-            <Trash id={"trash"}></Trash>
+
+            <Trash display={showTrash ? "flex" : "none"} id={"trash"}></Trash>
+
             <MdKeyboardArrowUp
               onClick={handleGoToTop}
               className={clsx(styles.go_to_top)}

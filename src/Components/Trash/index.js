@@ -8,7 +8,7 @@ import { FcEmptyTrash } from "react-icons/fc";
 import styles from "./Trash.module.scss";
 import { ContextItemsIngrid } from "~/Store/Context";
 
-function Trash({ id }) {
+function Trash({ id, display }) {
   //item in grid
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ["ITEM_IN_GRID", "MULTI_ITEM"],
@@ -32,13 +32,13 @@ function Trash({ id }) {
     });
     setItems(newItems);
   }, [idRemoved]);
-
   return (
     <div
       id={id}
       ref={drop}
       style={{
         backgroundColor: isOver ? "red" : "#3366cc",
+        display: display,
       }}
       className={clsx(styles.wrapper)}
     >

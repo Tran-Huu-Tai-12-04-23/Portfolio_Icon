@@ -5,46 +5,39 @@ import uuid from "react-uuid";
 
 import styles from "./Grid.module.scss";
 import { Item, MultiItem } from "~/Components";
-import { ContextItemsIngrid } from "~/Store/Context";
-import ComponentLayouts from "./ComponentLayouts";
+import { ContextItemsIngrid, ElementContentPortfolio } from "~/Store/Context";
+import ComponentLayouts from "../Item/ComponentLayouts";
 
 function Grid(props) {
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [backgroundColor, setBackgroundColor] = useState("#fff");
 
+  const [contentPortfolio, setShowTrash] = useContext(ElementContentPortfolio);
+
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ["ITEM_IN_GRID", "Item", "MULTI_ITEM"],
     drop(item, monitor) {
-      if (item.inGrid && item.isMulti === false) {
+      if (item.inGrid) {
         const delta = monitor.getDifferenceFromInitialOffset();
-        let { left, top } = getOffsetItemDrag(item.id, item.isMulti);
+        const left = Math.round(item.left + delta.x);
+        const top = Math.round(item.top + delta.y);
         console.log(`check left: ${left} top: ${top} `);
-        left = Math.round(left + delta.x);
-        top = Math.round(top + delta.y);
-        moveItem(item.id, left, top, item.inGrid, item.type);
+        moveItem(item.id, left, top, item.inGrid, item.items);
       } else if (item.inGrid === false && item.isMulti === false) {
-        const wrapper = document.getElementById("content_portfolio");
-        const valueScrollTop = wrapper.scrollTop;
+        const valueScrollTop = contentPortfolio.current.scrollTop;
         const delta = monitor.getClientOffset();
         let left = delta.x - 200;
         let top = delta.y - 116;
-        console.log(`left: ${left} top: ${top}`);
         addItem(item.type, left, top + valueScrollTop, uuid());
       } else if (item.inGrid === false && item.isMulti) {
-        const wrapper = document.getElementById("content_portfolio");
-        const valueScrollTop = wrapper.scrollTop;
+        const valueScrollTop = contentPortfolio.current.scrollTop;
         const delta = monitor.getClientOffset();
-        let left = 0;
-        let right = 0;
         let top = delta.y - 116;
-        console.log(`left: ${left} top: ${top}`);
         addItemMulti(
           item.type1,
           item.type2,
           item.type3,
           item.type4,
-          left,
-          right,
           top + valueScrollTop,
           uuid(),
           uuid(),
@@ -53,12 +46,6 @@ function Grid(props) {
           uuid(),
           item.numberComponents
         );
-      } else {
-        const delta = monitor.getDifferenceFromInitialOffset();
-        let { top } = getOffsetItemDrag(item.id, item.isMulti);
-        console.log(`top: ${top} `);
-        top = Math.round(top + delta.y);
-        moveItemMulti(item.id, top, item.inGrid, item.isMulti);
       }
     },
     collect: (monitor) => ({
@@ -67,40 +54,35 @@ function Grid(props) {
     }),
   }));
 
-  const addItem = useCallback(
-    (
-      type,
-      left = "200px",
-      top = "100px",
-      id,
-      width = "200px",
-      height = "100px"
-    ) => {
-      setItems((prev) => {
-        return [
-          ...prev,
-          {
-            type,
-            left,
-            top,
-            width,
-            height,
-            id,
-            inGrid: true,
-            isMulti: false,
-          },
-        ];
-      });
-    }
-  );
-
+  const addItem = (
+    type,
+    left = "200px",
+    top = "100px",
+    id,
+    width = "200px",
+    height = "100px"
+  ) => {
+    setItems((prev) => {
+      return [
+        ...prev,
+        {
+          type,
+          left,
+          top,
+          width,
+          height,
+          id,
+          inGrid: true,
+          isMulti: false,
+        },
+      ];
+    });
+  };
   const addItemMulti = (
     type1,
     type2,
     type3,
     type4,
-    left,
-    right,
     top,
     id,
     idItem1,
@@ -122,8 +104,8 @@ function Grid(props) {
           idItem2,
           idItem3,
           idItem4,
-          right,
-          left,
+          right: 0,
+          left: 0,
           top,
           width: "100%",
           id,
@@ -134,43 +116,28 @@ function Grid(props) {
     });
   };
 
-  const getOffsetItemDrag = useCallback(
-    (id, isMulti) => {
-      const item = document.getElementById(id);
-      let top, left;
-      if (isMulti === false) {
-        left = item.parentElement.offsetLeft;
-        top = item.parentElement.offsetTop;
-      } else {
-        left = item.offsetLeft;
-        top = item.offsetTop;
+  const moveItem = (id, left, top, inGrid, items) => {
+    items.map((item) => {
+      if (item.id === id) {
+        console.log(item);
+        console.log(`left: ${left} top: ${top}  inGrid: ${inGrid} id: ${id} `);
+        item.top = top;
+        if (left) {
+          item.left = left;
+        }
+        console.log(item);
       }
-      return { left, top };
-    },
-    [isOver]
-  );
-  const moveItem = useCallback((id, left, top, inGrid, type) => {
-    console.log(
-      `left: ${left} top: ${top}  inGrid: ${inGrid} id: ${id} type: ${type}`
-    );
+    });
+  };
 
-    const item = document.getElementById(id).parentElement;
-    item.style.left = `${left}px`;
-    item.style.top = `${top}px`;
-  });
-  const moveItemMulti = useCallback((id, top, inGrid, isMulti) => {
-    console.log(`top: ${top}  inGrid: ${inGrid} id: ${id} isMulti: ${isMulti}`);
-    const item = document.getElementById(id);
-    item.style.top = `${top}px`;
-  });
-
+  //show, hidden trash
   let isDragging = useDragDropManager().monitor.isDragging();
   useEffect(() => {
-    const trash = document.getElementById("trash");
-    trash.style.display = isDragging ? "flex" : "none";
-  }, [useDragDropManager().monitor.isDragging()]);
+    setShowTrash(isDragging ? true : false);
+  }, [isDragging]);
 
   const isActive = canDrop && isOver;
+  //set style when drop
   useEffect(() => {
     setBackgroundColor(
       isActive

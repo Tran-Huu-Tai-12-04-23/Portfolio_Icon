@@ -1,21 +1,27 @@
 import clsx from "clsx";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 
-import styles from "./Grid.module.scss";
+import styles from "./Item.module.scss";
 import { MultiItem, Item } from "~/Components";
-import { BiCloudSnow } from "react-icons/bi";
+import { ElementContentPortfolio } from "~/Store/Context";
 
-function ComponentLayouts({ item }) {
-  const [widthDisplay, setWidthDisplay] = useState();
-  const [heightDisplay, setHeightDisplay] = useState();
+function ComponentLayouts({ item, children }) {
+  const [widthDisplayContent, setWidthDisplayContent] = useState();
+  const [heightDisplayContent, setHeightDisplayContent] = useState();
+
+  const [contentPortfolio, setShowTrash] = useContext(ElementContentPortfolio);
 
   //get height and width of wrapper content
   useEffect(() => {
-    const wrapper = document.getElementById("content_portfolio");
-    if (wrapper) {
-      setWidthDisplay(wrapper.offsetWidth + 1000);
-      setHeightDisplay(wrapper.offsetHeight * 0.4);
+    if (contentPortfolio.current) {
+      setWidthDisplayContent(contentPortfolio.current.offsetWidth + 1000);
+      setHeightDisplayContent(contentPortfolio.current.offsetHeight * 0.4);
     }
+  });
+
+  useEffect(() => {
+    const itemWrapperComponent = document.getElementById(item.id);
+    setHeightDisplayContent(itemWrapperComponent.offsetHeight);
   });
 
   const renderItem = () => {
@@ -27,6 +33,7 @@ function ComponentLayouts({ item }) {
           style={{
             width: "22%",
             position: "unset",
+            margin: "0 12px",
           }}
         >
           <Item
@@ -35,8 +42,8 @@ function ComponentLayouts({ item }) {
             position='unset'
             inGrid={true}
             type={item.type1}
-            width={widthDisplay / 4}
-            height={(heightDisplay / 3.5) * 2}
+            width={widthDisplayContent / 4}
+            height={(heightDisplayContent / 3.5) * 2}
             draggable={false}
             stylesItem={{
               position: "unset",
@@ -48,8 +55,8 @@ function ComponentLayouts({ item }) {
             id={item.idItem2}
             position='unset'
             inGrid={true}
-            width={widthDisplay / 4}
-            height={(heightDisplay * 1) / 3.5}
+            width={widthDisplayContent / 4}
+            height={(heightDisplayContent * 1) / 3.5}
             draggable={false}
             type={item.type2}
             stylesItem={{
@@ -76,7 +83,7 @@ function ComponentLayouts({ item }) {
             top: item.top,
             left: item.left,
             right: item.right,
-            height: heightDisplay,
+            height: heightDisplayContent,
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
@@ -87,8 +94,8 @@ function ComponentLayouts({ item }) {
             id={item.idItem1}
             inGrid={true}
             type={item.type1}
-            width={widthDisplay / 2 - 24}
-            height={heightDisplay - 24}
+            width={widthDisplayContent / 2 - 24}
+            height={heightDisplayContent - 24}
             draggable={false}
             stylesItem={{
               top: 0,
@@ -101,8 +108,8 @@ function ComponentLayouts({ item }) {
             key={item.idItem2}
             id={item.idItem2}
             inGrid={true}
-            width={widthDisplay / 2 - 24}
-            height={heightDisplay * 0.2 + 12}
+            width={widthDisplayContent / 2 - 24}
+            height={heightDisplayContent * 0.15 + 12}
             draggable={false}
             type={item.type2}
             fontSize='24px'
@@ -118,8 +125,8 @@ function ComponentLayouts({ item }) {
             key={item.idItem3}
             id={item.idItem3}
             inGrid={true}
-            width={widthDisplay / 2 - 24}
-            height={heightDisplay - (heightDisplay * 0.2 + 48)}
+            width={widthDisplayContent / 2 - 24}
+            height={heightDisplayContent - (heightDisplayContent * 0.15 + 48)}
             draggable={false}
             type={item.type3}
             stylesItem={{
@@ -142,12 +149,12 @@ function ComponentLayouts({ item }) {
           key={item.id}
           stylesItem={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "space-around",
             alignItems: "center",
             top: item.top,
             left: item.left,
             right: item.right,
-            height: heightDisplay,
+            height: heightDisplayContent,
           }}
         >
           <Item
@@ -156,8 +163,8 @@ function ComponentLayouts({ item }) {
             position='unset'
             inGrid={true}
             type={item.type1}
-            width={widthDisplay / 4 - 12}
-            height={heightDisplay - 24}
+            width={widthDisplayContent / 4 - 12}
+            height={heightDisplayContent - 24}
             draggable={false}
             stylesItem={{
               position: "unset",
@@ -169,8 +176,8 @@ function ComponentLayouts({ item }) {
             id={item.idItem2}
             position='unset'
             inGrid={true}
-            width={widthDisplay / 4 - 12}
-            height={heightDisplay - 24}
+            width={widthDisplayContent / 4 - 12}
+            height={heightDisplayContent - 24}
             draggable={false}
             type={item.type2}
             stylesItem={{
@@ -183,8 +190,8 @@ function ComponentLayouts({ item }) {
             id={item.idItem3}
             position='unset'
             inGrid={true}
-            width={widthDisplay / 4 - 12}
-            height={heightDisplay - 24}
+            width={widthDisplayContent / 4 - 12}
+            height={heightDisplayContent - 24}
             draggable={false}
             type={item.type3}
             stylesItem={{
@@ -197,8 +204,8 @@ function ComponentLayouts({ item }) {
             id={item.idItem4}
             position='unset'
             inGrid={true}
-            width={widthDisplay / 4 - 12}
-            height={heightDisplay - 24}
+            width={widthDisplayContent / 4 - 12}
+            height={heightDisplayContent - 24}
             draggable={false}
             type={item.type4}
             stylesItem={{
@@ -219,12 +226,11 @@ function ComponentLayouts({ item }) {
           key={item.id}
           stylesItem={{
             display: "flex",
-            justifyContent: "space-around",
             alignItems: "center",
             top: item.top,
             left: item.left,
             right: item.right,
-            height: heightDisplay,
+            height: heightDisplayContent,
           }}
         >
           {renderItem()}
@@ -232,7 +238,7 @@ function ComponentLayouts({ item }) {
       );
     }
   };
-  return renderComponents();
+  return <>{renderComponents()}</>;
 }
 
 export default ComponentLayouts;

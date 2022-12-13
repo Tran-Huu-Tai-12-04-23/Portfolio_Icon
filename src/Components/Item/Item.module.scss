@@ -123,15 +123,19 @@
   .modal_enter_link {
     min-width: 300px;
     min-height: 180px;
-    display: flex;
-    transform: translate(-50%, -50%);
-    justify-content: center;
+    // display: flex;
+    transform: translate(-20%, -20%);
     align-items: center;
     flex-wrap: wrap;
     padding: 24px;
     border-radius: 24px;
     background-color: #ccc;
     transition: all 0.3s ease-in-out;
+    span {
+      margin-left: 12px;
+      font-size: 18px;
+      color: var(--primary_color_component);
+    }
     h5 {
       width: 100%;
       position: unset;
@@ -158,6 +162,7 @@
       background-color: var(--primary_color_component);
       color: #fff;
       font-size: 18px;
+      transform: translateX(50%);
       &:hover {
         cursor: pointer;
         background-color: var(--primary);
@@ -203,4 +208,43 @@
   background-color: #ccc;
   display: flex;
   justify-content: center;
+  &:hover {
+    border: 1px solid #4285f4;
+  }
+}
+
+.wrapper_multi_items {
+  &:hover .add_height_top,
+  &:hover .add_height_bottom,
+  .add_height_top:hover,
+  .add_height_bottom:hover {
+    display: block;
+  }
+}
+
+.add_height_bottom,
+.add_height_top {
+  display: block;
+  width: 15px;
+  height: 15px;
+  background-color: #4285f4;
+  position: absolute;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  z-index: 10;
+  display: none;
+
+  &:hover {
+    cursor: row-resize;
+  }
+}
+
+.add_height_top {
+  top: -8px;
+  left: 50%;
+}
+
+.add_height_bottom {
+  bottom: -8px;
+  left: 50%;
 }
