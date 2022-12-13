@@ -1,12 +1,32 @@
+import { useEffect, useState } from "react";
+import { useDragDropManager, useDrop } from "react-dnd";
+
 import clsx from "clsx";
 import styles from "./Overlay.module.scss";
+import Item from "./Item";
 
 function Overlay() {
-  const id = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const id = Array.from(Array(190).keys());
+  let top = 0;
+  let left = 0;
   return (
     <>
       {id.map((id) => {
-        return <span key={id} className={clsx(styles.overlay)}></span>;
+        left += 8.33333333333;
+        // console.log(`top: ${top} : left ${left}`);
+        // console.log(`id : ${id}`);
+        if (left > 100) {
+          top += 60;
+          left = 0;
+        }
+
+        return (
+          <Item
+            top={`${top - 60}px`}
+            left={`${left - 8.33333333333}%`}
+            key={id}
+          ></Item>
+        );
       })}
     </>
   );

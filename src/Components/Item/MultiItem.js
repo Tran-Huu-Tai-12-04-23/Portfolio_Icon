@@ -16,6 +16,7 @@ import {
   setAlignCenter,
   setBorderSize,
   setUppercase,
+  setTop,
 } from "~/Store/reducer/actions";
 import { ContextItemsIngrid } from "~/Store/Context";
 
@@ -92,26 +93,21 @@ function MultiItem({ stylesItem, id, top, children, inGrid, isMulti }) {
   }, [top]);
 
   const mouseDown = (e) => {
-    e.stopPropagation();
     e.preventDefault();
-    let prevY = e.clientY;
-    let changeY;
-    let heightChange;
-    const mouseMove = (e) => {
-      // setHeightWrapperContent((prev) => {
-      //   return prev + e.clientY - prev;
-      // });
-      console.log("checl" + e.clientY);
-      setTopWrapperContent(e.clientY);
-    };
+    const startHeight = heightWrapperContent;
+    const startPosition = e.pageY;
+    console.log(startHeight);
+    function onMouseMove(e) {
+      console.log(startPosition);
+      setHeightWrapperContent(startHeight - startPosition + e.pageY);
+    }
+    function onMouseUp() {
+      document.body.removeEventListener("mousemove", onMouseMove);
+      document.body.removeEventListener("mouseup", onMouseUp);
+    }
 
-    const mouseUp = (e) => {
-      window.removeEventListener("mousemove", mouseMove);
-      window.removeEventListener("mouseup", mouseUp);
-    };
-
-    window.addEventListener("mousemove", mouseMove);
-    window.addEventListener("mouseup", mouseUp);
+    document.body.addEventListener("mousemove", onMouseMove);
+    document.body.addEventListener("mouseup", onMouseUp);
   };
 
   return (
@@ -126,10 +122,6 @@ function MultiItem({ stylesItem, id, top, children, inGrid, isMulti }) {
         top: topWrapperContent,
       }}
     >
-      <span
-        className={clsx(styles.add_height_top)}
-        onMouseDown={mouseDown}
-      ></span>
       <span
         onMouseDown={mouseDown}
         className={clsx(styles.add_height_bottom)}

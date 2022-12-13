@@ -3,12 +3,11 @@ import { useState, useEffect, useRef, useContext } from "react";
 
 import styles from "./Item.module.scss";
 import { MultiItem, Item } from "~/Components";
-import { ElementContentPortfolio } from "~/Store/Context";
+import { ElementContentPortfolio, HeightHeading } from "~/Store/Context";
 
-function ComponentLayouts({ item, children }) {
+function ComponentLayouts({ item, opacity, children }) {
   const [widthDisplayContent, setWidthDisplayContent] = useState();
   const [heightDisplayContent, setHeightDisplayContent] = useState();
-
   const [contentPortfolio, setShowTrash] = useContext(ElementContentPortfolio);
 
   //get height and width of wrapper content
@@ -34,6 +33,7 @@ function ComponentLayouts({ item, children }) {
             width: "22%",
             position: "unset",
             margin: "0 12px",
+            opacity: opacity ? "0.4" : 1,
           }}
         >
           <Item
@@ -56,7 +56,7 @@ function ComponentLayouts({ item, children }) {
             position='unset'
             inGrid={true}
             width={widthDisplayContent / 4}
-            height={(heightDisplayContent * 1) / 3.5}
+            // height={(heightDisplayContent * 1) / 3.5}
             draggable={false}
             type={item.type2}
             stylesItem={{
@@ -68,6 +68,10 @@ function ComponentLayouts({ item, children }) {
       );
     });
   };
+
+  const [heightHeadingText, setHeightHeadingText] = useState(
+    heightDisplayContent ? heightDisplayContent * 0.3 + 12 : 50
+  );
 
   const renderComponents = () => {
     if (item.numberComponents === 3) {
@@ -87,6 +91,7 @@ function ComponentLayouts({ item, children }) {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            opacity: opacity ? "0.4" : 1,
           }}
         >
           <Item
@@ -109,7 +114,7 @@ function ComponentLayouts({ item, children }) {
             id={item.idItem2}
             inGrid={true}
             width={widthDisplayContent / 2 - 24}
-            height={heightDisplayContent * 0.15 + 12}
+            height={heightHeadingText}
             draggable={false}
             type={item.type2}
             fontSize='24px'
@@ -126,13 +131,12 @@ function ComponentLayouts({ item, children }) {
             id={item.idItem3}
             inGrid={true}
             width={widthDisplayContent / 2 - 24}
-            height={heightDisplayContent - (heightDisplayContent * 0.15 + 48)}
             draggable={false}
             type={item.type3}
             stylesItem={{
-              bottom: "12px",
+              top: heightHeadingText,
               right: item.right + 12,
-              marginTop: "12px",
+              marginTop: "20px",
               maxWidth: "48%",
             }}
           ></Item>
@@ -150,11 +154,12 @@ function ComponentLayouts({ item, children }) {
           stylesItem={{
             display: "flex",
             justifyContent: "space-around",
-            alignItems: "center",
+            // alignItems: "center",
             top: item.top,
             left: item.left,
             right: item.right,
             height: heightDisplayContent,
+            opacity: opacity ? "0.4" : 1,
           }}
         >
           <Item
@@ -177,7 +182,7 @@ function ComponentLayouts({ item, children }) {
             position='unset'
             inGrid={true}
             width={widthDisplayContent / 4 - 12}
-            height={heightDisplayContent - 24}
+            // height={heightDisplayContent - 24}
             draggable={false}
             type={item.type2}
             stylesItem={{
@@ -205,10 +210,11 @@ function ComponentLayouts({ item, children }) {
             position='unset'
             inGrid={true}
             width={widthDisplayContent / 4 - 12}
-            height={heightDisplayContent - 24}
+            // height={heightDisplayContent - 24}
             draggable={false}
             type={item.type4}
             stylesItem={{
+              top: 24,
               position: "unset",
               margin: "12px",
             }}
@@ -231,6 +237,7 @@ function ComponentLayouts({ item, children }) {
             left: item.left,
             right: item.right,
             height: heightDisplayContent,
+            opacity: opacity ? "0.4" : 1,
           }}
         >
           {renderItem()}
@@ -238,7 +245,11 @@ function ComponentLayouts({ item, children }) {
       );
     }
   };
-  return <>{renderComponents()}</>;
+  return (
+    <HeightHeading.Provider value={[heightHeadingText, setHeightHeadingText]}>
+      {renderComponents()}
+    </HeightHeading.Provider>
+  );
 }
 
 export default ComponentLayouts;

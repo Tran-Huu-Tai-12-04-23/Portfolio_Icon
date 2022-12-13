@@ -1,26 +1,7 @@
-.overlay_1,
-.overlay_2 {
+.overlay {
   position: absolute;
-  content: "";
-  background-color: transparent;
-}
-
-.overlay_1 {
-  top: 0;
-  bottom: 0;
-  width: 100vw;
-  z-index: -100;
-  border-bottom: 2px dotted blue;
-  border-top: 2px dotted blue;
-  transform: translateX(-50%);
-}
-
-.overlay_2 {
-  right: 0;
-  left: 0;
-  height: 100vw;
-  z-index: -100;
-  border-left: 2px dotted blue;
-  border-right: 2px dotted blue;
-  transform: translateY(-50%);
+  width: calc(8.333333333333%);
+  height: 60px;
+  border: 1px dotted #000;
+  display: none;
 }

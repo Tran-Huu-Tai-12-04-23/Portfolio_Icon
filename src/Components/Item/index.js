@@ -1,13 +1,18 @@
 import clsx from "clsx";
 import { useDrag } from "react-dnd";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { ResizableBox as ReactResizableBox } from "react-resizable";
 import { RiEdit2Fill } from "react-icons/ri";
 
 import "./resizeable.css";
 import styles from "./Item.module.scss";
 import { Overlay, TipSuggest } from "~/Components";
-import { ContextReducer, ContextItemsIngrid } from "~/Store/Context";
+import {
+  ContextReducer,
+  ContextItemsIngrid,
+  HeightHeading,
+  ContextShowEditorComponent,
+} from "~/Store/Context";
 import {
   setBackgroundColor,
   setBorderColor,
@@ -22,8 +27,7 @@ import {
   setUppercase,
   setLineHeight,
 } from "~/Store/reducer/actions";
-import { ContextShowEditorComponent } from "~/Store/Context";
-import { BiCloudSnow } from "react-icons/bi";
+import { constantActions } from "~/Constants";
 
 function Item({
   type,
@@ -40,15 +44,16 @@ function Item({
   heading = false,
   icon,
   width = 200,
-  height = 50,
+  height = 40,
   resizable = true,
   draggable = true,
   position = "absolute",
+  opacity = false,
   href = "huutai.com",
   children,
 }) {
+  console.log(opacity);
   const [items, setItems] = useContext(ContextItemsIngrid);
-
   var left = stylesItem ? stylesItem.left : 0;
   var top = stylesItem ? stylesItem.top : 0;
 
@@ -88,6 +93,7 @@ function Item({
   const [showEditorComponent, setEditorComponent] = useContext(
     ContextShowEditorComponent
   );
+  const data = useContext(HeightHeading);
 
   const classNamesItem = clsx(
     styles.wrapper,
@@ -118,12 +124,12 @@ function Item({
 
   const handleChangeValue = (e) => {
     setValue(e.target.value);
-    const height = e.target.parentElement.offsetHeight + 2;
-    const changeHeight = e.target.scrollHeight;
-    if (changeHeight > height) {
-      e.target.parentElement.style.height = `${
-        height + (changeHeight - height)
-      }px`;
+    e.target.style.height = 70;
+    e.target.style.height = e.target.scrollHeight + "px";
+    console.log(data);
+    if (data && heading) {
+      const [heightHeadingText, setHeightHeadingText] = data;
+      setHeightHeadingText(e.target.scrollHeight);
     }
   };
 
@@ -267,27 +273,13 @@ function Item({
     };
   }, []);
 
-  // auto set height when text full width
-  useEffect(() => {
-    const itemSelected = document.getElementById(state.id_item_selected);
-    if (itemSelected) {
-      const height = itemSelected.parentElement.offsetHeight + 2;
-      const changeHeight = itemSelected.scrollHeight;
-      if (changeHeight > height) {
-        itemSelected.parentElement.style.height = `${
-          height + (changeHeight - height)
-        }px`;
-      }
-    }
-  });
-
   return (
     <>
       {resizable ? (
         <ReactResizableBox
           width={width}
           height={height}
-          style={{ ...stylesItem }}
+          style={{ ...stylesItem, height: heading ? "80" : "50" }}
         >
           <>
             <Type
@@ -308,6 +300,9 @@ function Item({
                 fontSize: fontSize,
                 padding: type !== "img" ? "12px 0" : "",
                 position: position,
+                lineHeight: heading ? "24px" : "16px",
+                opacity: isDragging ? "0.5" : "1",
+                opacity: opacity ? "0.4" : "1",
               }}
               type={type === "img" ? "file" : "text"}
               accept={type !== "img" ? null : "image/*"}
@@ -333,7 +328,11 @@ function Item({
             id={id}
             ref={drag}
             className={classNamesItem}
-            style={{ ...stylesItem, opacity: isDragging ? "0.5" : "1" }}
+            style={{
+              ...stylesItem,
+              opacity: isDragging ? "0.5" : "1",
+              opacity: opacity ? "0.4" : "1",
+            }}
             value={value}
             onChange={handleChangeValue}
             onBlur={handleBlurInput}

@@ -5,7 +5,7 @@
   height: 100%;
   font-size: 14px;
   line-height: 16px;
-  // z-index: 10000;
+  cursor: grab;
 }
 
 .normal {
@@ -58,7 +58,7 @@
     margin: 8px;
     border: none;
     background: var(--primary);
-    padding: 10px 20px;
+    padding: 4px 12px;
     border-radius: 10px;
     cursor: pointer;
     transition: background 0.2s ease-in-out;
@@ -75,14 +75,13 @@
 
 .text {
 }
-.heading {
-}
 
 // css when item have prop icon
 
 .wrapper {
   border-style: solid;
   border-color: transparent;
+  border: 1px solid #ccc;
   // border-width: 1px;
 
   &:hover {
@@ -208,22 +207,21 @@
   background-color: #ccc;
   display: flex;
   justify-content: center;
+  min-height: 160px;
+
   &:hover {
     border: 1px solid #4285f4;
   }
 }
 
 .wrapper_multi_items {
-  &:hover .add_height_top,
   &:hover .add_height_bottom,
-  .add_height_top:hover,
   .add_height_bottom:hover {
     display: block;
   }
 }
 
-.add_height_bottom,
-.add_height_top {
+.add_height_bottom {
   display: block;
   width: 15px;
   height: 15px;
@@ -237,11 +235,6 @@
   &:hover {
     cursor: row-resize;
   }
-}
-
-.add_height_top {
-  top: -8px;
-  left: 50%;
 }
 
 .add_height_bottom {

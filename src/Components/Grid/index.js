@@ -4,7 +4,7 @@ import { useDrop, useDragDropManager } from "react-dnd";
 import uuid from "react-uuid";
 
 import styles from "./Grid.module.scss";
-import { Item, MultiItem } from "~/Components";
+import { Item, MultiItem, Overlay } from "~/Components";
 import { ContextItemsIngrid, ElementContentPortfolio } from "~/Store/Context";
 import ComponentLayouts from "../Item/ComponentLayouts";
 
@@ -17,6 +17,7 @@ function Grid(props) {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ["ITEM_IN_GRID", "Item", "MULTI_ITEM"],
     drop(item, monitor) {
+      console.log("check");
       if (item.inGrid) {
         const delta = monitor.getDifferenceFromInitialOffset();
         const left = Math.round(item.left + delta.x);
@@ -27,7 +28,7 @@ function Grid(props) {
         const valueScrollTop = contentPortfolio.current.scrollTop;
         const delta = monitor.getClientOffset();
         let left = delta.x - 200;
-        let top = delta.y - 116;
+        let top = delta.y - 100;
         addItem(item.type, left, top + valueScrollTop, uuid());
       } else if (item.inGrid === false && item.isMulti) {
         const valueScrollTop = contentPortfolio.current.scrollTop;
@@ -162,27 +163,37 @@ function Grid(props) {
           items.map((item, index) => {
             if (item.isMulti) {
               return (
-                <ComponentLayouts key={index} item={item}></ComponentLayouts>
+                <>
+                  <ComponentLayouts
+                    key={index}
+                    item={item}
+                    opacity={isDragging ? true : false}
+                  ></ComponentLayouts>
+                </>
               );
             } else {
               return (
-                <Item
-                  key={item.id}
-                  id={item.id}
-                  inGrid={true}
-                  type={item.type}
-                  stylesItem={{
-                    top: item.top,
-                    left: item.left,
-                    width: item.width,
-                    height: item.height,
-                  }}
-                ></Item>
+                <>
+                  <Item
+                    key={item.id}
+                    id={item.id}
+                    inGrid={true}
+                    type={item.type}
+                    stylesItem={{
+                      top: item.top,
+                      left: item.left,
+                      width: item.width,
+                      height: item.height,
+                    }}
+                    opacity={isDragging ? true : false}
+                  ></Item>
+                </>
               );
             }
           })}
         {props.children}
       </div>
+      <Overlay></Overlay>
     </>
   );
 }

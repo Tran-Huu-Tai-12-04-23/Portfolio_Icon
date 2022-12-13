@@ -20,7 +20,7 @@ function CreatePorfolio({ children }) {
   const [goToTop, setGoToTop] = useState(false);
   const [showEditorComponent, setEditorComponent] = useState(false);
   const [showAddHeight, setShowAddHeight] = useState(false);
-  const [heightContent, setHeightContent] = useState(0);
+  const [heightContent, setHeightContent] = useState(800);
   const [heightContentChange, setHeightContentChange] = useState(0);
   const [showTrash, setShowTrash] = useState(false);
 
@@ -28,16 +28,17 @@ function CreatePorfolio({ children }) {
   const wrapperTemplateContent = useRef();
 
   //get height element id content_portfolio
-  useEffect(() => {
-    if (contentPortfolio.current) {
-      setHeightContent(contentPortfolio.current.offsetHeight);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (contentPortfolio.current) {
+  //     setHeightContent(contentPortfolio.current.offsetHeight);
+  //   }
+  // });
 
   useEffect(() => {
     if (wrapperTemplateContent.current) {
       wrapperTemplateContent.current.style.height = `${heightContent}px`;
     }
+    console.log(heightContent);
   }, [heightContent]);
 
   const handleShowScroll = (e) => {
