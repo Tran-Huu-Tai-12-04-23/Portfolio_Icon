@@ -29,6 +29,7 @@ function ComponentLayouts({ item, opacity, children }) {
       return (
         <div
           key={index}
+          id={item.id}
           style={{
             width: "22%",
             position: "unset",
@@ -56,7 +57,7 @@ function ComponentLayouts({ item, opacity, children }) {
             position='unset'
             inGrid={true}
             width={widthDisplayContent / 4}
-            // height={(heightDisplayContent * 1) / 3.5}
+            height={40}
             draggable={false}
             type={item.type2}
             stylesItem={{
@@ -76,12 +77,13 @@ function ComponentLayouts({ item, opacity, children }) {
     if (item.numberComponents === 3) {
       return (
         <MultiItem
+          id={item.id}
           isMulti={true}
           inGrid={true}
           top={item.top}
-          id={item.id}
           className={clsx(styles.wrapper_multi_items)}
           key={item.id}
+          stylesComponentMulti={item.stylesComponentMulti}
           stylesItem={{
             display: "flex",
             alignItems: "center",
@@ -156,6 +158,7 @@ function ComponentLayouts({ item, opacity, children }) {
           id={item.id}
           className={clsx(styles.wrapper_multi_items)}
           key={item.id}
+          stylesComponentMulti={item.stylesComponentMulti}
           stylesItem={{
             display: "flex",
             alignItems: "center",
@@ -233,6 +236,7 @@ function ComponentLayouts({ item, opacity, children }) {
           id={item.id}
           className={clsx(styles.wrapper_multi_items)}
           key={item.id}
+          stylesComponentMulti={item.stylesComponentMulti}
           stylesItem={{
             display: "flex",
             alignItems: "center",

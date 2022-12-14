@@ -28,6 +28,7 @@ function MultiItem({
   inGrid,
   isMulti,
   setHeightDisplayContent,
+  stylesComponentMulti,
 }) {
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [heightWrapperContent, setHeightWrapperContent] = useState(200);
@@ -141,6 +142,7 @@ function MultiItem({
         ...stylesItem,
         height: heightWrapperContent,
         top: topWrapperContent,
+        ...stylesComponentMulti,
       }}
     >
       <span

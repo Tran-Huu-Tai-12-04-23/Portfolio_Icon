@@ -53,19 +53,23 @@ function Item({
   opacity = false,
   styleDefault = {},
   src,
-  href,
+  href = {},
   valueItem,
+  center = false,
   children,
 }) {
+  console.log(href);
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [value, setValue] = useState(valueItem ? valueItem : "Enter text !!!");
-  const [linkItemTypeA, setLinkItemTypeA] = useState(href ? href : "");
-  const [nameItemLink, setNameItemLink] = useState("");
+  const [linkItemTypeA, setLinkItemTypeA] = useState(
+    href.href ? href.href : ""
+  );
+  const [nameItemLink, setNameItemLink] = useState(href.name ? href.name : "");
   const [Type, setType] = useState("div");
   const [linkImg, setLinkImg] = useState(src ? src : "");
   const [state, dispatch] = useContext(ContextReducer);
   const showOverlayComponent = useContext(ShowOverlay);
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(href ? false : true);
   //use context get state show and hidden editor component
   const [showEditorComponent, setEditorComponent] = useContext(
     ContextShowEditorComponent
@@ -75,6 +79,7 @@ function Item({
   const [widthContents, setWidthContents] = useState(width);
   const [heightWrapperReSizeable, setHeightWrapperReSizeable] =
     useState(height);
+  const [scrollHeight, setScrollHeight] = useState(0);
 
   const classNamesItem = clsx(
     styles.wrapper,
@@ -123,6 +128,8 @@ function Item({
         numberComponents,
         items,
         valueItem,
+        center,
+        href,
       },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
@@ -212,14 +219,12 @@ function Item({
   };
   useEffect(() => {
     setType(icon ? "div" : type);
+    setType(type === "button" ? "input" : type);
     if (type === "img") {
       setType(src ? "img" : "input");
       propsTypeLink.type = "file";
     }
-    if (type === "button") {
-      setType("input");
-      setValue("Enter name button!!");
-    }
+
     if (icon) {
       setType("div");
     }
@@ -282,9 +287,15 @@ function Item({
     };
   }, []);
 
+  let contentPortfolio, setShowTrash, widthContent;
   //get width wrapper content
   useEffect(() => {
-    let contentPortfolio, setShowTrash, widthContent;
+    if (elementContentPortfolio) {
+      [contentPortfolio, setShowTrash, widthContent] = elementContentPortfolio;
+      setScrollHeight(contentPortfolio.current.scrollTop);
+    }
+  }, [elementContentPortfolio]);
+  useEffect(() => {
     if (elementContentPortfolio && width === "100%") {
       [contentPortfolio, setShowTrash, widthContent] = elementContentPortfolio;
       setWidthContents(widthContent);
@@ -299,7 +310,8 @@ function Item({
           height={type === "input" ? heightWrapperReSizeable : height}
           style={{
             ...stylesItem,
-            height: "50",
+            transform: center ? "translateX(-50%)" : "none",
+            minHeight: 36,
           }}
           onMouseDown={(e) => {
             setShowOverlay(true);
@@ -370,8 +382,18 @@ function Item({
         </>
       )}
       {type === "a" && inGrid && showModal ? (
-        <div className={clsx(styles.modal)}>
-          <div className={clsx(styles.modal_enter_link)}>
+        <div
+          className={clsx(styles.modal)}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <div
+            className={clsx(styles.modal_enter_link)}
+            style={{
+              top: `${300 + scrollHeight}px`,
+            }}
+          >
             <h5>Add link</h5>
             <span>Name</span>
             <input
