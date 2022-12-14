@@ -18,9 +18,17 @@ import {
   setUppercase,
   setTop,
 } from "~/Store/reducer/actions";
-import { ContextItemsIngrid } from "~/Store/Context";
+import { ContextItemsIngrid, ShowOverlay } from "~/Store/Context";
 
-function MultiItem({ stylesItem, id, top, children, inGrid, isMulti }) {
+function MultiItem({
+  stylesItem,
+  id,
+  top,
+  children,
+  inGrid,
+  isMulti,
+  setHeightDisplayContent,
+}) {
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [heightWrapperContent, setHeightWrapperContent] = useState(200);
   const [topWrapperContent, setTopWrapperContent] = useState(top);
@@ -28,6 +36,7 @@ function MultiItem({ stylesItem, id, top, children, inGrid, isMulti }) {
   const [showEditorComponent, setEditorComponent] = useContext(
     ContextShowEditorComponent
   );
+  const showOverlayComponent = useContext(ShowOverlay);
 
   const [{ isDragging }, drag] = useDrag(
     () => ({
@@ -92,16 +101,28 @@ function MultiItem({ stylesItem, id, top, children, inGrid, isMulti }) {
     setTopWrapperContent(top);
   }, [top]);
 
+  // get useState showOverlay
+  let showOverlay, setShowOverlay;
+  useEffect(() => {
+    if (showOverlayComponent) {
+      [showOverlay, setShowOverlay] = showOverlayComponent;
+    }
+  });
+
   const mouseDown = (e) => {
     e.preventDefault();
+    setShowOverlay(true);
     const startHeight = heightWrapperContent;
     const startPosition = e.pageY;
     console.log(startHeight);
     function onMouseMove(e) {
-      console.log(startPosition);
       setHeightWrapperContent(startHeight - startPosition + e.pageY);
+      if (setHeightDisplayContent) {
+        setHeightDisplayContent(startHeight - startPosition + e.pageY);
+      }
     }
     function onMouseUp() {
+      setShowOverlay(false);
       document.body.removeEventListener("mousemove", onMouseMove);
       document.body.removeEventListener("mouseup", onMouseUp);
     }

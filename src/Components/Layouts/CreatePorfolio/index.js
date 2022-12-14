@@ -13,17 +13,19 @@ import {
   ElementContentPortfolio,
 } from "~/Store/Context";
 
-function CreatePorfolio({ children }) {
-  const [items, setItems] = useState([]);
+function CreatePorfolio({ DefaultComponent, heightDefault, children }) {
+  const [items, setItems] = useState(DefaultComponent ? DefaultComponent : []);
   const [transactionContent, setTransactionContent] = useState("0");
   const [widthMenu, setWidthMenu] = useState("22%");
   const [goToTop, setGoToTop] = useState(false);
   const [showEditorComponent, setEditorComponent] = useState(false);
   const [showAddHeight, setShowAddHeight] = useState(false);
-  const [heightContent, setHeightContent] = useState(800);
+  const [heightContent, setHeightContent] = useState(
+    heightDefault ? heightDefault : 1000
+  );
   const [heightContentChange, setHeightContentChange] = useState(0);
   const [showTrash, setShowTrash] = useState(false);
-
+  const [widthContent, setWidthContent] = useState();
   const contentPortfolio = useRef();
   const wrapperTemplateContent = useRef();
 
@@ -33,6 +35,14 @@ function CreatePorfolio({ children }) {
   //     setHeightContent(contentPortfolio.current.offsetHeight);
   //   }
   // });
+
+  //get width content portfolio
+
+  useEffect(() => {
+    if (wrapperTemplateContent.current) {
+      setWidthContent(wrapperTemplateContent.current.offsetWidth);
+    }
+  }, []);
 
   useEffect(() => {
     if (wrapperTemplateContent.current) {
@@ -56,8 +66,10 @@ function CreatePorfolio({ children }) {
   };
 
   useEffect(() => {
-    if (items.length <= 0) {
-      setEditorComponent(false);
+    if (items) {
+      if (items.length <= 0) {
+        setEditorComponent(false);
+      }
     }
   }, [items]);
 
@@ -85,7 +97,7 @@ function CreatePorfolio({ children }) {
                 id='wrapper_template_content'
               >
                 <ElementContentPortfolio.Provider
-                  value={[contentPortfolio, setShowTrash]}
+                  value={[contentPortfolio, setShowTrash, widthContent]}
                 >
                   {children}
                 </ElementContentPortfolio.Provider>

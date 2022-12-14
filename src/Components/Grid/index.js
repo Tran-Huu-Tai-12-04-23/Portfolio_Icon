@@ -1,27 +1,48 @@
 import clsx from "clsx";
-import { useCallback, useState, useEffect, useContext } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import { useDrop, useDragDropManager } from "react-dnd";
 import uuid from "react-uuid";
 
 import styles from "./Grid.module.scss";
 import { Item, MultiItem, Overlay } from "~/Components";
-import { ContextItemsIngrid, ElementContentPortfolio } from "~/Store/Context";
+import {
+  ContextItemsIngrid,
+  ElementContentPortfolio,
+  ShowOverlay,
+} from "~/Store/Context";
 import ComponentLayouts from "../Item/ComponentLayouts";
 
 function Grid(props) {
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [backgroundColor, setBackgroundColor] = useState("#fff");
-
-  const [contentPortfolio, setShowTrash] = useContext(ElementContentPortfolio);
+  const [contentPortfolio, setShowTrash, widthContent] = useContext(
+    ElementContentPortfolio
+  );
+  const [showOverlay, setShowOverlay] = useState(false);
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ["ITEM_IN_GRID", "Item", "MULTI_ITEM"],
     drop(item, monitor) {
-      console.log("check");
       if (item.inGrid) {
+        console.log(item);
         const delta = monitor.getDifferenceFromInitialOffset();
-        const left = Math.round(item.left + delta.x);
-        const top = Math.round(item.top + delta.y);
+        console.log(item);
+        let left, top;
+        if (item.left) {
+          left = item.left.toString().includes("%")
+            ? `calc(${item.left} + ${delta.x}px)`
+            : Math.round(item.left + delta.x);
+        } else {
+          left = Math.round(item.left + delta.x);
+        }
+        if (item.top) {
+          top = item.top.toString().includes("%")
+            ? `calc(${item.top} + ${delta.y}px)`
+            : Math.round(item.top + delta.y);
+        } else {
+          top = Math.round(item.top + delta.y);
+        }
+
         console.log(`check left: ${left} top: ${top} `);
         moveItem(item.id, left, top, item.inGrid, item.items);
       } else if (item.inGrid === false && item.isMulti === false) {
@@ -29,7 +50,7 @@ function Grid(props) {
         const delta = monitor.getClientOffset();
         let left = delta.x - 200;
         let top = delta.y - 100;
-        addItem(item.type, left, top + valueScrollTop, uuid());
+        addItem(item.type, left, top + valueScrollTop, uuid(), item.valueItem);
       } else if (item.inGrid === false && item.isMulti) {
         const valueScrollTop = contentPortfolio.current.scrollTop;
         const delta = monitor.getClientOffset();
@@ -60,8 +81,10 @@ function Grid(props) {
     left = "200px",
     top = "100px",
     id,
-    width = "200px",
-    height = "100px"
+    width = 200,
+    height = 40,
+    src,
+    valueItem
   ) => {
     setItems((prev) => {
       return [
@@ -75,6 +98,8 @@ function Grid(props) {
           id,
           inGrid: true,
           isMulti: false,
+          src,
+          valueItem,
         },
       ];
     });
@@ -90,7 +115,8 @@ function Grid(props) {
     idItem2,
     idItem3,
     idItem4,
-    numberComponents
+    numberComponents,
+    src
   ) => {
     setItems((prev) => {
       return [
@@ -112,6 +138,7 @@ function Grid(props) {
           id,
           inGrid: true,
           isMulti: true,
+          src,
         },
       ];
     });
@@ -150,7 +177,7 @@ function Grid(props) {
   }, [{ isActive, canDrop }]);
 
   return (
-    <>
+    <ShowOverlay.Provider value={[showOverlay, setShowOverlay]}>
       <div
         ref={drop}
         style={{
@@ -163,38 +190,41 @@ function Grid(props) {
           items.map((item, index) => {
             if (item.isMulti) {
               return (
-                <>
-                  <ComponentLayouts
-                    key={index}
-                    item={item}
-                    opacity={isDragging ? true : false}
-                  ></ComponentLayouts>
-                </>
+                <ComponentLayouts
+                  key={item.id}
+                  item={item}
+                  opacity={isDragging ? true : false}
+                  styleDefault={item.styles}
+                  src={item.src}
+                ></ComponentLayouts>
               );
             } else {
               return (
-                <>
-                  <Item
-                    key={item.id}
-                    id={item.id}
-                    inGrid={true}
-                    type={item.type}
-                    stylesItem={{
-                      top: item.top,
-                      left: item.left,
-                      width: item.width,
-                      height: item.height,
-                    }}
-                    opacity={isDragging ? true : false}
-                  ></Item>
-                </>
+                <Item
+                  key={item.id}
+                  id={item.id}
+                  inGrid={true}
+                  type={item.type}
+                  width={item.width}
+                  height={item.height}
+                  valueItem={item.valueItem}
+                  stylesItem={{
+                    top: item.top,
+                    left: item.left,
+                    width: item.width,
+                    height: item.height,
+                  }}
+                  src={item.src}
+                  styleDefault={item.styles}
+                  opacity={isDragging ? true : false}
+                ></Item>
               );
             }
           })}
         {props.children}
+        <Overlay></Overlay>
       </div>
-      <Overlay></Overlay>
-    </>
+    </ShowOverlay.Provider>
   );
 }
 

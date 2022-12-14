@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { useDrag } from "react-dnd";
 import { useState, useEffect, useContext, useRef } from "react";
 import { ResizableBox as ReactResizableBox } from "react-resizable";
-import { RiEdit2Fill } from "react-icons/ri";
+import { RiContactsBookLine, RiEdit2Fill } from "react-icons/ri";
 
 import "./resizeable.css";
 import styles from "./Item.module.scss";
@@ -12,6 +12,8 @@ import {
   ContextItemsIngrid,
   HeightHeading,
   ContextShowEditorComponent,
+  ShowOverlay,
+  ElementContentPortfolio,
 } from "~/Store/Context";
 import {
   setBackgroundColor,
@@ -44,56 +46,35 @@ function Item({
   heading = false,
   icon,
   width = 200,
-  height = 40,
+  height = 50,
   resizable = true,
   draggable = true,
   position = "absolute",
   opacity = false,
-  href = "huutai.com",
+  styleDefault = {},
+  src,
+  href,
+  valueItem,
   children,
 }) {
-  console.log(opacity);
   const [items, setItems] = useContext(ContextItemsIngrid);
-  var left = stylesItem ? stylesItem.left : 0;
-  var top = stylesItem ? stylesItem.top : 0;
-
-  const [{ isDragging }, drag] = useDrag(
-    () => ({
-      type: inGrid ? "ITEM_IN_GRID" : "Item",
-      item: {
-        id,
-        left,
-        top,
-        inGrid,
-        type,
-        isMulti,
-        type1,
-        type2,
-        type3,
-        type4,
-        numberComponents,
-        items,
-      },
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-        opacity: monitor.isDragging() ? 0.4 : 1,
-      }),
-    }),
-    [id, left, top, inGrid, isMulti]
-  );
-
-  const [value, setValue] = useState("Enter text !!!");
-  const [linkItemTypeA, setLinkItemTypeA] = useState("");
+  const [value, setValue] = useState(valueItem ? valueItem : "Enter text !!!");
+  const [linkItemTypeA, setLinkItemTypeA] = useState(href ? href : "");
   const [nameItemLink, setNameItemLink] = useState("");
   const [Type, setType] = useState("div");
-  const [linkImg, setLinkImg] = useState("");
+  const [linkImg, setLinkImg] = useState(src ? src : "");
   const [state, dispatch] = useContext(ContextReducer);
+  const showOverlayComponent = useContext(ShowOverlay);
   const [showModal, setShowModal] = useState(true);
   //use context get state show and hidden editor component
   const [showEditorComponent, setEditorComponent] = useContext(
     ContextShowEditorComponent
   );
   const data = useContext(HeightHeading);
+  const elementContentPortfolio = useContext(ElementContentPortfolio);
+  const [widthContents, setWidthContents] = useState(width);
+  const [heightWrapperReSizeable, setHeightWrapperReSizeable] =
+    useState(height);
 
   const classNamesItem = clsx(
     styles.wrapper,
@@ -122,13 +103,42 @@ function Item({
     }
   );
 
+  var left = stylesItem ? stylesItem.left : 0;
+  var top = stylesItem ? stylesItem.top : 0;
+
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type: inGrid ? "ITEM_IN_GRID" : "Item",
+      item: {
+        id,
+        left,
+        top,
+        inGrid,
+        type,
+        isMulti,
+        type1,
+        type2,
+        type3,
+        type4,
+        numberComponents,
+        items,
+        valueItem,
+      },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+        opacity: monitor.isDragging() ? 0.4 : 1,
+      }),
+    }),
+    [id, left, top, inGrid, isMulti]
+  );
+
+  let heightHeadingText, setHeightHeadingText;
   const handleChangeValue = (e) => {
     setValue(e.target.value);
-    e.target.style.height = 70;
     e.target.style.height = e.target.scrollHeight + "px";
-    console.log(data);
-    if (data && heading) {
-      const [heightHeadingText, setHeightHeadingText] = data;
+    setHeightWrapperReSizeable(e.target.offsetHeight);
+    if (data) {
+      [heightHeadingText, setHeightHeadingText] = data;
       setHeightHeadingText(e.target.scrollHeight);
     }
   };
@@ -200,24 +210,16 @@ function Item({
     onClick: null,
     type: "text",
   };
-
   useEffect(() => {
-    if (type) {
-      setType(type);
-    }
-    if (type === "a") {
-      setType("a");
-      setValue("Enter link!!");
-    }
+    setType(icon ? "div" : type);
     if (type === "img") {
-      setType("input");
+      setType(src ? "img" : "input");
       propsTypeLink.type = "file";
     }
     if (type === "button") {
       setType("input");
       setValue("Enter name button!!");
     }
-
     if (icon) {
       setType("div");
     }
@@ -235,7 +237,14 @@ function Item({
       setValue("Enter title");
     }
   }, [linkImg]);
-
+  // get useState showOverlay
+  let showOverlay, setShowOverlay;
+  useEffect(() => {
+    if (showOverlayComponent) {
+      [showOverlay, setShowOverlay] = showOverlayComponent;
+      console.log(showOverlay);
+    }
+  });
   //set style for component
   useEffect(() => {
     const itemSelected = document.getElementById(state.id_item_selected);
@@ -273,13 +282,31 @@ function Item({
     };
   }, []);
 
+  //get width wrapper content
+  useEffect(() => {
+    let contentPortfolio, setShowTrash, widthContent;
+    if (elementContentPortfolio && width === "100%") {
+      [contentPortfolio, setShowTrash, widthContent] = elementContentPortfolio;
+      setWidthContents(widthContent);
+    }
+  });
+
   return (
     <>
       {resizable ? (
         <ReactResizableBox
-          width={width}
-          height={height}
-          style={{ ...stylesItem, height: heading ? "80" : "50" }}
+          width={widthContents ? parseInt(widthContents) : parseInt(width)}
+          height={type === "input" ? heightWrapperReSizeable : height}
+          style={{
+            ...stylesItem,
+            height: "50",
+          }}
+          onMouseDown={(e) => {
+            setShowOverlay(true);
+          }}
+          onMouseUp={(e) => {
+            setShowOverlay(false);
+          }}
         >
           <>
             <Type
@@ -303,6 +330,7 @@ function Item({
                 lineHeight: heading ? "24px" : "16px",
                 opacity: isDragging ? "0.5" : "1",
                 opacity: opacity ? "0.4" : "1",
+                ...styleDefault,
               }}
               type={type === "img" ? "file" : "text"}
               accept={type !== "img" ? null : "image/*"}

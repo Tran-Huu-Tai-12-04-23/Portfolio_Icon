@@ -1,10 +1,13 @@
 import { useDrop, useDragDropManager } from "react-dnd";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import clsx from "clsx";
 import styles from "./Overlay.module.scss";
 
+import { ShowOverlay } from "~/Store/Context";
+
 function Item({ top, left }) {
   const [backgroundColor, setBackgroundColor] = useState("#fff");
+  const [showOverlay, setShowOverlay] = useContext(ShowOverlay);
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ["ITEM_IN_GRID", "Item", "MULTI_ITEM"],
@@ -29,6 +32,9 @@ function Item({ top, left }) {
   }, [{ isActive, canDrop }]);
 
   let isDragging = useDragDropManager().monitor.isDragging();
+  useEffect(() => {
+    setShowOverlay(isDragging);
+  }, [isDragging]);
 
   return (
     <div
@@ -36,7 +42,7 @@ function Item({ top, left }) {
       style={{
         top: top,
         left: left,
-        display: isDragging ? "block" : "none",
+        display: showOverlay ? "block" : "none",
         backgroundColor: backgroundColor,
       }}
     ></div>

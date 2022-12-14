@@ -72,7 +72,6 @@ function ComponentLayouts({ item, opacity, children }) {
   const [heightHeadingText, setHeightHeadingText] = useState(
     heightDisplayContent ? heightDisplayContent * 0.3 + 12 : 50
   );
-
   const renderComponents = () => {
     if (item.numberComponents === 3) {
       return (
@@ -84,13 +83,14 @@ function ComponentLayouts({ item, opacity, children }) {
           className={clsx(styles.wrapper_multi_items)}
           key={item.id}
           stylesItem={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "12px 24px",
             top: item.top,
             left: item.left,
             right: item.right,
             height: heightDisplayContent,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
             opacity: opacity ? "0.4" : 1,
           }}
         >
@@ -102,44 +102,49 @@ function ComponentLayouts({ item, opacity, children }) {
             width={widthDisplayContent / 2 - 24}
             height={heightDisplayContent - 24}
             draggable={false}
+            position='unset'
             stylesItem={{
-              top: 0,
-              left: item.left + 12,
-              marginTop: "12px",
+              position: "unset",
               maxWidth: "48%",
             }}
           ></Item>
-          <Item
-            key={item.idItem2}
-            id={item.idItem2}
-            inGrid={true}
-            width={widthDisplayContent / 2 - 24}
-            height={heightHeadingText}
-            draggable={false}
-            type={item.type2}
-            fontSize='24px'
-            heading='true'
-            stylesItem={{
-              top: 0,
-              right: item.right + 12,
-              marginTop: "12px",
-              maxWidth: "48%",
+          <div
+            style={{
+              width: "50%",
+              height: "100%",
+              position: "unset",
+              marginLeft: 24,
             }}
-          ></Item>
-          <Item
-            key={item.idItem3}
-            id={item.idItem3}
-            inGrid={true}
-            width={widthDisplayContent / 2 - 24}
-            draggable={false}
-            type={item.type3}
-            stylesItem={{
-              top: heightHeadingText,
-              right: item.right + 12,
-              marginTop: "20px",
-              maxWidth: "48%",
-            }}
-          ></Item>
+          >
+            <Item
+              key={item.idItem2}
+              id={item.idItem2}
+              inGrid={true}
+              width={widthDisplayContent / 2 - 24}
+              draggable={false}
+              position='unset'
+              type={item.type2}
+              fontSize='24px'
+              heading='true'
+              stylesItem={{
+                maxWidth: "100%",
+                position: "unset",
+              }}
+            ></Item>
+            <Item
+              key={item.idItem3}
+              id={item.idItem3}
+              inGrid={true}
+              draggable={false}
+              width={widthDisplayContent / 2 - 24}
+              position='unset'
+              type={item.type3}
+              stylesItem={{
+                maxWidth: "100%",
+                position: "unset",
+              }}
+            ></Item>
+          </div>
         </MultiItem>
       );
     } else if (item.numberComponents === 4) {
@@ -153,8 +158,7 @@ function ComponentLayouts({ item, opacity, children }) {
           key={item.id}
           stylesItem={{
             display: "flex",
-            justifyContent: "space-around",
-            // alignItems: "center",
+            alignItems: "center",
             top: item.top,
             left: item.left,
             right: item.right,
@@ -214,7 +218,6 @@ function ComponentLayouts({ item, opacity, children }) {
             draggable={false}
             type={item.type4}
             stylesItem={{
-              top: 24,
               position: "unset",
               margin: "12px",
             }}
