@@ -6,6 +6,7 @@
   font-size: 14px;
   line-height: 16px;
   cursor: grab;
+  resize: auto;
 }
 
 .normal {
@@ -86,8 +87,8 @@
 
   &:hover {
     border-color: #0000ff !important;
-    border-style: solid !important;
-    border-width: 1px !important;
+    // border-style: solid !important;
+    // border-width: 1px !important;
   }
 }
 .box {

@@ -70,6 +70,7 @@ function BoxMenu() {
         <TipSuggest
           content='Image'
           position={"top"}
+          width='30%'
           styles={{
             width: "100%",
             height: "100%",

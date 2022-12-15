@@ -49,15 +49,7 @@ function Grid(props) {
         const delta = monitor.getClientOffset();
         let left = delta.x - 200;
         let top = delta.y - 100;
-        addItem(
-          item.type,
-          left,
-          top + valueScrollTop,
-          uuid(),
-          item.valueItem,
-          item.center,
-          item.href
-        );
+        addItem(item.type, left, top + valueScrollTop, uuid());
       } else if (item.inGrid === false && item.isMulti) {
         const valueScrollTop = contentPortfolio.current.scrollTop;
         const delta = monitor.getClientOffset();
@@ -93,12 +85,9 @@ function Grid(props) {
     top = "100px",
     id,
     width = 200,
-    height = 40,
-    src,
-    valueItem,
-    center,
-    href
+    height = 40
   ) => {
+    console.log(height);
     setItems((prev) => {
       return [
         ...prev,
@@ -106,15 +95,11 @@ function Grid(props) {
           type,
           left,
           top,
+          id,
           width,
           height,
-          id,
           inGrid: true,
           isMulti: false,
-          src,
-          valueItem,
-          center,
-          href,
         },
       ];
     });
@@ -219,6 +204,7 @@ function Grid(props) {
                 ></ComponentLayouts>
               );
             } else {
+              console.log(item);
               return (
                 <Item
                   key={item.id}

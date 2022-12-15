@@ -141,6 +141,7 @@ function ComponentLayouts({ item, opacity, children }) {
               id={item.idItem2}
               inGrid={true}
               width={widthDisplayContent / 2 - 24}
+              height={40}
               draggable={false}
               position='unset'
               type={item.type2}
@@ -157,6 +158,7 @@ function ComponentLayouts({ item, opacity, children }) {
               inGrid={true}
               draggable={false}
               width={widthDisplayContent / 2 - 24}
+              height={40}
               position='unset'
               type={item.type3}
               stylesItem={{

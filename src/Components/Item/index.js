@@ -54,21 +54,19 @@ function Item({
   opacity = false,
   styleDefault = {},
   src,
-  href = {},
+  href,
   valueItem,
   center = false,
   children,
 }) {
+  console.log(styleDefault);
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [value, setValue] = useState(valueItem ? valueItem : "Enter text !!!");
-  const [linkItemTypeA, setLinkItemTypeA] = useState(
-    href.href ? href.href : ""
-  );
-  const [nameItemLink, setNameItemLink] = useState(href.name ? href.name : "");
+  const [linkItemTypeA, setLinkItemTypeA] = useState(href ? href.href : "");
+  const [nameItemLink, setNameItemLink] = useState(href ? href.name : "");
   const [Type, setType] = useState("div");
   const [linkImg, setLinkImg] = useState(src ? src : "");
   const [state, dispatch] = useContext(ContextReducer);
-  const showOverlayComponent = useContext(ShowOverlay);
   const [showModal, setShowModal] = useState(href ? false : true);
   //use context get state show and hidden editor component
   const [showEditorComponent, setEditorComponent] = useContext(
@@ -142,7 +140,11 @@ function Item({
   let heightHeadingText, setHeightHeadingText;
   const handleChangeValue = (e) => {
     setValue(e.target.value);
-    e.target.style.height = e.target.scrollHeight + "px";
+    console.log(e.target.scrollHeight);
+    console.log(e.target.offsetHeight);
+    if (e.target.scrollHeight > e.target.offsetHeight) {
+      e.target.style.height = e.target.scrollHeight + "px";
+    }
     setHeightWrapperReSizeable(e.target.offsetHeight);
     if (data) {
       [heightHeadingText, setHeightHeadingText] = data;
@@ -157,6 +159,7 @@ function Item({
   };
 
   const handleShowInputImg = (e) => {
+    setValue(e.target.value);
     const reader = new FileReader();
     var url;
     reader.onload = () => {
@@ -242,14 +245,7 @@ function Item({
       setValue("Enter title");
     }
   }, [linkImg]);
-  // get useState showOverlay
-  let showOverlay, setShowOverlay;
-  useEffect(() => {
-    if (showOverlayComponent) {
-      [showOverlay, setShowOverlay] = showOverlayComponent;
-      console.log(showOverlay);
-    }
-  });
+
   //set style for component
   useEffect(() => {
     const itemSelected = document.getElementById(state.id_item_selected);
@@ -302,7 +298,6 @@ function Item({
       setWidthContents(widthContent);
     }
   });
-
   return (
     <>
       {resizable ? (
@@ -312,13 +307,7 @@ function Item({
           style={{
             ...stylesItem,
             transform: center ? "translateX(-50%)" : "none",
-            minHeight: 36,
-          }}
-          onMouseDown={(e) => {
-            setShowOverlay(true);
-          }}
-          onMouseUp={(e) => {
-            setShowOverlay(false);
+            minHeight: 42,
           }}
         >
           <>
@@ -327,9 +316,12 @@ function Item({
               ref={draggable ? drag : null}
               onClick={handleSelectItemToEdit}
               className={classNamesItem}
-              src={type === "img" ? linkImg : ""}
+              cols={50}
+              src={type === "img" ? linkImg : null}
               value={type !== "img" ? value : undefined}
-              onChange={type === "img" ? handleShowInputImg : handleChangeValue}
+              onChange={
+                type === "input" ? handleChangeValue : handleShowInputImg
+              }
               href={linkItemTypeA ? linkItemTypeA : ""}
               target={linkItemTypeA ? "_blank" : null}
               onBlur={handleBlurInput}
@@ -366,6 +358,7 @@ function Item({
       ) : (
         <>
           <Type
+            onClick={resizable ? handleSelectItemToEdit : null}
             id={id}
             ref={drag}
             className={classNamesItem}
@@ -373,6 +366,9 @@ function Item({
               ...stylesItem,
               opacity: isDragging ? "0.5" : "1",
               opacity: opacity ? "0.4" : "1",
+              height: height,
+              width: width,
+              ...styleDefault,
             }}
             value={value}
             onChange={handleChangeValue}

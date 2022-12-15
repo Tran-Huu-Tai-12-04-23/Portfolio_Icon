@@ -13,6 +13,7 @@ import {
   ElementContentPortfolio,
 } from "~/Store/Context";
 import Footer from "../Footer";
+import { BiCloudSnow } from "react-icons/bi";
 
 function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
   const [items, setItems] = useState(DefaultComponent ? DefaultComponent : []);
@@ -42,6 +43,7 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
   useEffect(() => {
     if (wrapperTemplateContent.current) {
       setWidthContent(wrapperTemplateContent.current.offsetWidth);
+      console.log(wrapperTemplateContent.current.offsetWidth);
     }
   }, []);
 
