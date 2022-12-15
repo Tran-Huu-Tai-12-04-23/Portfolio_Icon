@@ -9,25 +9,32 @@ function Header() {
   return (
     <div className={clsx(styles.wrapper)}>
       {/* menu in here  */}
-      <img
-        src={logoHuutai}
+      <div
         style={{
-          width: "50px",
+          width: "100px",
           height: "50px",
-          borderRadius: "50%",
         }}
-      ></img>
-      {/* <div className={clsx(styles.wrapper_input)}>
-        <FontAwesomeIcon
-          className={clsx(styles.icon)}
-          icon={faSearch}
-        ></FontAwesomeIcon>
-        <input className={clsx(styles.input)} placeholder='Search' />
-        <FontAwesomeIcon
-          className={clsx(styles.icon_close)}
-          icon={faClose}
-        ></FontAwesomeIcon>
-      </div> */}
+      >
+        <img
+          src={logoHuutai}
+          style={{
+            width: "50px",
+            height: "50px",
+            borderRadius: "50%",
+          }}
+        ></img>
+      </div>
+      <div className={clsx(styles.nav_home)}>
+        <a href='#home'>
+          <h4>Home</h4>
+        </a>
+        <a href='#guide'>
+          <h4>Guide</h4>
+        </a>
+        <a href='#footer'>
+          <h4>Contact</h4>
+        </a>
+      </div>
       <img
         className={clsx(styles.icon__university)}
         src={logo_tdtu}

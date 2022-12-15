@@ -104,6 +104,7 @@ const reducer = (state, action) => {
         id_item_selected: action.payload,
       };
     }
+
     default:
       throw new Error("Invalid action type");
   }

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useContext } from "react";
 import styles from "./Item.module.scss";
 import { MultiItem, Item } from "~/Components";
 import { ElementContentPortfolio, HeightHeading } from "~/Store/Context";
+import uuid from "react-uuid";
 
 function ComponentLayouts({ item, opacity, children }) {
   const [widthDisplayContent, setWidthDisplayContent] = useState();
@@ -24,12 +25,29 @@ function ComponentLayouts({ item, opacity, children }) {
   });
 
   const renderItem = () => {
-    const arr = [1, 2, 3, 4];
+    const arr = [
+      {
+        idItem1: item.idItem1,
+        idItem2: item.idItem2,
+      },
+      {
+        idItem1: item.idItem3,
+        idItem2: item.idItem4,
+      },
+      {
+        idItem1: item.idItem5,
+        idItem2: item.idItem6,
+      },
+      {
+        idItem1: item.idItem7,
+        idItem2: item.idItem8,
+      },
+    ];
     return arr.map((temp, index) => {
       return (
         <div
           key={index}
-          id={item.id}
+          id={`${index}_wrapper_item_multi`}
           style={{
             width: "22%",
             position: "unset",
@@ -38,8 +56,8 @@ function ComponentLayouts({ item, opacity, children }) {
           }}
         >
           <Item
-            key={item.idItem1}
-            id={item.idItem1}
+            key={temp.idItem1}
+            id={temp.idItem1}
             position='unset'
             inGrid={true}
             type={item.type1}
@@ -52,8 +70,8 @@ function ComponentLayouts({ item, opacity, children }) {
             }}
           ></Item>
           <Item
-            key={item.idItem2}
-            id={item.idItem2}
+            key={temp.idItem2}
+            id={temp.idItem2}
             position='unset'
             inGrid={true}
             width={widthDisplayContent / 4}

@@ -8,12 +8,13 @@
   margin-bottom: 2vh;
   scroll-behavior: smooth;
   transition: all 0.5s ease-in-out;
+  padding-bottom: 50px;
 }
 
 .wrapper_template {
   margin: 0 50px;
-  -webkit-box-shadow: 4px -3px 15px 5px #ccc;
-  box-shadow: 4px -3px 15px 5px #ccc;
+  -webkit-box-shadow: 5px 5px 15px 5px #170c0b;
+  box-shadow: 5px 5px 15px 5px #170c0b;
   height: 86vh;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -62,8 +63,8 @@
 
 .go_to_top {
   position: absolute;
-  bottom: 4%;
-  right: 26%;
+  bottom: 650px;
+  right: 22%;
   font-size: 80;
   background-color: #ccc;
   width: 50px;

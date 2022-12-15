@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useContext } from "react";
 import clsx from "clsx";
-import styles from "./CreatePorfolio.module.scss";
+import styles from "./CreatePortfolio.module.scss";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { VscAdd } from "react-icons/vsc";
 
@@ -12,8 +12,9 @@ import {
   ContextItemsIngrid,
   ElementContentPortfolio,
 } from "~/Store/Context";
+import Footer from "../Footer";
 
-function CreatePorfolio({ DefaultComponent, heightDefault, children }) {
+function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
   const [items, setItems] = useState(DefaultComponent ? DefaultComponent : []);
   const [transactionContent, setTransactionContent] = useState("0");
   const [widthMenu, setWidthMenu] = useState("22%");
@@ -86,7 +87,7 @@ function CreatePorfolio({ DefaultComponent, heightDefault, children }) {
               id={"content_portfolio"}
               className={clsx(styles.wrapper_template)}
               style={{
-                width: "76%",
+                minWidth: "76%",
                 transform: `translateX(${transactionContent})`,
               }}
               onScroll={handleShowScroll}
@@ -173,9 +174,11 @@ function CreatePorfolio({ DefaultComponent, heightDefault, children }) {
             ></MdKeyboardArrowUp>
           </div>
         </div>
+
+        <Footer backgroundColor='#fff'></Footer>
       </ContextShowEditorComponent.Provider>
     </ContextItemsIngrid.Provider>
   );
 }
 
-export default CreatePorfolio;
+export default CreatePortfolio;

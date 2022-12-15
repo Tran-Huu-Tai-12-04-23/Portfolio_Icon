@@ -41,10 +41,7 @@ function Header() {
             ></FontAwesomeIcon>
           </Link>
         </TipSuggest>
-        <FontAwesomeIcon
-          className={clsx(styles.icon_file)}
-          icon={faFile}
-        ></FontAwesomeIcon>
+
         <TipSuggest classNames={clsx(styles.input)} content='Edit'>
           <input
             value={title}
@@ -55,27 +52,21 @@ function Header() {
       </div>
 
       <div className={clsx(styles.until_options)}>
-        <TipSuggest content='Back'>
-          <FontAwesomeIcon icon={faRotateLeft}></FontAwesomeIcon>
-        </TipSuggest>
-        <TipSuggest content='Next'>
-          <FontAwesomeIcon icon={faRotateRight}></FontAwesomeIcon>
-        </TipSuggest>
         <TipSuggest content='Show preview'>
           <FontAwesomeIcon icon={faComputer}></FontAwesomeIcon>
         </TipSuggest>
-        <TipSuggest content='Get Link'>
+        {/* <TipSuggest content='Get Link'>
           <FontAwesomeIcon icon={faLink}></FontAwesomeIcon>
-        </TipSuggest>
-        <TipSuggest content='Share'>
+        </TipSuggest> */}
+        {/* <TipSuggest content='Share'>
           <FontAwesomeIcon icon={faUserPlus}></FontAwesomeIcon>
-        </TipSuggest>
-        <TipSuggest content='Settings'>
+        </TipSuggest> */}
+        {/* <TipSuggest content='Settings'>
           <FontAwesomeIcon icon={faGears}></FontAwesomeIcon>
-        </TipSuggest>
-        <TipSuggest content='Menu'>
+        </TipSuggest> */}
+        {/* <TipSuggest content='Menu'>
           <FontAwesomeIcon icon={faEllipsisVertical}></FontAwesomeIcon>
-        </TipSuggest>
+        </TipSuggest> */}
         <TipSuggest content='Public'>
           <Button primary className={clsx(styles.button)}>
             Public

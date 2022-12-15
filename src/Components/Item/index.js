@@ -28,6 +28,7 @@ import {
   setBorderSize,
   setUppercase,
   setLineHeight,
+  setFontWeight,
 } from "~/Store/reducer/actions";
 import { constantActions } from "~/Constants";
 
@@ -58,7 +59,6 @@ function Item({
   center = false,
   children,
 }) {
-  console.log(href);
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [value, setValue] = useState(valueItem ? valueItem : "Enter text !!!");
   const [linkItemTypeA, setLinkItemTypeA] = useState(
@@ -177,7 +177,7 @@ function Item({
     dispatch(setBorderRadius(item.style.borderRadius));
     dispatch(setBorderStyle(item.style.borderStyle));
     dispatch(setBorderColor(item.style.borderColor));
-    dispatch(setBorderColor(item.style.fontWeight));
+    dispatch(setFontWeight(item.style.fontWeight));
     const alignText = item.style.textAlign === "center" ? true : false;
     dispatch(setAlignCenter(alignText));
     dispatch(setBorderSize(item.style.borderWidth));
@@ -254,6 +254,7 @@ function Item({
   useEffect(() => {
     const itemSelected = document.getElementById(state.id_item_selected);
     if (itemSelected) {
+      console.log(state.font_weight);
       itemSelected.style.color = state.color;
       itemSelected.style.backgroundColor = state.background_color;
       itemSelected.style.fontSize = state.font_size;

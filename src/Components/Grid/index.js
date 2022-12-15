@@ -73,6 +73,10 @@ function Grid(props) {
           uuid(),
           uuid(),
           uuid(),
+          uuid(),
+          uuid(),
+          uuid(),
+          uuid(),
           item.numberComponents
         );
       }
@@ -126,8 +130,11 @@ function Grid(props) {
     idItem2,
     idItem3,
     idItem4,
-    numberComponents,
-    src
+    idItem5,
+    idItem6,
+    idItem7,
+    idItem8,
+    numberComponents
   ) => {
     setItems((prev) => {
       return [
@@ -142,6 +149,10 @@ function Grid(props) {
           idItem2,
           idItem3,
           idItem4,
+          idItem5,
+          idItem6,
+          idItem7,
+          idItem8,
           right: 0,
           left: 0,
           top,
@@ -149,12 +160,10 @@ function Grid(props) {
           id,
           inGrid: true,
           isMulti: true,
-          src,
         },
       ];
     });
   };
-
   const moveItem = (id, left, top, inGrid, items) => {
     items.map((item) => {
       if (item.id === id) {

@@ -1,6 +1,6 @@
 import {
   Home,
-  CreatePorfolio,
+  CreatePortfolio,
   Template1Content,
   Template2Content,
   Template3Content,
@@ -15,28 +15,28 @@ export const publicRoutes = [
 
   {
     element: (
-      <CreatePorfolio>
+      <CreatePortfolio>
         <Template1Content />
-      </CreatePorfolio>
+      </CreatePortfolio>
     ),
     path: "/template1",
   },
   {
     element: (
-      <CreatePorfolio
+      <CreatePortfolio
         DefaultComponent={DefaultItemInGridTemplate2}
         heightDefault={3000}
       >
         <Template2Content />
-      </CreatePorfolio>
+      </CreatePortfolio>
     ),
     path: "/template2",
   },
   {
     element: (
-      <CreatePorfolio>
+      <CreatePortfolio>
         <Template3Content />
-      </CreatePorfolio>
+      </CreatePortfolio>
     ),
     path: "/template3",
   },

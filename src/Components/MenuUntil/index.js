@@ -37,8 +37,12 @@ function MenuUntil({ state, valueState, children }) {
         className={clsx(styles.title, {
           [styles.hidden]: !show,
         })}
+        style={{
+          textTransform: "uppercase",
+          fontSize: "24px",
+        }}
       >
-        Insert
+        Components
       </h1>
       {/* //contenm */}
       <div className={clsx(styles.content)}>

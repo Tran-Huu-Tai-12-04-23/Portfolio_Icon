@@ -1,6 +1,6 @@
 //components layout
 import Home from "./Layouts/Home";
-import CreatePorfolio from "./Layouts/CreatePorfolio";
+import CreatePortfolio from "./Layouts/CreatePortfolio";
 //components
 import Template from "./Template";
 import TipSuggest from "./TipSuggest";
@@ -19,7 +19,7 @@ import Template3Content from "./TemplatesContent/Template3Content";
 
 export {
   Home,
-  CreatePorfolio,
+  CreatePortfolio,
   Grid,
   Template,
   TipSuggest,
