@@ -6,6 +6,7 @@
   font-size: 14px;
   line-height: 16px;
   cursor: grab;
+  resize: auto;
 }
 
 .input_text {
@@ -16,7 +17,6 @@
   padding: 0 12px;
   cursor: text;
   word-wrap: break-all;
-  resize: auto;
 }
 
 .link {
@@ -75,7 +75,7 @@
   svg {
     width: 100%;
     height: 100%;
-    color: inherit;
+    color: inherit !important;
   }
 }
 // css when item have prop icon
@@ -123,7 +123,7 @@
   z-index: 1000000;
   .modal_enter_link {
     position: absolute;
-    left: 50%;
+    left: 50vh;
     min-width: 300px;
     min-height: 180px;
     // display: flex;
@@ -175,6 +175,7 @@
 }
 
 // css icon
+.get_link_icon:hover .item_edit,
 .wrapper:hover + .item_edit {
   display: flex;
 }
@@ -244,4 +245,49 @@
 .add_height_bottom {
   bottom: -8px;
   left: 50%;
+}
+
+//get link for icon
+.enter_link_icon {
+  display: none;
+  position: absolute;
+  top: -60px;
+  right: -200px;
+  width: 400px;
+  height: 50px;
+  display: flex;
+  padding: 0 6px;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #e6e6fa;
+  border-radius: 12px;
+  border: 1px solid #000;
+
+  input {
+    width: 78%;
+    height: 80%;
+    border: none;
+    outline: none;
+    position: unset;
+    background-color: transparent;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    padding: 0 12px;
+  }
+  button {
+    width: 20%;
+    height: 80%;
+    border: none;
+    outline: none;
+    padding: 0 12px;
+    position: unset;
+    border-radius: 12px;
+    background-color: var(--primary);
+    color: #fff;
+    font-size: 14px;
+    &:hover {
+      cursor: pointer;
+      background-color: #4285f4;
+    }
+  }
 }

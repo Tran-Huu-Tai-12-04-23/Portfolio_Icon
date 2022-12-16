@@ -2,10 +2,10 @@
   display: flex;
   align-items: center;
   position: absolute;
-  left: 24%;
-  top: 20px;
-  min-width: 45%;
-  min-height: 40px;
+  left: 20vw;
+  top: 10px;
+  max-width: 70vw;
+  min-height: 60px;
   padding: 0 24px;
   background-color: #ccc;
   border-radius: 12px;
@@ -161,7 +161,7 @@
   .border_radius_options {
     width: 150px;
     border: 1px solid #000;
-    min-width: 60px;
+    min-width: 80px;
     margin: 0 6px;
     height: 100%;
     overflow: hidden;
@@ -177,7 +177,7 @@
     }
 
     input {
-      width: 100%;
+      width: 30%;
       text-align: center;
     }
 
@@ -283,7 +283,7 @@ svg {
 }
 .icon_trash {
   position: absolute;
-  right: -10%;
+  right: -4%;
   font-size: 40px;
   cursor: pointer;
   animation: wiggle 0.4s ease-in-out;

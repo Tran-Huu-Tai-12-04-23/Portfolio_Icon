@@ -3,6 +3,7 @@ import { useDrag } from "react-dnd";
 import { useState, useEffect, useContext, useRef } from "react";
 import { ResizableBox as ReactResizableBox } from "react-resizable";
 import { RiEdit2Fill } from "react-icons/ri";
+import { IoIosAdd } from "react-icons/io";
 
 import "./resizeable.css";
 import styles from "./Item.module.scss";
@@ -66,6 +67,7 @@ function Item({
   const [linkImg, setLinkImg] = useState(src ? src : "");
   const [state, dispatch] = useContext(ContextReducer);
   const [showModal, setShowModal] = useState(href ? false : true);
+  const [showEditLinkIcon, setShowEditLinkIcon] = useState(false);
   //use context get state show and hidden editor component
   const [showEditorComponent, setEditorComponent] = useContext(
     ContextShowEditorComponent
@@ -76,6 +78,8 @@ function Item({
   const [heightWrapperReSizeable, setHeightWrapperReSizeable] =
     useState(height);
   const [scrollHeight, setScrollHeight] = useState(0);
+  const inputEditLinkIcon = useRef();
+  const [linkIcon, setLinkIcon] = useState("");
 
   const classNamesItem = clsx(
     styles.wrapper,
@@ -169,6 +173,7 @@ function Item({
   };
 
   const loadStyleComponentInInitState = (item) => {
+    console.log(item);
     dispatch(setColor(item.style.color));
     dispatch(setBackgroundColor(item.style.backgroundColor));
     dispatch(setFontSize(item.style.fontSize ? item.style.fontSize : "14px"));
@@ -178,7 +183,7 @@ function Item({
     );
     dispatch(setBorderStyle(item.style.borderStyle));
     dispatch(setBorderColor(item.style.borderColor));
-    dispatch(setFontWeight(item.style.fontWeight));
+    dispatch(setFontWeight(item.style.fontWeight ? true : false));
     const alignText = item.style.textAlign === "center" ? true : false;
     dispatch(setAlignCenter(alignText));
     dispatch(setBorderSize(item.style.borderWidth));
@@ -193,7 +198,7 @@ function Item({
     e.stopPropagation();
     loadStyleComponentInInitState(getParent(e));
     // dispatch(setIdItemSelected(e.target.id));
-    setEditorComponent(!showEditorComponent);
+    setEditorComponent(true);
   };
 
   //get id if component multi layer
@@ -281,7 +286,7 @@ function Item({
       itemSelected.style.borderRadius = state.border_radius;
       itemSelected.style.borderStyle = state.border_style;
       itemSelected.style.borderColor = state.border_color;
-      itemSelected.style.fontWeight = state.font_weight ? "bold" : "400";
+      itemSelected.style.fontWeight = state.font_weight ? "bold" : "";
       // set center text in component
       itemSelected.style.textAlign = state.align_center ? "center" : "";
       itemSelected.style.display = state.align_center ? "flex" : "";
@@ -415,14 +420,70 @@ function Item({
             ...stylesItem,
           }}
         >
-          <div
-            id={id}
-            ref={draggable ? drag : null}
-            onClick={handleSelectItemToEdit}
-            className={classNamesItem}
-          >
-            {InfoIcon ? InfoIcon.Component : null}
-          </div>
+          <>
+            <a
+              id={id}
+              ref={draggable ? drag : null}
+              onClick={handleSelectItemToEdit}
+              className={classNamesItem}
+              target='_blank'
+              href={linkIcon ? linkIcon : null}
+              styles={{
+                ...styleDefault,
+              }}
+            >
+              {InfoIcon ? InfoIcon.Component : null}
+            </a>
+            <div
+              className={clsx(styles.item_edit)}
+              onClick={(e) => {
+                e.stopPropagation();
+                inputEditLinkIcon.current.focus();
+                setShowEditLinkIcon(true);
+                setEditorComponent(true);
+              }}
+            >
+              <TipSuggest content='Add link '>
+                <RiEdit2Fill id={id}></RiEdit2Fill>
+              </TipSuggest>
+            </div>
+            <div
+              className={clsx(styles.enter_link_icon)}
+              style={{
+                display: showEditLinkIcon ? "flex" : "none",
+              }}
+            >
+              <input
+                placeholder="After adding,you can't edit the item's style"
+                ref={inputEditLinkIcon}
+                onChange={(e) => {
+                  setLinkIcon(e.target.value);
+                  e.stopPropagation();
+                }}
+                value={linkIcon}
+                onKeyPress={(e) => {
+                  if (e.which === 13) {
+                    e.stopPropagation();
+                    setShowEditLinkIcon(false);
+                    setLinkIcon(e.target.value);
+                  }
+                }}
+                onBlur={(e) => {
+                  e.stopPropagation();
+                  setShowEditLinkIcon(false);
+                  setLinkIcon(e.target.value);
+                }}
+              ></input>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowEditLinkIcon(false);
+                }}
+              >
+                Enter
+              </button>
+            </div>
+          </>
         </ReactResizableBox>
       );
     }

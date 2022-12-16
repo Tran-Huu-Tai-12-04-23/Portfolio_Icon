@@ -39,12 +39,6 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
       inputAddHeight.current.focus();
     }
   });
-  //get height element id content_portfolio
-  // useEffect(() => {
-  //   if (contentPortfolio.current) {
-  //     setHeightContent(contentPortfolio.current.offsetHeight);
-  //   }
-  // });
 
   //get width content portfolio
   useEffect(() => {

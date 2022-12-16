@@ -5,7 +5,10 @@ import {
   Template2Content,
   Template3Content,
 } from "~/Components";
-import { DefaultItemInGridTemplate2 } from "./ComponentDefaults";
+import {
+  DefaultItemInGridTemplate2,
+  DefaultItemInGridTemplate3,
+} from "./ComponentDefaults";
 
 export const publicRoutes = [
   {
@@ -34,7 +37,10 @@ export const publicRoutes = [
   },
   {
     element: (
-      <CreatePortfolio>
+      <CreatePortfolio
+        DefaultComponent={DefaultItemInGridTemplate3}
+        heightDefault={3000}
+      >
         <Template3Content />
       </CreatePortfolio>
     ),

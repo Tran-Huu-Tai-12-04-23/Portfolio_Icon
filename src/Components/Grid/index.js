@@ -50,6 +50,7 @@ function Grid(props) {
         console.log(delta);
         let left = item.type === "icon" ? delta.x - 350 : delta.x - 400;
         let top = delta.y - 100;
+
         addItem(item.type, left, top + valueScrollTop, uuid(), item.InfoIcon);
       } else if (item.inGrid === false && item.isMulti) {
         const valueScrollTop = contentPortfolio.current.scrollTop;
@@ -162,7 +163,6 @@ function Grid(props) {
       }
     });
   };
-
   //show, hidden trash
   let isDragging = useDragDropManager().monitor.isDragging();
   useEffect(() => {
@@ -198,6 +198,7 @@ function Grid(props) {
                 <ComponentLayouts
                   key={item.id}
                   item={item}
+                  id={"multi_items"}
                   opacity={isDragging ? true : false}
                   styleDefault={item.styles}
                   src={item.src}

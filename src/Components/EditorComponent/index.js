@@ -213,8 +213,10 @@ function EditorComponent({ style }) {
   const removeItemsIngrid = (e) => {
     e.stopPropagation();
     //remove dom real
-    document.getElementById(state.id_item_selected).remove();
+    const item = document.getElementById(state.id_item_selected);
+    // item.remove();
     // remove dom virtual
+    console.log(state.id_item_selected);
     setItems(() => {
       return items.filter((item) => {
         return item.id !== state.id_item_selected;

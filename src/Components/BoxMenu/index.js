@@ -26,11 +26,23 @@ function BoxMenu() {
   const icons = [
     {
       Name: "Facebook",
-      Component: <GrFacebookOption />,
+      Component: (
+        <GrFacebookOption
+          style={{
+            color: "#1E90FF",
+          }}
+        />
+      ),
     },
     {
       Name: "Instagram",
-      Component: <GrInstagram />,
+      Component: (
+        <GrInstagram
+          style={{
+            color: "#F80000",
+          }}
+        />
+      ),
     },
     {
       Name: "Github",
@@ -38,11 +50,23 @@ function BoxMenu() {
     },
     {
       Name: "Linkedin",
-      Component: <GrLinkedin />,
+      Component: (
+        <GrLinkedin
+          style={{
+            color: "#00BFFF",
+          }}
+        />
+      ),
     },
     {
       Name: "Youtube",
-      Component: <GrYoutube />,
+      Component: (
+        <GrYoutube
+          style={{
+            color: "#980000",
+          }}
+        />
+      ),
     },
   ];
 
