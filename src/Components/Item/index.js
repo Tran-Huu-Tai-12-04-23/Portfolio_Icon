@@ -99,7 +99,7 @@ function Item({
       [styles.item_grid]: inGrid,
     },
     {
-      [styles.icon_ingrid]: type === "icon",
+      [styles.icon_ingrid]: type === "icon" && inGrid,
     }
   );
 
@@ -171,9 +171,11 @@ function Item({
   const loadStyleComponentInInitState = (item) => {
     dispatch(setColor(item.style.color));
     dispatch(setBackgroundColor(item.style.backgroundColor));
-    dispatch(setFontSize(item.style.fontSize));
+    dispatch(setFontSize(item.style.fontSize ? item.style.fontSize : "14px"));
     dispatch(setFontFamily(item.style.fontFamily));
-    dispatch(setBorderRadius(item.style.borderRadius));
+    dispatch(
+      setBorderRadius(item.style.borderRadius ? item.style.borderRadius : "0px")
+    );
     dispatch(setBorderStyle(item.style.borderStyle));
     dispatch(setBorderColor(item.style.borderColor));
     dispatch(setFontWeight(item.style.fontWeight));
@@ -182,7 +184,9 @@ function Item({
     dispatch(setBorderSize(item.style.borderWidth));
     const upperCase = item.style.textTransform === "uppercase" ? true : false;
     dispatch(setUppercase(upperCase));
-    dispatch(setLineHeight(item.style.lineHeight));
+    dispatch(
+      setLineHeight(item.style.lineHeight ? item.style.lineHeight : "14px")
+    );
   };
 
   const handleEditorComponent = (e) => {
@@ -213,6 +217,7 @@ function Item({
     }
   };
   const handleSelectItemToEdit = (e) => {
+    // e.preventDefault();
     e.stopPropagation();
     dispatch(setIdItemSelected(getId(e)));
     loadStyleComponentInInitState(getParent(e));
@@ -391,7 +396,7 @@ function Item({
             // height: height,
             // width: width,
             width: isMulti ? "100%" : "40px",
-            height: "50px",
+            height: "40px",
             ...styleDefault,
           }}
           value={value}
@@ -409,7 +414,6 @@ function Item({
           style={{
             ...stylesItem,
           }}
-          onClick={handleSelectItemToEdit}
         >
           <div
             id={id}

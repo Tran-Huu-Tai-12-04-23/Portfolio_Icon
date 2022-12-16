@@ -74,30 +74,7 @@ const reducer = (state, action) => {
         upper_case_letter: action.payload,
       };
     }
-    case constantActions.SET_FULL_WIDTH: {
-      return {
-        ...state,
-        full_width: action.payload,
-      };
-    }
-    case constantActions.SET_PREV_LEFT: {
-      return {
-        ...state,
-        prev_left: action.payload,
-      };
-    }
-    case constantActions.SET_PREV_RIGHT: {
-      return {
-        ...state,
-        prev_right: action.payload,
-      };
-    }
-    case constantActions.SET_PREV_WIDTH: {
-      return {
-        ...state,
-        prev_width: action.payload,
-      };
-    }
+
     case constantActions.SET_ID_ITEM: {
       return {
         ...state,

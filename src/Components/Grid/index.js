@@ -45,7 +45,10 @@ function Grid(props) {
       } else if (item.inGrid === false && item.isMulti === false) {
         const valueScrollTop = contentPortfolio.current.scrollTop;
         const delta = monitor.getClientOffset();
-        let left = delta.x - 200;
+        const data = monitor.getDifferenceFromInitialOffset();
+        console.log(data);
+        console.log(delta);
+        let left = item.type === "icon" ? delta.x - 350 : delta.x - 400;
         let top = delta.y - 100;
         addItem(item.type, left, top + valueScrollTop, uuid(), item.InfoIcon);
       } else if (item.inGrid === false && item.isMulti) {

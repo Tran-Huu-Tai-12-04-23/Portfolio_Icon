@@ -1,6 +1,6 @@
 import uuid from "react-uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLink, faImage } from "@fortawesome/free-solid-svg-icons";
+import { faLink } from "@fortawesome/free-solid-svg-icons";
 import {
   GrFacebookOption,
   GrInstagram,
@@ -9,10 +9,15 @@ import {
   GrYoutube,
 } from "react-icons/gr";
 import clsx from "clsx";
-import { BsFillMenuButtonFill } from "react-icons/bs";
-import { TfiText, TfiImage } from "react-icons/tfi";
-import { BsBox, BsImage } from "react-icons/bs";
-import { AiOutlineAlignLeft } from "react-icons/ai";
+import {
+  BsCardText,
+  BsFileImage,
+  BsBoxSeam,
+  BsFillMenuButtonWideFill,
+} from "react-icons/bs";
+import { TfiImage } from "react-icons/tfi";
+import { BsImage } from "react-icons/bs";
+import { AiOutlineAlignLeft, AiOutlineLink } from "react-icons/ai";
 
 import styles from "./BoxMenu.module.scss";
 import { Item, TipSuggest } from "~/Components";
@@ -54,12 +59,13 @@ function BoxMenu() {
           }}
         >
           <Item
-            id={uuid()}
             resizable={false}
-            type='icon'
-            icon={true}
-            InfoIcon={Icon}
             draggable='true'
+            className={clsx(styles.item_text)}
+            icon
+            id={uuid()}
+            type='icon'
+            InfoIcon={Icon}
             stylesItem={{
               position: "unset",
               border: "none",
@@ -76,6 +82,16 @@ function BoxMenu() {
   return (
     <div className={clsx(styles.wrapper)} id='menu_1'>
       <div className={clsx(styles.wrapper_single_component)}>
+        <span
+          style={{
+            width: "100%",
+            textAlign: "center",
+            color: "#FF6600",
+            fontWeight: "600",
+          }}
+        >
+          Single item
+        </span>
         <TipSuggest
           content='Text'
           position={"top"}
@@ -95,11 +111,7 @@ function BoxMenu() {
               position: "unset",
             }}
           >
-            <TfiText
-              style={{
-                fontSize: "18px",
-              }}
-            ></TfiText>
+            <BsCardText />
           </Item>
         </TipSuggest>
         <TipSuggest
@@ -121,7 +133,7 @@ function BoxMenu() {
               position: "unset",
             }}
           >
-            <FontAwesomeIcon icon={faLink}></FontAwesomeIcon>
+            <FontAwesomeIcon icon={faLink} />
           </Item>
         </TipSuggest>
         <TipSuggest
@@ -146,7 +158,7 @@ function BoxMenu() {
               backgroundColor: "var(--primary_color_component)",
             }}
           >
-            <FontAwesomeIcon icon={faImage}></FontAwesomeIcon>
+            <BsFileImage />
           </Item>
         </TipSuggest>
         <TipSuggest
@@ -171,7 +183,7 @@ function BoxMenu() {
               textAlign: "center",
             }}
           >
-            <BsFillMenuButtonFill></BsFillMenuButtonFill>
+            <BsFillMenuButtonWideFill />
           </Item>
         </TipSuggest>
         <TipSuggest content='Box'>
@@ -189,16 +201,21 @@ function BoxMenu() {
               textAlign: "center",
             }}
           >
-            <BsBox
-              style={{
-                fontWeight: 800,
-                fontSize: 16,
-              }}
-            ></BsBox>
+            <BsBoxSeam />
           </Item>
         </TipSuggest>
       </div>
       <div className={clsx(styles.multi_items)}>
+        <span
+          style={{
+            width: "100%",
+            textAlign: "center",
+            color: "#FF6600",
+            fontWeight: "600",
+          }}
+        >
+          Multi items
+        </span>
         <Item
           resizable={false}
           id='item_div'
@@ -217,7 +234,7 @@ function BoxMenu() {
             textAlign: "center",
           }}
         >
-          <TipSuggest content='Layout about'>
+          <TipSuggest content='Image + text'>
             <div className={clsx(styles.wrapper_icon)}>
               <BsImage
                 style={{
@@ -253,7 +270,7 @@ function BoxMenu() {
             textAlign: "center",
           }}
         >
-          <TipSuggest content='Layout about'>
+          <TipSuggest content='Feedback client, etc'>
             <div className={clsx(styles.wrapper_icon)}>
               <BsImage
                 style={{
@@ -299,7 +316,7 @@ function BoxMenu() {
             textAlign: "center",
           }}
         >
-          <TipSuggest content='Layout about'>
+          <TipSuggest content='Show projects,etc'>
             <div className={clsx(styles.wrapper_icon)}>
               <TfiImage
                 style={{
@@ -329,7 +346,19 @@ function BoxMenu() {
           </TipSuggest>
         </Item>
       </div>
-      <div className={clsx(styles.menu_icon)}>{renderIcons()}</div>
+      <div className={clsx(styles.menu_icon)}>
+        <span
+          style={{
+            width: "100%",
+            textAlign: "center",
+            color: "#FF6600",
+            fontWeight: "600",
+          }}
+        >
+          Icons
+        </span>
+        {renderIcons()}
+      </div>
     </div>
   );
 }

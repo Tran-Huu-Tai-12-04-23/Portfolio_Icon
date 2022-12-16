@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
@@ -7,12 +7,17 @@ import { TbBorderRadius } from "react-icons/tb";
 import { TfiClose } from "react-icons/tfi";
 import { GoTextSize } from "react-icons/go";
 import { BiFontFamily, BiColorFill } from "react-icons/bi";
-import { AiOutlineBorder, AiOutlineFontColors } from "react-icons/ai";
+import {
+  AiOutlineBorder,
+  AiOutlineFontColors,
+  AiOutlineMinus,
+} from "react-icons/ai";
 import { FcFullTrash } from "react-icons/fc";
 import { RxBorderStyle, RxLineHeight } from "react-icons/rx";
 import { FaBold } from "react-icons/fa";
 import { FiAlignCenter } from "react-icons/fi";
 import { TbLetterCaseUpper } from "react-icons/tb";
+import { IoIosAdd } from "react-icons/io";
 
 import styles from "./EditorComponent.module.scss";
 import { colors, fontFamilys, borderStyles } from "./datas";
@@ -41,6 +46,54 @@ function EditorComponent({ style }) {
     ContextShowEditorComponent
   );
 
+  const [valueBorderRadius, setValueBorderRadius] = useState(
+    state.border_radius
+      ? parseInt(
+          state.border_radius.substring(0, state.border_radius.length - 2)
+        )
+      : 0
+  );
+  const [fontSize, setFontSizeItem] = useState(
+    state.font_size
+      ? parseInt(state.font_size.substring(0, state.font_size.length - 2))
+      : 0
+  );
+  const [lineHeight, setLineHeightItem] = useState(
+    state.line_height
+      ? parseInt(state.line_height.substring(0, state.line_height.length - 2))
+      : 0
+  );
+
+  useEffect(() => {
+    if (state.border_radius) {
+      setValueBorderRadius(
+        parseInt(
+          state.border_radius.substring(0, state.border_radius.length - 2)
+        )
+      );
+    }
+    if (state.font_size) {
+      setFontSizeItem(
+        parseInt(state.font_size.substring(0, state.font_size.length - 2))
+      );
+    }
+    if (state.line_height) {
+      setLineHeightItem(
+        parseInt(state.line_height.substring(0, state.line_height.length - 2))
+      );
+    }
+  }, [state]);
+  //set style component
+  useEffect(() => {
+    dispatch(setBorderRadius(`${valueBorderRadius}px`));
+  }, [valueBorderRadius]);
+  useEffect(() => {
+    dispatch(setFontSize(`${fontSize}px`));
+  }, [fontSize]);
+  useEffect(() => {
+    dispatch(setLineHeight(`${lineHeight}px`));
+  }, [lineHeight]);
+
   const renderOptionColors = () => {
     return colors.map((color, index) => {
       return (
@@ -55,42 +108,6 @@ function EditorComponent({ style }) {
             backgroundColor: color,
           }}
         ></li>
-      );
-    });
-  };
-
-  const renderFontSize = () => {
-    const numberFontSize = Array.from(Array(41).keys());
-    return numberFontSize.map((size, index) => {
-      return (
-        <li
-          key={index}
-          onClick={(e) => {
-            dispatch(setFontSize(`${size}px`));
-            e.stopPropagation();
-          }}
-          data-font-size={size}
-        >
-          {size}
-        </li>
-      );
-    });
-  };
-
-  const renderLineHeights = () => {
-    const numberFontSize = Array.from(Array(41).keys());
-    return numberFontSize.map((size, index) => {
-      return (
-        <li
-          key={index}
-          onClick={(e) => {
-            e.stopPropagation();
-            dispatch(setLineHeight(`${size}px`));
-          }}
-          data-font-size={size}
-        >
-          {size}
-        </li>
       );
     });
   };
@@ -148,30 +165,6 @@ function EditorComponent({ style }) {
     });
   };
 
-  const renderOptionBorderRadius = () => {
-    const numberBorderRadius = Array.from(Array(5).keys());
-    return numberBorderRadius.map((item, index) => {
-      var radius = `${item * 8}px`;
-      if (item === 4) {
-        radius = "50%";
-      }
-      return (
-        <li
-          onClick={(e) => {
-            e.stopPropagation();
-            dispatch(setBorderRadius(radius));
-          }}
-          key={index}
-          data-border-radius={radius}
-          style={{
-            borderRadius: radius,
-            marginBottom: "4px",
-            height: "30px",
-          }}
-        ></li>
-      );
-    });
-  };
   const renderOptionBorderSize = () => {
     const numberBorderSize = Array.from(Array(6).keys());
     return numberBorderSize.map((size, index) => {
@@ -228,12 +221,12 @@ function EditorComponent({ style }) {
       });
     });
   };
-
   return (
     <div
       className={clsx(styles.wrapper)}
       style={{
-        display: style.display,
+        ...style,
+        // display: "flex",
       }}
       onClick={(e) => {
         e.stopPropagation();
@@ -286,40 +279,99 @@ function EditorComponent({ style }) {
           {renderOptionBorderColors()}
         </ul>
       </div>
-
-      <div className={clsx(styles.icon, styles.icon_font_size)}>
-        <GoTextSize></GoTextSize>
-        <FontAwesomeIcon
-          className={clsx(styles.icon__arrow_down)}
-          icon={faChevronDown}
-        ></FontAwesomeIcon>
-        <ul className={clsx(styles.font_size_options)} id='font_size_options'>
-          {renderFontSize()}
-        </ul>
+      <div className={clsx(styles.icon, styles.font_size_options)}>
+        <GoTextSize
+          style={{
+            border: "none",
+          }}
+        ></GoTextSize>
+        <AiOutlineMinus
+          onClick={(e) => {
+            setFontSizeItem((prev) => {
+              return parseInt(prev) - 1;
+            });
+          }}
+        />
+        <input
+          type='number'
+          style={{
+            color: "#000",
+          }}
+          onChange={(e) => {
+            setFontSizeItem(e.target.value);
+          }}
+          value={fontSize}
+        ></input>
+        <IoIosAdd
+          onClick={(e) => {
+            setFontSizeItem((prev) => {
+              return parseInt(prev) + 1;
+            });
+          }}
+        />
       </div>
-      <div className={clsx(styles.icon, styles.icon_font_size)}>
-        <RxLineHeight></RxLineHeight>
-        <FontAwesomeIcon
-          className={clsx(styles.icon__arrow_down)}
-          icon={faChevronDown}
-        ></FontAwesomeIcon>
-        <ul className={clsx(styles.font_size_options)} id='font_size_options'>
-          {renderLineHeights()}
-        </ul>
+      <div className={clsx(styles.icon, styles.line_height_options)}>
+        <RxLineHeight
+          style={{
+            border: "none",
+          }}
+        ></RxLineHeight>
+        <AiOutlineMinus
+          onClick={(e) => {
+            setLineHeightItem((prev) => {
+              return parseInt(prev) - 1;
+            });
+          }}
+        />
+        <input
+          type='number'
+          style={{
+            color: "#000",
+          }}
+          onChange={(e) => {
+            setLineHeightItem(e.target.value);
+          }}
+          value={lineHeight}
+        ></input>
+        <IoIosAdd
+          onClick={(e) => {
+            setLineHeightItem((prev) => {
+              return parseInt(prev) + 1;
+            });
+          }}
+        />
       </div>
 
-      <div className={clsx(styles.icon, styles.icon_border_radius)}>
-        <TbBorderRadius></TbBorderRadius>
-        <FontAwesomeIcon
-          className={clsx(styles.icon__arrow_down)}
-          icon={faChevronDown}
-        ></FontAwesomeIcon>
-        <ul
-          className={clsx(styles.border_raidus_options)}
-          id='border_raidus_options'
-        >
-          {renderOptionBorderRadius()}
-        </ul>
+      <div className={clsx(styles.icon, styles.border_radius_options)}>
+        <TbBorderRadius
+          style={{
+            border: "none",
+          }}
+        ></TbBorderRadius>
+        <AiOutlineMinus
+          onClick={(e) => {
+            setValueBorderRadius((prev) => {
+              return parseInt(prev) - 1;
+            });
+          }}
+        />
+        <input
+          type='number'
+          style={{
+            color: "#000",
+          }}
+          onChange={(e) => {
+            setValueBorderRadius(e.target.value);
+          }}
+          value={valueBorderRadius}
+        ></input>
+        <IoIosAdd
+          onClick={(e) => {
+            setValueBorderRadius((prev) => {
+              return parseInt(prev) + 1;
+            });
+          }}
+        />
       </div>
       <div className={clsx(styles.icon, styles.icon_border_size)}>
         <BsBorderWidth></BsBorderWidth>

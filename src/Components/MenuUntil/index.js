@@ -1,4 +1,4 @@
-import { Children, useState } from "react";
+import { useState } from "react";
 
 import {
   faArrowAltCircleLeft,
@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import clsx from "clsx";
 import styles from "./MenuUntil.module.scss";
-import { BoxMenu } from "~/Components";
+import { BoxMenu, TipSuggest } from "~/Components";
 
 function MenuUntil({ state, valueState, children }) {
   const [show, setShow] = useState(true);
@@ -37,30 +37,36 @@ function MenuUntil({ state, valueState, children }) {
         className={clsx(styles.title, {
           [styles.hidden]: !show,
         })}
-        style={{
-          textTransform: "uppercase",
-          fontSize: "24px",
-        }}
       >
         Components
       </h1>
       {/* //contenm */}
-      <div className={clsx(styles.content)}>
-        <BoxMenu></BoxMenu>
+      <div className={clsx(styles.wrapper_component)}>
+        <div className={clsx(styles.content)}>
+          <BoxMenu></BoxMenu>
+        </div>
       </div>
       <div className={clsx(styles.nav_icon)} onClick={() => handleChangeMenu()}>
-        <FontAwesomeIcon
-          className={clsx(styles.btn_left_menu, {
-            [styles.hidden]: show,
-          })}
-          icon={faArrowAltCircleLeft}
-        ></FontAwesomeIcon>
-        <FontAwesomeIcon
-          className={clsx(styles.btn_right_menu, {
-            [styles.hidden]: !show,
-          })}
-          icon={faArrowAltCircleRight}
-        ></FontAwesomeIcon>
+        <div>
+          <TipSuggest content='Close menu util' position='right'>
+            <FontAwesomeIcon
+              className={clsx(styles.btn_left_menu, {
+                [styles.hidden]: !show,
+              })}
+              icon={faArrowAltCircleLeft}
+            ></FontAwesomeIcon>
+          </TipSuggest>
+        </div>
+        <div>
+          <TipSuggest content='Open menu util' position='right'>
+            <FontAwesomeIcon
+              className={clsx(styles.btn_right_menu, {
+                [styles.hidden]: show,
+              })}
+              icon={faArrowAltCircleRight}
+            ></FontAwesomeIcon>
+          </TipSuggest>
+        </div>
       </div>
       {showMenuUtil ? children : <></>}
     </div>

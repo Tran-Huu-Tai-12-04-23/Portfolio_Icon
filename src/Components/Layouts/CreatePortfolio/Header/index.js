@@ -8,7 +8,7 @@ import { Button, TipSuggest } from "~/Components";
 import { Link } from "react-router-dom";
 
 function Header({ setShowPreview }) {
-  const [title, setTitle] = useState("Trang web không có tiêu đề");
+  const [title, setTitle] = useState("Enter title");
   const handleDataTitle = (e) => {
     document.title = e.target.value;
     setTitle(e.target.value);
