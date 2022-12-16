@@ -1,11 +1,7 @@
 import { useContext } from "react";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronDown,
-  faChevronUp,
-  faPalette,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { BsBorderWidth } from "react-icons/bs";
 import { TbBorderRadius } from "react-icons/tb";
 import { TfiClose } from "react-icons/tfi";
@@ -17,7 +13,6 @@ import { RxBorderStyle, RxLineHeight } from "react-icons/rx";
 import { FaBold } from "react-icons/fa";
 import { FiAlignCenter } from "react-icons/fi";
 import { TbLetterCaseUpper } from "react-icons/tb";
-import { RxWidth } from "react-icons/rx";
 
 import styles from "./EditorComponent.module.scss";
 import { colors, fontFamilys, borderStyles } from "./datas";
@@ -222,7 +217,11 @@ function EditorComponent({ style }) {
     });
   };
 
-  const removeItemsIngrid = () => {
+  const removeItemsIngrid = (e) => {
+    e.stopPropagation();
+    //remove dom real
+    document.getElementById(state.id_item_selected).remove();
+    // remove dom virtual
     setItems(() => {
       return items.filter((item) => {
         return item.id !== state.id_item_selected;

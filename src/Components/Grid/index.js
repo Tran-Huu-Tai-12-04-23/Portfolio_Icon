@@ -1,10 +1,10 @@
 import clsx from "clsx";
-import { useRef, useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useDrop, useDragDropManager } from "react-dnd";
 import uuid from "react-uuid";
 
 import styles from "./Grid.module.scss";
-import { Item, MultiItem, Overlay } from "~/Components";
+import { Item, Overlay, TipSuggest } from "~/Components";
 import {
   ContextItemsIngrid,
   ElementContentPortfolio,
@@ -24,9 +24,7 @@ function Grid(props) {
     accept: ["ITEM_IN_GRID", "Item", "MULTI_ITEM"],
     drop(item, monitor) {
       if (item.inGrid) {
-        console.log(item);
         const delta = monitor.getDifferenceFromInitialOffset();
-        console.log(item);
         let left, top;
         if (item.left) {
           left = item.left.toString().includes("%")
@@ -49,7 +47,7 @@ function Grid(props) {
         const delta = monitor.getClientOffset();
         let left = delta.x - 200;
         let top = delta.y - 100;
-        addItem(item.type, left, top + valueScrollTop, uuid());
+        addItem(item.type, left, top + valueScrollTop, uuid(), item.InfoIcon);
       } else if (item.inGrid === false && item.isMulti) {
         const valueScrollTop = contentPortfolio.current.scrollTop;
         const delta = monitor.getClientOffset();
@@ -84,10 +82,10 @@ function Grid(props) {
     left = "200px",
     top = "100px",
     id,
+    InfoIcon,
     width = 200,
     height = 40
   ) => {
-    console.log(height);
     setItems((prev) => {
       return [
         ...prev,
@@ -100,6 +98,7 @@ function Grid(props) {
           height,
           inGrid: true,
           isMulti: false,
+          InfoIcon,
         },
       ];
     });
@@ -152,13 +151,11 @@ function Grid(props) {
   const moveItem = (id, left, top, inGrid, items) => {
     items.map((item) => {
       if (item.id === id) {
-        console.log(item);
         console.log(`left: ${left} top: ${top}  inGrid: ${inGrid} id: ${id} `);
         item.top = top;
         if (left) {
           item.left = left;
         }
-        console.log(item);
       }
     });
   };
@@ -204,7 +201,6 @@ function Grid(props) {
                 ></ComponentLayouts>
               );
             } else {
-              console.log(item);
               return (
                 <Item
                   key={item.id}
@@ -216,6 +212,8 @@ function Grid(props) {
                   valueItem={item.valueItem}
                   center={item.center}
                   href={item.href}
+                  icon={false}
+                  InfoIcon={item.InfoIcon}
                   stylesItem={{
                     top: item.top,
                     left: item.left,

@@ -1,11 +1,13 @@
+import uuid from "react-uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLink, faImage } from "@fortawesome/free-solid-svg-icons";
 import {
-  faTextWidth,
-  faLink,
-  faBox,
-  faTabletButton,
-  faImage,
-} from "@fortawesome/free-solid-svg-icons";
+  GrFacebookOption,
+  GrInstagram,
+  GrGithub,
+  GrLinkedin,
+  GrYoutube,
+} from "react-icons/gr";
 import clsx from "clsx";
 import { BsFillMenuButtonFill } from "react-icons/bs";
 import { TfiText, TfiImage } from "react-icons/tfi";
@@ -16,6 +18,61 @@ import styles from "./BoxMenu.module.scss";
 import { Item, TipSuggest } from "~/Components";
 
 function BoxMenu() {
+  const icons = [
+    {
+      Name: "Facebook",
+      Component: <GrFacebookOption />,
+    },
+    {
+      Name: "Instagram",
+      Component: <GrInstagram />,
+    },
+    {
+      Name: "Github",
+      Component: <GrGithub />,
+    },
+    {
+      Name: "Linkedin",
+      Component: <GrLinkedin />,
+    },
+    {
+      Name: "Youtube",
+      Component: <GrYoutube />,
+    },
+  ];
+
+  const renderIcons = () => {
+    return icons.map((Icon) => {
+      return (
+        <TipSuggest
+          key={uuid()}
+          content={`Icon ${Icon.Name}`}
+          position={"top"}
+          styles={{
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          <Item
+            id={uuid()}
+            resizable={false}
+            type='icon'
+            icon={true}
+            InfoIcon={Icon}
+            draggable='true'
+            stylesItem={{
+              position: "unset",
+              border: "none",
+              backgroundColor: "var(--primary_color_component)",
+            }}
+          >
+            {Icon.Component}
+          </Item>
+        </TipSuggest>
+      );
+    });
+  };
+
   return (
     <div className={clsx(styles.wrapper)} id='menu_1'>
       <div className={clsx(styles.wrapper_single_component)}>
@@ -272,6 +329,7 @@ function BoxMenu() {
           </TipSuggest>
         </Item>
       </div>
+      <div className={clsx(styles.menu_icon)}>{renderIcons()}</div>
     </div>
   );
 }

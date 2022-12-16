@@ -1,14 +1,4 @@
-import {
-  faComputer,
-  faEllipsisVertical,
-  faFile,
-  faGears,
-  faHomeLg,
-  faLink,
-  faRotateLeft,
-  faRotateRight,
-  faUserPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faComputer, faHomeLg } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import { useState } from "react";
@@ -17,7 +7,7 @@ import styles from "./Header.module.scss";
 import { Button, TipSuggest } from "~/Components";
 import { Link } from "react-router-dom";
 
-function Header() {
+function Header({ setShowPreview }) {
   const [title, setTitle] = useState("Trang web không có tiêu đề");
   const handleDataTitle = (e) => {
     document.title = e.target.value;
@@ -53,7 +43,12 @@ function Header() {
 
       <div className={clsx(styles.until_options)}>
         <TipSuggest content='Show preview'>
-          <FontAwesomeIcon icon={faComputer}></FontAwesomeIcon>
+          <FontAwesomeIcon
+            onClick={(e) => {
+              setShowPreview(true);
+            }}
+            icon={faComputer}
+          ></FontAwesomeIcon>
         </TipSuggest>
         {/* <TipSuggest content='Get Link'>
           <FontAwesomeIcon icon={faLink}></FontAwesomeIcon>

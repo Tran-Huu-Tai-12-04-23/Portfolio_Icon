@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useContext } from "react";
+import { useEffect, useState, useRef } from "react";
 import clsx from "clsx";
 import styles from "./CreatePortfolio.module.scss";
 import { MdKeyboardArrowUp } from "react-icons/md";
@@ -13,7 +13,7 @@ import {
   ElementContentPortfolio,
 } from "~/Store/Context";
 import Footer from "../Footer";
-import { BiCloudSnow } from "react-icons/bi";
+import Preview from "../Preview";
 
 function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
   const [items, setItems] = useState(DefaultComponent ? DefaultComponent : []);
@@ -30,6 +30,7 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
   const [widthContent, setWidthContent] = useState();
   const contentPortfolio = useRef();
   const wrapperTemplateContent = useRef();
+  const [showPreview, setShowPreview] = useState(false);
 
   //get height element id content_portfolio
   // useEffect(() => {
@@ -82,7 +83,7 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
         value={[showEditorComponent, setEditorComponent]}
       >
         <div className={clsx(styles.wrapper)}>
-          <Header />
+          <Header setShowPreview={setShowPreview} />
           <div className={clsx(styles.content)}>
             <div
               ref={contentPortfolio}
@@ -178,6 +179,15 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
         </div>
 
         <Footer backgroundColor='#fff'></Footer>
+
+        <div
+          style={{
+            display: "none",
+            display: showPreview ? "block" : "none",
+          }}
+        >
+          <Preview setShowPreview={setShowPreview} items={items}></Preview>
+        </div>
       </ContextShowEditorComponent.Provider>
     </ContextItemsIngrid.Provider>
   );

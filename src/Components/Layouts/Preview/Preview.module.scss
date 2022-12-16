@@ -1,0 +1,31 @@
+.wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 10000;
+
+  .icon_close {
+    position: absolute;
+    top: 6%;
+    right: 2%;
+    width: 100px;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 24px;
+    color: #fff;
+
+    &:hover {
+      color: var(--primary);
+      cursor: pointer;
+    }
+  }
+}
+
+.wrapper_template {
+}

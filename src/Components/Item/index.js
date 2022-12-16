@@ -2,17 +2,16 @@ import clsx from "clsx";
 import { useDrag } from "react-dnd";
 import { useState, useEffect, useContext, useRef } from "react";
 import { ResizableBox as ReactResizableBox } from "react-resizable";
-import { RiContactsBookLine, RiEdit2Fill } from "react-icons/ri";
+import { RiEdit2Fill } from "react-icons/ri";
 
 import "./resizeable.css";
 import styles from "./Item.module.scss";
-import { Overlay, TipSuggest } from "~/Components";
+import { TipSuggest } from "~/Components";
 import {
   ContextReducer,
   ContextItemsIngrid,
   HeightHeading,
   ContextShowEditorComponent,
-  ShowOverlay,
   ElementContentPortfolio,
 } from "~/Store/Context";
 import {
@@ -30,7 +29,6 @@ import {
   setLineHeight,
   setFontWeight,
 } from "~/Store/reducer/actions";
-import { constantActions } from "~/Constants";
 
 function Item({
   type,
@@ -45,7 +43,7 @@ function Item({
   stylesItem,
   fontSize = "14px",
   heading = false,
-  icon,
+  icon = false,
   width = 200,
   height = 50,
   resizable = true,
@@ -58,8 +56,8 @@ function Item({
   valueItem,
   center = false,
   children,
+  InfoIcon,
 }) {
-  console.log(styleDefault);
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [value, setValue] = useState(valueItem ? valueItem : "Enter text !!!");
   const [linkItemTypeA, setLinkItemTypeA] = useState(href ? href.href : "");
@@ -81,11 +79,7 @@ function Item({
 
   const classNamesItem = clsx(
     styles.wrapper,
-    styles.normal,
     styles.text,
-    {
-      [styles.input_text]: type === "input",
-    },
     {
       [styles.link]: type === "a",
     },
@@ -103,6 +97,9 @@ function Item({
     },
     {
       [styles.item_grid]: inGrid,
+    },
+    {
+      [styles.icon_ingrid]: type === "icon",
     }
   );
 
@@ -125,9 +122,8 @@ function Item({
         type4,
         numberComponents,
         items,
-        valueItem,
-        center,
-        href,
+        InfoIcon,
+        icon,
       },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
@@ -191,15 +187,35 @@ function Item({
 
   const handleEditorComponent = (e) => {
     e.stopPropagation();
-    loadStyleComponentInInitState(e.target);
-    dispatch(setIdItemSelected(e.target.id));
+    loadStyleComponentInInitState(getParent(e));
+    // dispatch(setIdItemSelected(e.target.id));
     setEditorComponent(!showEditorComponent);
   };
 
+  //get id if component multi layer
+  const getId = (e) => {
+    let item = e.target;
+    while (item.parentNode) {
+      if (item.id) {
+        return item.id;
+      }
+      item = item.parentElement;
+    }
+  };
+  //get element parent cho item
+  const getParent = (e) => {
+    let item = e.target;
+    while (item.parentNode) {
+      if (item.id) {
+        return item;
+      }
+      item = item.parentElement;
+    }
+  };
   const handleSelectItemToEdit = (e) => {
     e.stopPropagation();
-    loadStyleComponentInInitState(e.target);
-    dispatch(setIdItemSelected(e.target.id));
+    dispatch(setIdItemSelected(getId(e)));
+    loadStyleComponentInInitState(getParent(e));
     handleEditorComponent(e);
   };
 
@@ -244,13 +260,15 @@ function Item({
     if (heading) {
       setValue("Enter title");
     }
+    if (type === "icon") {
+      setType("div");
+    }
   }, [linkImg]);
 
   //set style for component
   useEffect(() => {
     const itemSelected = document.getElementById(state.id_item_selected);
     if (itemSelected) {
-      console.log(state.font_weight);
       itemSelected.style.color = state.color;
       itemSelected.style.backgroundColor = state.background_color;
       itemSelected.style.fontSize = state.font_size;
@@ -278,7 +296,6 @@ function Item({
       setEditorComponent(false);
     };
     window.addEventListener("click", handleShowEditorComponent);
-    dispatch(setIdItemSelected(""));
     return () => {
       window.removeEventListener("click", handleShowEditorComponent);
     };
@@ -298,12 +315,16 @@ function Item({
       setWidthContents(widthContent);
     }
   });
-  return (
-    <>
-      {resizable ? (
+
+  // render item
+
+  const renderItem = () => {
+    if (resizable && type !== "icon") {
+      return (
         <ReactResizableBox
           width={widthContents ? parseInt(widthContents) : parseInt(width)}
           height={type === "input" ? heightWrapperReSizeable : height}
+          // onClick={handleSelectItemToEdit}
           style={{
             ...stylesItem,
             transform: center ? "translateX(-50%)" : "none",
@@ -355,29 +376,57 @@ function Item({
             ) : undefined}
           </>
         </ReactResizableBox>
-      ) : (
-        <>
-          <Type
-            onClick={resizable ? handleSelectItemToEdit : null}
+      );
+    } else if (icon) {
+      return (
+        <Type
+          onClick={resizable ? handleSelectItemToEdit : null}
+          id={id}
+          ref={drag}
+          className={classNamesItem}
+          style={{
+            ...stylesItem,
+            opacity: isDragging ? "0.5" : "1",
+            opacity: opacity ? "0.4" : "1",
+            // height: height,
+            // width: width,
+            width: isMulti ? "100%" : "40px",
+            height: "50px",
+            ...styleDefault,
+          }}
+          value={value}
+          onChange={handleChangeValue}
+          onBlur={handleBlurInput}
+        >
+          {children}
+        </Type>
+      );
+    } else {
+      return (
+        <ReactResizableBox
+          width={40}
+          height={40}
+          style={{
+            ...stylesItem,
+          }}
+          onClick={handleSelectItemToEdit}
+        >
+          <div
             id={id}
-            ref={drag}
+            ref={draggable ? drag : null}
+            onClick={handleSelectItemToEdit}
             className={classNamesItem}
-            style={{
-              ...stylesItem,
-              opacity: isDragging ? "0.5" : "1",
-              opacity: opacity ? "0.4" : "1",
-              height: height,
-              width: width,
-              ...styleDefault,
-            }}
-            value={value}
-            onChange={handleChangeValue}
-            onBlur={handleBlurInput}
           >
-            {children}
-          </Type>
-        </>
-      )}
+            {InfoIcon ? InfoIcon.Component : null}
+          </div>
+        </ReactResizableBox>
+      );
+    }
+  };
+
+  return (
+    <>
+      {renderItem()}
       {type === "a" && inGrid && showModal ? (
         <div
           className={clsx(styles.modal)}

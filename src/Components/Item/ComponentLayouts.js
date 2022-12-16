@@ -135,6 +135,7 @@ function ComponentLayouts({ item, opacity, children }) {
               position: "unset",
               marginLeft: 24,
             }}
+            id={item.id}
           >
             <Item
               key={item.idItem2}
