@@ -10,7 +10,7 @@ export const constantActions = {
   SET_FONT_SIZE: "set_font_size",
   SET_FONT_FAMILY: "set_font_family",
   SET_FONT_WEIGHT: "set_font_weight",
-  SET_ALIGN_CENTER: "set_align_center",
-  SET_UPPER_CASE_LETTER: "set_upper_case_letter",
+  SET_TEXT_ALIGN: "set_align_center",
+  SET_TEXT_TRANSFORM: "set_text_transform",
   SET_ID_ITEM: "set_id",
 };

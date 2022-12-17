@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { useDrag } from "react-dnd";
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useContext, useRef, useCallback } from "react";
 import { ResizableBox as ReactResizableBox } from "react-resizable";
 import { RiEdit2Fill } from "react-icons/ri";
 import { IoIosAdd } from "react-icons/io";
@@ -24,9 +24,9 @@ import {
   setBorderRadius,
   setFontFamily,
   setBorderStyle,
-  setAlignCenter,
+  setTextAlign,
   setBorderSize,
-  setUppercase,
+  setTextTransform,
   setLineHeight,
   setFontWeight,
 } from "~/Store/reducer/actions";
@@ -59,9 +59,6 @@ function Item({
   children,
   InfoIcon,
 }) {
-  if (icon) {
-    console.log(styleDefault);
-  }
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [value, setValue] = useState(valueItem ? valueItem : "Enter text !!!");
   const [linkItemTypeA, setLinkItemTypeA] = useState(href ? href.href : "");
@@ -131,6 +128,11 @@ function Item({
         items,
         InfoIcon,
         icon,
+        styleDefault,
+        src,
+        href,
+        valueItem,
+        stylesItem,
       },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
@@ -176,31 +178,68 @@ function Item({
   };
 
   const loadStyleComponentInInitState = (item) => {
-    console.log(item);
-    dispatch(setColor(item.style.color));
-    dispatch(setBackgroundColor(item.style.backgroundColor));
-    dispatch(setFontSize(item.style.fontSize ? item.style.fontSize : "14px"));
-    dispatch(setFontFamily(item.style.fontFamily));
-    dispatch(
-      setBorderRadius(item.style.borderRadius ? item.style.borderRadius : "0px")
-    );
-    dispatch(setBorderStyle(item.style.borderStyle));
-    dispatch(setBorderColor(item.style.borderColor));
-    dispatch(setFontWeight(item.style.fontWeight ? true : false));
-    const alignText = item.style.textAlign === "center" ? true : false;
-    dispatch(setAlignCenter(alignText));
-    dispatch(setBorderSize(item.style.borderWidth));
-    const upperCase = item.style.textTransform === "uppercase" ? true : false;
-    dispatch(setUppercase(upperCase));
-    dispatch(
-      setLineHeight(item.style.lineHeight ? item.style.lineHeight : "14px")
-    );
+    if (item) {
+      if (item.styleDefault) {
+        dispatch(
+          setColor(item.styleDefault.color ? item.styleDefault.color : "")
+        );
+        dispatch(
+          setBackgroundColor(
+            item.styleDefault.backgroundColor
+              ? item.styleDefault.backgroundColor
+              : ""
+          )
+        );
+        dispatch(
+          setFontSize(
+            item.styleDefault.fontSize ? item.styleDefault.fontSize : ""
+          )
+        );
+        dispatch(
+          setFontFamily(
+            item.styleDefault.fontFamily ? item.styleDefault.fontFamily : ""
+          )
+        );
+        dispatch(
+          setBorderRadius(
+            item.styleDefault.borderRadius ? item.styleDefault.borderRadius : ""
+          )
+        );
+        dispatch(
+          setBorderStyle(
+            item.styleDefault.borderStyle ? item.styleDefault.borderStyle : ""
+          )
+        );
+        dispatch(
+          setBorderColor(
+            item.styleDefault.borderColor ? item.styleDefault.borderColor : ""
+          )
+        );
+        dispatch(setFontWeight(item.styleDefault.fontWeight ? true : false));
+        dispatch(setTextAlign(item.styleDefault.textAlign ? true : false));
+        dispatch(
+          setBorderSize(
+            item.styleDefault.borderWidth ? item.styleDefault.borderWidth : ""
+          )
+        );
+        dispatch(
+          setTextTransform(item.styleDefault.textTransform ? true : false)
+        );
+        dispatch(
+          setLineHeight(
+            item.styleDefault.lineHeight ? item.styleDefault.lineHeight : ""
+          )
+        );
+      }
+    }
   };
 
   const handleEditorComponent = (e) => {
     e.stopPropagation();
-    loadStyleComponentInInitState(getParent(e));
-    // dispatch(setIdItemSelected(e.target.id));
+    console.log(e.target);
+    console.log(styleDefault);
+    loadStyleComponentInInitState(findItem(getId(e)));
+    dispatch(setIdItemSelected(e.target.id));
     setEditorComponent(true);
   };
 
@@ -224,12 +263,23 @@ function Item({
       item = item.parentElement;
     }
   };
+  //find item from items
+  const findItem = (id) => {
+    var item;
+    items.forEach((element) => {
+      if (element.id === id) {
+        item = element;
+      }
+    });
+    return item;
+  };
   const handleSelectItemToEdit = (e) => {
     // e.preventDefault();
     e.stopPropagation();
-    dispatch(setIdItemSelected(getId(e)));
-    loadStyleComponentInInitState(getParent(e));
+    loadStyleComponentInInitState(findItem(getId(e)));
     handleEditorComponent(e);
+    dispatch(setIdItemSelected(getId(e)));
+    // loadStyleComponentInInitState(getParent(e));
   };
 
   const handleEditLink = (e) => {
@@ -249,6 +299,7 @@ function Item({
     onClick: null,
     type: "text",
   };
+
   useEffect(() => {
     setType(icon ? "div" : type);
     setType(type === "button" ? "input" : type);
@@ -278,31 +329,6 @@ function Item({
     }
   }, [linkImg]);
 
-  //set style for component
-  useEffect(() => {
-    const itemSelected = document.getElementById(state.id_item_selected);
-    if (itemSelected) {
-      itemSelected.style.color = state.color;
-      itemSelected.style.backgroundColor = state.background_color;
-      itemSelected.style.fontSize = state.font_size;
-      itemSelected.style.fontFamily = state.font_family;
-      itemSelected.style.borderRadius = state.border_radius;
-      itemSelected.style.borderStyle = state.border_style;
-      itemSelected.style.borderColor = state.border_color;
-      itemSelected.style.fontWeight = state.font_weight ? "bold" : "";
-      // set center text in component
-      itemSelected.style.textAlign = state.align_center ? "center" : "";
-      itemSelected.style.display = state.align_center ? "flex" : "";
-      itemSelected.style.justifyContent = state.align_center ? "center" : "";
-      //end
-      itemSelected.style.borderWidth = state.border_size;
-      itemSelected.style.textTransform = state.upper_case_letter
-        ? "uppercase"
-        : "";
-      itemSelected.style.lineHeight = state.line_height;
-    }
-  }, [state]);
-
   let contentPortfolio, setShowTrash, widthContent;
   //get width wrapper content
   useEffect(() => {
@@ -317,6 +343,26 @@ function Item({
       setWidthContents(widthContent);
     }
   });
+  //load styles
+  useEffect(() => {
+    // console.log(state);
+    const itemDom = document.getElementById(state.id_item_selected);
+    if (itemDom) {
+      itemDom.style.color = state.color;
+      itemDom.style.backgroundColor = state.background_color;
+      itemDom.style.fontSize = state.font_size;
+      itemDom.style.fontFamily = state.font_family;
+      itemDom.style.borderRadius = state.border_radius;
+      itemDom.style.borderStyle = state.border_style;
+      itemDom.style.borderColor = state.border_color;
+      itemDom.style.fontWeight = state.font_weight ? "bold" : "normal";
+      itemDom.style.textAlign = state.text_align ? "center" : "";
+
+      itemDom.style.borderWidth = state.border_size;
+      itemDom.style.textTransform = state.text_transform ? "uppercase" : "";
+      itemDom.style.lineHeight = state.line_height;
+    }
+  }, [state]);
 
   // render item
 
@@ -342,9 +388,7 @@ function Item({
               cols={50}
               src={type === "img" ? linkImg : null}
               value={type !== "img" ? value : undefined}
-              onChange={
-                type === "input" ? handleChangeValue : handleShowInputImg
-              }
+              onChange={type === "img" ? handleShowInputImg : handleChangeValue}
               href={linkItemTypeA ? linkItemTypeA : ""}
               target={linkItemTypeA ? "_blank" : null}
               onBlur={handleBlurInput}

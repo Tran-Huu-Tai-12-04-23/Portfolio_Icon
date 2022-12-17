@@ -3,10 +3,15 @@ import { useState, useEffect, useRef, useContext } from "react";
 
 import styles from "./Item.module.scss";
 import { MultiItem, Item } from "~/Components";
-import { ElementContentPortfolio, HeightHeading } from "~/Store/Context";
+import {
+  ElementContentPortfolio,
+  HeightHeading,
+  ContextItemsMultiIngrid,
+} from "~/Store/Context";
 import uuid from "react-uuid";
 
 function ComponentLayouts({ item, opacity, children }) {
+  const [itemMulti, setItemMulti] = useContext(ContextItemsMultiIngrid);
   const [widthDisplayContent, setWidthDisplayContent] = useState();
   const [heightDisplayContent, setHeightDisplayContent] = useState();
   const [contentPortfolio, setShowTrash] = useContext(ElementContentPortfolio);
@@ -98,9 +103,12 @@ function ComponentLayouts({ item, opacity, children }) {
     });
   };
 
+  // load style
+
   const [heightHeadingText, setHeightHeadingText] = useState(
     heightDisplayContent ? heightDisplayContent * 0.3 + 12 : 50
   );
+
   const renderComponents = () => {
     if (item.numberComponents === 3) {
       return (
@@ -111,7 +119,7 @@ function ComponentLayouts({ item, opacity, children }) {
           top={item.top}
           className={clsx(styles.wrapper_multi_items)}
           key={item.id}
-          stylesComponentMulti={item.stylesComponentMulti}
+          styleDefault={item.styleDefault}
           stylesItem={{
             display: "flex",
             alignItems: "center",
@@ -201,7 +209,7 @@ function ComponentLayouts({ item, opacity, children }) {
           id={item.id}
           className={clsx(styles.wrapper_multi_items)}
           key={item.id}
-          stylesComponentMulti={item.stylesComponentMulti}
+          styleDefault={item.styleDefault}
           stylesItem={{
             display: "flex",
             alignItems: "center",
@@ -297,7 +305,7 @@ function ComponentLayouts({ item, opacity, children }) {
           id={item.id}
           className={clsx(styles.wrapper_multi_items)}
           key={item.id}
-          stylesComponentMulti={item.stylesComponentMulti}
+          styleDefault={item.styleDefault}
           stylesItem={{
             display: "flex",
             alignItems: "center",

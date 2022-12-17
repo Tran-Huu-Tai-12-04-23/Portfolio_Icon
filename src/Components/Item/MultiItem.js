@@ -13,9 +13,9 @@ import {
   setBorderRadius,
   setFontFamily,
   setBorderStyle,
-  setAlignCenter,
+  setTextAlign,
   setBorderSize,
-  setUppercase,
+  setTextTransform,
   setTop,
 } from "~/Store/reducer/actions";
 import { ContextItemsIngrid, ShowOverlay } from "~/Store/Context";
@@ -28,7 +28,7 @@ function MultiItem({
   inGrid,
   isMulti,
   setHeightDisplayContent,
-  stylesComponentMulti,
+  styleDefault,
 }) {
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [heightWrapperContent, setHeightWrapperContent] = useState(200);
@@ -42,7 +42,7 @@ function MultiItem({
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: "MULTI_ITEM",
-      item: { id, top, inGrid, isMulti, items },
+      item: { id, top, inGrid, isMulti, items, styleDefault },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
         opacity: monitor.isDragging() ? 0.4 : 1,
@@ -50,7 +50,6 @@ function MultiItem({
     }),
     [id, top, inGrid, isMulti]
   );
-
   const handleSelectItemToEdit = (e) => {
     e.stopPropagation();
     loadStyleComponentInInitState(e.target);
@@ -67,10 +66,10 @@ function MultiItem({
     dispatch(setBorderColor(item.style.borderColor));
     dispatch(setBorderColor(item.style.fontWeight));
     const alignText = item.style.textAlign === "center" ? true : false;
-    dispatch(setAlignCenter(alignText));
+    dispatch(setTextAlign(alignText));
     dispatch(setBorderSize(item.style.borderWidth));
     const upperCase = item.style.textTransform === "uppercase" ? true : false;
-    dispatch(setUppercase(upperCase));
+    dispatch(setTextTransform(upperCase));
   };
 
   //set style for component
@@ -142,7 +141,7 @@ function MultiItem({
         ...stylesItem,
         height: heightWrapperContent,
         top: topWrapperContent,
-        ...stylesComponentMulti,
+        ...styleDefault,
       }}
     >
       <span

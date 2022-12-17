@@ -11,669 +11,6 @@ import {
 const leftDefaultText = 50;
 const leftDefaultTitle = 100;
 
-export const DefaultItemInGridTemplate1 = [
-  {
-    type: "box",
-    left: 0,
-    top: 0,
-    width: "100%",
-    height: 500,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    valueItem: "<About>",
-    styles: {
-      backgroundColor: "#669999",
-    },
-  },
-  {
-    type: "input",
-    left: "50%",
-    top: 100,
-    width: 500,
-    height: 80,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    valueItem: "[Header]",
-    center: true,
-    styles: {
-      backgroundColor: "transparent",
-      fontSize: 18,
-      textAlign: "center",
-      color: "#000",
-      fontFamily: "Poppins",
-      lineHeight: "26px",
-      textAlign: "center",
-      color: "#fff",
-    },
-  },
-];
-
-export const DefaultItemInGridTemplate2 = [
-  //header
-  {
-    type: "img",
-    left: 0,
-    top: 0,
-    width: "100%",
-    height: 502,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    src: "https://images.unsplash.com/photo-1497864149936-d3163f0c0f4b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80",
-    styles: {
-      backgroundColor: "rgba(0,0,0,0,.3)",
-    },
-  },
-  //about
-  {
-    type: "div",
-    left: 0,
-    top: 500,
-    width: "100%",
-    height: 510,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    valueItem: "<Name page>",
-    styles: {
-      backgroundColor: "#182d47",
-      border: "none",
-    },
-  },
-  //service
-  {
-    type: "div",
-    left: 0,
-    top: 1000,
-    width: "100%",
-    height: 510,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    styles: {
-      backgroundColor: "#091d35",
-      border: "none",
-    },
-  },
-  //feedback
-  {
-    type: "div",
-    left: 0,
-    top: 1500,
-    width: "100%",
-    height: 510,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    valueItem: "<Name page>",
-    styles: {
-      backgroundColor: "#182d47",
-      border: "none",
-    },
-  },
-  // your project
-  {
-    type: "div",
-    left: 0,
-    top: 2000,
-    width: "100%",
-    height: 510,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    styles: {
-      backgroundColor: "#091d35",
-      border: "none",
-    },
-  },
-  //footer
-  {
-    type: "div",
-    left: 0,
-    top: 2500,
-    width: "100%",
-    height: 510,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    styles: {
-      backgroundColor: "#182d47",
-      border: "none",
-    },
-  },
-  //end open each part in portfolio
-  //begin header
-  {
-    type: "img",
-    left: "60%",
-    top: 80,
-    width: 300,
-    height: 350,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    src: "https://i.imgur.com/uo3V1fn.png",
-    styles: {
-      borderRadius: "50px",
-      backgroundColor: "transparent",
-      borderColor: "transparent",
-    },
-  },
-  {
-    type: "input",
-    left: leftDefaultTitle,
-    top: 150,
-    width: 400,
-    height: 50,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    valueItem: "[Enter title]",
-    styles: {
-      backgroundColor: "transparent",
-      fontSize: 24,
-      fontWeight: "bold",
-      textAlign: "center",
-      border: "none",
-      color: "#DC143C",
-      fontFamily: "Poppins",
-      lineHeight: "26px",
-      border: "1px solid #ccc",
-    },
-  },
-  {
-    type: "input",
-    left: leftDefaultText,
-    top: 250,
-    width: 500,
-    height: 48,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    valueItem: "<Enter text>",
-    styles: {
-      backgroundColor: "transparent",
-      fontSize: 18,
-      textAlign: "center",
-      border: "none",
-      color: "#FFFFE0",
-      fontFamily: "Poppins",
-      lineHeight: "26px",
-      border: "1px solid #ccc",
-    },
-  },
-  {
-    type: "button",
-    left: 12,
-    top: 12,
-    width: 200,
-    height: 48,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    valueItem: "<Name page>",
-    styles: {
-      backgroundColor: "transparent",
-      fontSize: 18,
-      textAlign: "center",
-      border: "none",
-      color: "#FF0000",
-      fontFamily: "Poppins",
-      lineHeight: "26px",
-      borderBottom: "1px double #ccc ",
-      borderRight: "1px double #ccc ",
-      padding: 12,
-      minHeight: 48,
-    },
-  },
-  //end header
-  //begin about
-  {
-    type: "img",
-    left: "60%",
-    top: 560,
-    width: 300,
-    height: 350,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    src: "https://i.imgur.com/MCXD87T.png",
-    styles: {
-      borderRadius: "24px",
-      backgroundColor: "transparent",
-      border: "none",
-      borderRight: "1px double #ccc",
-      borderTop: "1px double #ccc",
-    },
-  },
-  {
-    type: "button",
-    left: leftDefaultTitle,
-    top: 650,
-    width: 200,
-    height: 48,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    heading: true,
-    valueItem: "About",
-    styles: {
-      fontWeight: "bold",
-      fontSize: "24px",
-      color: "#6A5ACD",
-      border: "none",
-      wordSpacing: "4px",
-      backgroundColor: "transparent",
-      textTransform: "UpperCase",
-      border: "1px solid #ccc",
-    },
-  },
-  {
-    type: "input",
-    left: leftDefaultText,
-    top: 740,
-    width: 500,
-    height: 48,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    heading: true,
-    valueItem: "<Your About>",
-    styles: {
-      fontWeight: "bold",
-      color: "#fff",
-      backgroundColor: "transparent",
-      // border: "none",
-      border: "1px solid #ccc",
-      textAlign: "center",
-      minHeight: 50,
-    },
-  },
-  //end about
-  //begin service
-  {
-    type: "input",
-    left: "50%",
-    top: 1040,
-    width: 400,
-    height: 48,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    heading: true,
-    center: true,
-    valueItem: "[Your Offered Services]",
-    styles: {
-      fontWeight: "bold",
-      color: "#6A5ACD",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      textAlign: "center",
-      minHeight: 50,
-      fontSize: 18,
-    },
-  },
-  {
-    type: "input",
-    left: "50%",
-    top: 1120,
-    width: 600,
-    height: 48,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    heading: true,
-    center: true,
-    valueItem: "<Describe>",
-    styles: {
-      color: "#fff",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      textAlign: "center",
-      minHeight: 50,
-      fontSize: 18,
-      margin: "0 auto",
-    },
-  },
-  {
-    type1: "img",
-    type2: "input",
-    left: 0,
-    top: 1200,
-    width: "100%",
-    height: 300,
-    id: uuid(),
-    idItem1: uuid(),
-    idItem2: uuid(),
-    idItem3: uuid(),
-    idItem4: uuid(),
-    idItem5: uuid(),
-    idItem6: uuid(),
-    idItem7: uuid(),
-    idItem8: uuid(),
-    inGrid: true,
-    isMulti: true,
-    numberComponents: 8,
-    stylesComponentMulti: {
-      backgroundColor: "transparent",
-    },
-  },
-  //end service
-  //begin feedback
-  {
-    type: "img",
-    left: leftDefaultText,
-    top: 1540,
-    width: 400,
-    height: 400,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    heading: true,
-    styles: {
-      fontWeight: "bold",
-      color: "#c9ab7a",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      textAlign: "center",
-      minHeight: 50,
-      fontSize: 18,
-      height: 400,
-    },
-  },
-  {
-    type: "input",
-    left: "55%",
-    top: 1540,
-    width: 300,
-    height: 48,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    heading: true,
-    valueItem: "[Feedback from client]",
-    styles: {
-      fontWeight: "bold",
-      color: "#c9ab7a",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      textAlign: "center",
-      minHeight: 50,
-      fontSize: 18,
-    },
-  },
-  {
-    type: "input",
-    left: "50%",
-    top: 1620,
-    width: 400,
-    height: 48,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    heading: true,
-    valueItem: "<Your slogan>",
-    styles: {
-      color: "#fff",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      textAlign: "center",
-      minHeight: 50,
-      fontSize: 18,
-      margin: "0 auto",
-    },
-  },
-  //end feedback
-  //begin your project
-  {
-    type: "input",
-    left: "50%",
-    top: 2040,
-    width: 400,
-    height: 48,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    heading: true,
-    center: true,
-    valueItem: "[Your project]",
-    styles: {
-      fontWeight: "bold",
-      color: "#b3073c",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      textAlign: "center",
-      minHeight: 50,
-      fontSize: 18,
-    },
-  },
-  {
-    type: "input",
-    left: "50%",
-    top: 2120,
-    width: 600,
-    height: 48,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    heading: true,
-    center: true,
-    valueItem: "<Technology used>",
-    styles: {
-      color: "#fff",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      textAlign: "center",
-      minHeight: 50,
-      fontSize: 18,
-      margin: "0 auto",
-    },
-  },
-  {
-    type1: "img",
-    type2: "input",
-    type3: "img",
-    type4: "input",
-    left: 0,
-    top: 2250,
-    width: "100%",
-    height: 300,
-    id: uuid(),
-    idItem1: uuid(),
-    idItem2: uuid(),
-    idItem3: uuid(),
-    idItem4: uuid(),
-    inGrid: true,
-    isMulti: true,
-    numberComponents: 4,
-    stylesComponentMulti: {
-      backgroundColor: "transparent",
-    },
-  },
-  //end your project
-  //begin footer
-  {
-    type: "input",
-    left: "50%",
-    top: 2540,
-    width: 250,
-    height: 100,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    heading: true,
-    center: true,
-    valueItem: "Looking ForWard to working with everyone!",
-    styles: {
-      fontWeight: "bold",
-      color: "#FFF8DC",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      textAlign: "center",
-      minHeight: 50,
-      fontSize: 18,
-      lineHeight: "32px",
-      textTransform: "upperCase",
-    },
-  },
-  {
-    type: "img",
-    left: "50%",
-    top: 2680,
-    width: 200,
-    height: 250,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    center: true,
-    src: "https://i.imgur.com/PAvCNbh.png",
-    styles: {
-      borderRadius: "50px",
-      backgroundColor: "transparent",
-      borderColor: "transparent",
-    },
-  },
-  {
-    type: "input",
-    left: leftDefaultText,
-    top: 2880,
-    width: 300,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    valueItem: "[Your detail, address]",
-    styles: {
-      fontWeight: "bold",
-      color: "#FFF",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      textAlign: "center",
-      minHeight: 50,
-      fontSize: 14,
-    },
-  },
-  {
-    type: "button",
-    left: "70%",
-    top: 2600,
-    width: 200,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    valueItem: "About",
-    styles: {
-      fontWeight: "bold",
-      color: "#FFF",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      textAlign: "center",
-      minHeight: 50,
-      fontSize: 14,
-      textTransform: "upperCase",
-    },
-  },
-  {
-    type: "input",
-    left: "64%",
-    top: 2680,
-    width: 320,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    valueItem: "[Address detail,your number]",
-    styles: {
-      fontWeight: "bold",
-      color: "#FFF",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      textAlign: "center",
-      minHeight: 50,
-      fontSize: 14,
-    },
-  },
-
-  {
-    type: "a",
-    left: "62%",
-    top: 2880,
-    width: 100,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    href: {
-      name: "facebook",
-      href: "#",
-    },
-    styles: {
-      fontWeight: "bold",
-      color: "#FFF",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      minHeight: 50,
-      fontSize: 14,
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      textAlign: "center",
-    },
-  },
-  {
-    type: "a",
-    left: "74%",
-    top: 2880,
-    width: 100,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    href: {
-      name: "Instagram",
-      href: "#",
-    },
-    valueItem: "[Detail contact, number phone]",
-    styles: {
-      fontWeight: "bold",
-      color: "#FFF",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      minHeight: 50,
-      fontSize: 14,
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      textAlign: "center",
-    },
-  },
-  {
-    type: "a",
-    left: "86%",
-    top: 2880,
-    width: 100,
-    id: uuid(),
-    inGrid: true,
-    isMulti: false,
-    href: {
-      name: "Youtube",
-      href: "#",
-    },
-    styles: {
-      fontWeight: "bold",
-      color: "#FFF",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      minHeight: 50,
-      fontSize: 14,
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      textAlign: "center",
-    },
-  },
-
-  //end footer
-];
-
 export const DefaultItemInGridTemplate3 = [
   //header
 
@@ -700,7 +37,7 @@ export const DefaultItemInGridTemplate3 = [
     isMulti: false,
     center: true,
     src: "https://i.ibb.co/F5445KH/icon-removebg-preview.png",
-    styles: {
+    styleDefault: {
       backgroundColor: "transparent",
       borderColor: "transparent",
     },
@@ -740,7 +77,7 @@ export const DefaultItemInGridTemplate3 = [
     isMulti: false,
     valueItem: "<Name page>",
     center: true,
-    styles: {
+    styleDefault: {
       backgroundColor: "transparent",
       fontSize: 18,
       textAlign: "center",
@@ -764,7 +101,7 @@ export const DefaultItemInGridTemplate3 = [
     inGrid: true,
     isMulti: false,
     valueItem: "[Enter title]",
-    styles: {
+    styleDefault: {
       backgroundColor: "transparent",
       fontSize: 24,
       fontWeight: "bold",
@@ -791,7 +128,7 @@ export const DefaultItemInGridTemplate3 = [
     isMulti: false,
     valueItem: "<Enter text>",
     center: true,
-    styles: {
+    styleDefault: {
       backgroundColor: "transparent",
       fontSize: 18,
       textAlign: "center",
@@ -818,7 +155,7 @@ export const DefaultItemInGridTemplate3 = [
     isMulti: false,
     center: true,
     src: "https://i.ibb.co/CnXLkqg/Pngtree-cartoon-hand-drawn-online-education-4986516.png",
-    styles: {
+    styleDefault: {
       borderRadius: "24px",
       backgroundColor: "transparent",
       border: "none",
@@ -838,7 +175,7 @@ export const DefaultItemInGridTemplate3 = [
     isMulti: false,
     heading: true,
     valueItem: "About",
-    styles: {
+    styleDefault: {
       fontWeight: "bold",
       fontSize: "24px",
       color: "#6A5ACD",
@@ -862,7 +199,7 @@ export const DefaultItemInGridTemplate3 = [
     isMulti: false,
     heading: true,
     valueItem: "<Your About>",
-    styles: {
+    styleDefault: {
       fontWeight: "bold",
       color: "#000",
       backgroundColor: "transparent",
@@ -888,7 +225,7 @@ export const DefaultItemInGridTemplate3 = [
     heading: true,
     center: true,
     valueItem: "[Your project]",
-    styles: {
+    styleDefault: {
       fontWeight: "bold",
       color: "#6A5ACD",
       backgroundColor: "transparent",
@@ -914,7 +251,7 @@ export const DefaultItemInGridTemplate3 = [
     heading: true,
     center: true,
     valueItem: "<Describe>",
-    styles: {
+    styleDefault: {
       color: "#000",
       backgroundColor: "transparent",
       border: "1px solid #ccc",
@@ -945,7 +282,7 @@ export const DefaultItemInGridTemplate3 = [
     inGrid: true,
     isMulti: true,
     numberComponents: 8,
-    stylesComponentMulti: {
+    styleDefault: {
       backgroundColor: "#FFC0CB",
       boxShadow: "10px 10px 106px -33px rgba(240,43,53,1)",
       borderRadius: "50px",
@@ -964,7 +301,7 @@ export const DefaultItemInGridTemplate3 = [
     isMulti: false,
     center: true,
     src: "https://i.ibb.co/KzzV8qS/Pngtree-network-education-online-education-illustration-6187862.png",
-    styles: {
+    styleDefault: {
       borderRadius: "24px",
       backgroundColor: "transparent",
       border: "none",
@@ -984,7 +321,7 @@ export const DefaultItemInGridTemplate3 = [
     isMulti: false,
     heading: true,
     valueItem: "Education",
-    styles: {
+    styleDefault: {
       fontWeight: "bold",
       color: "#c9ab7a",
       backgroundColor: "transparent",
@@ -1009,7 +346,7 @@ export const DefaultItemInGridTemplate3 = [
     isMulti: false,
     heading: true,
     valueItem: "<Details major>",
-    styles: {
+    styleDefault: {
       color: "#000",
       backgroundColor: "transparent",
       border: "1px solid #ccc",
@@ -1032,7 +369,7 @@ export const DefaultItemInGridTemplate3 = [
     isMulti: false,
     heading: true,
     valueItem: "About work",
-    styles: {
+    styleDefault: {
       fontWeight: "bold",
       color: "#c9ab7a",
       backgroundColor: "transparent",
@@ -1057,7 +394,7 @@ export const DefaultItemInGridTemplate3 = [
     isMulti: false,
     heading: true,
     valueItem: "<Details work>",
-    styles: {
+    styleDefault: {
       color: "#000",
       backgroundColor: "transparent",
       border: "1px solid #ccc",
@@ -1081,7 +418,7 @@ export const DefaultItemInGridTemplate3 = [
     heading: true,
     center: true,
     valueItem: "<Your feeling>",
-    styles: {
+    styleDefault: {
       color: "#ccc",
       backgroundColor: "transparent",
       border: "1px solid #ccc",
@@ -1106,7 +443,7 @@ export const DefaultItemInGridTemplate3 = [
     heading: true,
     center: true,
     valueItem: "Other projects",
-    styles: {
+    styleDefault: {
       fontWeight: "bold",
       color: "#b3073c",
       backgroundColor: "transparent",
@@ -1129,7 +466,7 @@ export const DefaultItemInGridTemplate3 = [
     id: uuid(),
     inGrid: true,
     isMulti: false,
-    styles: {
+    styleDefault: {
       boxShadow: " 10px 10px 106px -33px rgba(240,43,53,1)",
       border: "3px outset  rgb(255, 69, 0)",
     },
@@ -1152,7 +489,7 @@ export const DefaultItemInGridTemplate3 = [
     id: uuid(),
     inGrid: true,
     isMulti: false,
-    styles: {
+    styleDefault: {
       boxShadow: " 10px 10px 106px -33px rgba(240,43,53,1)",
       border: "3px outset  rgb(255, 69, 0)",
     },
@@ -1171,7 +508,7 @@ export const DefaultItemInGridTemplate3 = [
     id: uuid(),
     inGrid: true,
     isMulti: false,
-    styles: {
+    styleDefault: {
       boxShadow: " 10px 10px 106px -33px rgba(240,43,53,1)",
       border: "3px outset  rgb(255, 69, 0)",
     },
@@ -1192,7 +529,7 @@ export const DefaultItemInGridTemplate3 = [
     isMulti: false,
     heading: true,
     valueItem: "<Technology used>",
-    styles: {
+    styleDefault: {
       fontWeight: "bold",
       color: "#000",
       backgroundColor: "transparent",
@@ -1216,7 +553,7 @@ export const DefaultItemInGridTemplate3 = [
     isMulti: false,
     heading: true,
     valueItem: "<Field of work>",
-    styles: {
+    styleDefault: {
       fontWeight: "bold",
       color: "#000",
       backgroundColor: "transparent",
@@ -1267,7 +604,7 @@ export const DefaultItemInGridTemplate3 = [
     heading: true,
     center: true,
     valueItem: "Contact me",
-    styles: {
+    styleDefault: {
       fontWeight: "bold",
       color: "#b3073c",
       backgroundColor: "transparent",
@@ -1292,7 +629,7 @@ export const DefaultItemInGridTemplate3 = [
     isMulti: false,
     center: true,
     src: "https://i.ibb.co/dg8wwp3/Pngtree-contact-us-flat-design-style-5874427.png",
-    styles: {
+    styleDefault: {
       borderRadius: "24px",
       backgroundColor: "transparent",
       border: "none",
@@ -1308,7 +645,7 @@ export const DefaultItemInGridTemplate3 = [
     inGrid: true,
     isMulti: false,
     valueItem: "[Your detail, address]",
-    styles: {
+    styleDefault: {
       fontWeight: "bold",
       color: "#000",
       backgroundColor: "transparent",
@@ -1328,7 +665,7 @@ export const DefaultItemInGridTemplate3 = [
     inGrid: true,
     isMulti: false,
     valueItem: "<Your social networks>",
-    styles: {
+    styleDefault: {
       fontWeight: "bold",
       color: "#000",
       backgroundColor: "transparent",
@@ -1353,7 +690,7 @@ export const DefaultItemInGridTemplate3 = [
       Name: "Facebook",
       Component: <GrFacebookOption />,
     },
-    styles: {
+    styleDefault: {
       color: "blue",
       backgroundColor: "transparent",
       boxShadow: "10px 10px 106px -33px rgba(240,43,53,1)",
@@ -1374,7 +711,7 @@ export const DefaultItemInGridTemplate3 = [
       Name: "Instagram",
       Component: <GrInstagram />,
     },
-    styles: {
+    styleDefault: {
       color: "#FF3399",
       textTransform: "uppercase",
       boxShadow: "10px 10px 106px -33px rgba(240,43,53,1)",
@@ -1395,7 +732,7 @@ export const DefaultItemInGridTemplate3 = [
       Name: "Github",
       Component: <GrGithub />,
     },
-    styles: {
+    styleDefault: {
       boxShadow: "10px 10px 106px -33px rgba(240,43,53,1)",
       borderRadius: "50px",
       border: "3px outset #DC143C",
@@ -1414,7 +751,7 @@ export const DefaultItemInGridTemplate3 = [
       Name: "Youtube",
       Component: <GrYoutube />,
     },
-    styles: {
+    styleDefault: {
       color: "red",
       boxShadow: "10px 10px 106px -33px rgba(240,43,53,1)",
       borderRadius: "50px",

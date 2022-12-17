@@ -5,11 +5,9 @@ import {
   Template2Content,
   Template3Content,
 } from "~/Components";
-import {
-  DefaultItemInGridTemplate1,
-  DefaultItemInGridTemplate2,
-  DefaultItemInGridTemplate3,
-} from "./ComponentDefaults";
+import { DefaultItemInGridTemplate1 } from "~/Routes/ComponentDefault/ComponentDefaults1";
+import { DefaultItemInGridTemplate2 } from "~/Routes/ComponentDefault/ComponentDefaults2";
+import { DefaultItemInGridTemplate3 } from "~/Routes/ComponentDefault/ComponentDefaults3";
 
 export const publicRoutes = [
   {

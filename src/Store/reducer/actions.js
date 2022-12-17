@@ -17,9 +17,9 @@ export const setLeft = (payload) => {
     payload,
   };
 };
-export const setAlignCenter = (payload) => {
+export const setTextAlign = (payload) => {
   return {
-    type: constantActions.SET_ALIGN_CENTER,
+    type: constantActions.SET_TEXT_ALIGN,
     payload,
   };
 };
@@ -84,9 +84,9 @@ export const setFontFamily = (payload) => {
     payload,
   };
 };
-export const setUppercase = (payload) => {
+export const setTextTransform = (payload) => {
   return {
-    type: constantActions.SET_UPPER_CASE_LETTER,
+    type: constantActions.SET_TEXT_TRANSFORM,
     payload,
   };
 };

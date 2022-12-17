@@ -1,7 +1,6 @@
 import { AiOutlineClose } from "react-icons/ai";
 import clsx from "clsx";
 import styles from "./Preview.module.scss";
-import { ComponentDefaults } from "~/Routes/ComponentDefaults";
 import Grid from "~/Components/Grid";
 
 function Preview({

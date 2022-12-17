@@ -31,9 +31,9 @@ import {
   setBorderStyle,
   setBorderColor,
   setFontWeight,
-  setAlignCenter,
+  setTextAlign,
   setBorderSize,
-  setUppercase,
+  setTextTransform,
   setLineHeight,
 } from "~/Store/reducer/actions";
 import { TipSuggest } from "~/Components";
@@ -53,52 +53,59 @@ function EditorComponent({ style }) {
   const [showEditFontStyle, setShowEditFontStyle] = useState(false);
 
   const [valueBorderRadius, setValueBorderRadius] = useState(
-    state.border_radius
-      ? parseInt(
-          state.border_radius.substring(0, state.border_radius.length - 2)
-        )
-      : 0
+    state.border_radius ? state.border_radius : 0
   );
   const [fontSize, setFontSizeItem] = useState(
-    state.font_size
-      ? parseInt(state.font_size.substring(0, state.font_size.length - 2))
-      : 0
+    state.font_size ? parseInt(state.font_size) : 0
   );
   const [lineHeight, setLineHeightItem] = useState(
-    state.line_height
-      ? parseInt(state.line_height.substring(0, state.line_height.length - 2))
-      : 0
+    state.line_height ? parseInt(state.line_height) : 0
   );
 
   useEffect(() => {
     if (state.border_radius) {
-      setValueBorderRadius(
-        parseInt(
-          state.border_radius.substring(0, state.border_radius.length - 2)
-        )
-      );
+      setValueBorderRadius(parseInt(state.border_radius));
     }
     if (state.font_size) {
-      setFontSizeItem(
-        parseInt(state.font_size.substring(0, state.font_size.length - 2))
-      );
+      setFontSizeItem(parseInt(state.font_size));
     }
     if (state.line_height) {
-      setLineHeightItem(
-        parseInt(state.line_height.substring(0, state.line_height.length - 2))
-      );
+      setLineHeightItem(parseInt(state.line_height));
     }
   }, [state]);
   //set style component
   useEffect(() => {
-    dispatch(setBorderRadius(`${valueBorderRadius}px`));
+    if (valueBorderRadius) {
+      dispatch(setBorderRadius(`${valueBorderRadius}px`));
+    }
   }, [valueBorderRadius]);
   useEffect(() => {
-    dispatch(setFontSize(`${fontSize}px`));
+    if (fontSize) {
+      dispatch(setFontSize(`${fontSize}px`));
+    }
   }, [fontSize]);
   useEffect(() => {
-    dispatch(setLineHeight(`${lineHeight}px`));
+    if (lineHeight) {
+      dispatch(setLineHeight(`${lineHeight}px`));
+    }
   }, [lineHeight]);
+
+  //hidden editor each attribute
+  useEffect(() => {
+    const handleHiddenEditor = () => {
+      setShowSetBackground(false);
+      setShowEditColor(false);
+      setShowEditBorderColor(false);
+      setShowEditBorderSize(false);
+      setShowEditBorderStyle(false);
+      setShowEditFontStyle(false);
+      setEditorComponent(false);
+    };
+    window.addEventListener("click", handleHiddenEditor);
+    return () => {
+      window.removeEventListener("click", handleHiddenEditor);
+    };
+  }, []);
 
   const renderOptionColors = () => {
     return colors.map((color, index) => {
@@ -230,23 +237,15 @@ function EditorComponent({ style }) {
     });
   };
 
-  useEffect(() => {
-    const handleHiddenEditor = () => {
-      setShowSetBackground(false);
-      setShowEditColor(false);
-      setShowEditBorderColor(false);
-      setShowEditBorderSize(false);
-      setShowEditBorderStyle(false);
-      setShowEditFontStyle(false);
-      setEditorComponent(false);
-    };
-    window.addEventListener("click", handleHiddenEditor);
-    return () => {
-      window.removeEventListener("click", handleHiddenEditor);
-    };
-  }, []);
   //handle hidden and show edit component when i click display
-
+  const handleHiddenEditor = () => {
+    setShowEditBorderStyle(false);
+    setShowEditBorderColor(false);
+    setShowEditColor(false);
+    setShowSetBackground(false);
+    setShowEditFontStyle(false);
+    setShowEditBorderSize(false);
+  };
   return (
     <div
       className={clsx(styles.wrapper)}
@@ -366,7 +365,10 @@ function EditorComponent({ style }) {
           {renderOptionBorderColors()}
         </ul>
       </div>
-      <div className={clsx(styles.icon, styles.font_size_options)}>
+      <div
+        className={clsx(styles.icon, styles.font_size_options)}
+        onClick={handleHiddenEditor}
+      >
         <TipSuggest content='Edit fontsize'>
           <GoTextSize
             style={{
@@ -402,7 +404,10 @@ function EditorComponent({ style }) {
           }}
         />
       </div>
-      <div className={clsx(styles.icon, styles.line_height_options)}>
+      <div
+        className={clsx(styles.icon, styles.line_height_options)}
+        onClick={handleHiddenEditor}
+      >
         <TipSuggest content='Edit line height'>
           <RxLineHeight
             style={{
@@ -439,7 +444,12 @@ function EditorComponent({ style }) {
         />
       </div>
 
-      <div className={clsx(styles.icon, styles.border_radius_options)}>
+      <div
+        className={clsx(styles.icon, styles.border_radius_options)}
+        onClick={(e) => {
+          handleHiddenEditor();
+        }}
+      >
         <TipSuggest content='Edit border radius' position='bottom'>
           <TbBorderRadius
             style={{
@@ -549,6 +559,7 @@ function EditorComponent({ style }) {
         onClick={(e) => {
           e.stopPropagation();
           dispatch(setFontWeight(!state.font_weight));
+          handleHiddenEditor();
         }}
       >
         <FaBold></FaBold>
@@ -557,7 +568,8 @@ function EditorComponent({ style }) {
         className={clsx(styles.icon, styles.icon_align_center)}
         onClick={(e) => {
           e.stopPropagation();
-          dispatch(setAlignCenter(!state.align_center));
+          handleHiddenEditor();
+          dispatch(setTextAlign(!state.text_align));
         }}
       >
         <TipSuggest content='Text center'>
@@ -575,7 +587,8 @@ function EditorComponent({ style }) {
         }}
         onClick={(e) => {
           e.stopPropagation();
-          dispatch(setUppercase(!state.upper_case_letter));
+          handleHiddenEditor();
+          dispatch(setTextTransform(!state.text_transform));
         }}
       >
         <TipSuggest content='Letter uppercase'>

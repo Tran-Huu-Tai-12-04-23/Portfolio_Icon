@@ -9,10 +9,14 @@ import {
   ContextItemsIngrid,
   ElementContentPortfolio,
   ShowOverlay,
+  ContextReducer,
+  ContextItemsMultiIngrid,
 } from "~/Store/Context";
 import ComponentLayouts from "../Item/ComponentLayouts";
 
 function Grid(props) {
+  const [state, dispatch] = useContext(ContextReducer);
+  const [itemMulti, setItemMulti] = useContext(ContextItemsMultiIngrid);
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [backgroundColor, setBackgroundColor] = useState("#fff");
   const [contentPortfolio, setShowTrash, widthContent] = useContext(
@@ -50,8 +54,18 @@ function Grid(props) {
         console.log(delta);
         let left = item.type === "icon" ? delta.x - 350 : delta.x - 400;
         let top = delta.y - 100;
-
-        addItem(item.type, left, top + valueScrollTop, uuid(), item.InfoIcon);
+        console.log(item);
+        addItem(
+          item.type,
+          left,
+          top + valueScrollTop,
+          uuid(),
+          item.InfoIcon,
+          item.styleDefault,
+          item.src,
+          item.href,
+          item.valueItem
+        );
       } else if (item.inGrid === false && item.isMulti) {
         const valueScrollTop = contentPortfolio.current.scrollTop;
         const delta = monitor.getClientOffset();
@@ -71,7 +85,8 @@ function Grid(props) {
           uuid(),
           uuid(),
           uuid(),
-          item.numberComponents
+          item.numberComponents,
+          item.styleDefault
         );
       }
     },
@@ -81,15 +96,62 @@ function Grid(props) {
     }),
   }));
 
+  //set default styles for components
+  const setStyleDefault = (item) => {
+    if (item.styleDefault) {
+      item.styleDefault.color = item.styleDefault.color
+        ? item.styleDefault.color
+        : "";
+      item.styleDefault.backgroundColor = item.styleDefault.backgroundColor
+        ? item.styleDefault.backgroundColor
+        : "";
+      item.styleDefault.fontSize = item.styleDefault.fontSize
+        ? item.styleDefault.fontSize
+        : "";
+      item.styleDefault.fontFamily = item.styleDefault.fontFamily
+        ? item.styleDefault.fontFamily
+        : "";
+      item.styleDefault.borderRadius = item.styleDefault.borderRadius
+        ? item.styleDefault.borderRadius
+        : "";
+      item.styleDefault.borderStyle = item.styleDefault.borderStyle
+        ? item.styleDefault.borderStyle
+        : "";
+      item.styleDefault.borderColor = item.styleDefault.borderColor
+        ? item.styleDefault.borderColor
+        : "";
+      item.styleDefault.fontWeight = item.styleDefault.fontWeight
+        ? item.styleDefault.fontWeight
+        : "";
+      item.styleDefault.textAlign = item.styleDefault.textAlign
+        ? item.styleDefault.textAlign
+        : "";
+      item.styleDefault.borderWidth = item.styleDefault.borderWidth
+        ? item.styleDefault.borderWidth
+        : "";
+      item.styleDefault.textTransform = item.styleDefault.textTransform
+        ? item.styleDefault.textTransform
+        : "";
+      item.styleDefault.lineHeight = item.styleDefault.lineHeight
+        ? item.styleDefault.lineHeight
+        : "";
+    }
+  };
   const addItem = (
     type,
     left = "200px",
     top = "100px",
     id,
     InfoIcon,
+    styleDefault,
+    src,
+    href,
+    valueItem,
     width = 200,
     height = 40
   ) => {
+    setStyleDefault(styleDefault);
+
     setItems((prev) => {
       return [
         ...prev,
@@ -103,10 +165,15 @@ function Grid(props) {
           inGrid: true,
           isMulti: false,
           InfoIcon,
+          styleDefault,
+          src,
+          href,
+          valueItem,
         },
       ];
     });
   };
+
   const addItemMulti = (
     type1,
     type2,
@@ -122,7 +189,8 @@ function Grid(props) {
     idItem6,
     idItem7,
     idItem8,
-    numberComponents
+    numberComponents,
+    styleDefault
   ) => {
     setItems((prev) => {
       return [
@@ -132,7 +200,6 @@ function Grid(props) {
           type2,
           type3,
           type4,
-          numberComponents,
           idItem1,
           idItem2,
           idItem3,
@@ -141,6 +208,8 @@ function Grid(props) {
           idItem6,
           idItem7,
           idItem8,
+          numberComponents,
+          styleDefault,
           right: 0,
           left: 0,
           top,
@@ -180,7 +249,33 @@ function Grid(props) {
         : "#fff"
     );
   }, [{ isActive, canDrop }]);
-
+  //load style default cho items
+  useEffect(() => {
+    items.map((item) => {
+      setStyleDefault(item);
+    });
+  }, [items]);
+  // load style default
+  useEffect(() => {
+    // console.log(state);
+    // console.log("render");
+    items.map((item) => {
+      if (item.id === state.id_item_selected) {
+        item.styleDefault.color = state.color;
+        item.styleDefault.backgroundColor = state.background_color;
+        item.styleDefault.fontSize = state.font_size;
+        item.styleDefault.fontFamily = state.font_family;
+        item.styleDefault.borderRadius = state.border_radius;
+        item.styleDefault.borderStyle = state.border_style;
+        item.styleDefault.borderColor = state.border_color;
+        item.styleDefault.fontWeight = state.font_weight;
+        item.styleDefault.textAlign = state.text_align;
+        item.styleDefault.borderSize = state.border_size;
+        item.styleDefault.textTransform = state.text_transform;
+        item.styleDefault.lineHeight = state.line_height;
+      }
+    });
+  }, [state]);
   return (
     <ShowOverlay.Provider value={[showOverlay, setShowOverlay]}>
       <div
@@ -200,7 +295,7 @@ function Grid(props) {
                   item={item}
                   id={"multi_items"}
                   opacity={isDragging ? true : false}
-                  styleDefault={item.styles}
+                  styleDefault={item.styleDefault}
                   src={item.src}
                 ></ComponentLayouts>
               );
@@ -217,7 +312,7 @@ function Grid(props) {
                   center={item.center}
                   href={item.href}
                   icon={false}
-                  styleDefault={item.styles}
+                  styleDefault={item.styleDefault}
                   InfoIcon={item.InfoIcon}
                   stylesItem={{
                     top: item.top,

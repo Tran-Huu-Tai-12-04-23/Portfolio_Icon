@@ -20,6 +20,12 @@ const reducer = (state, action) => {
         font_size: action.payload,
       };
     }
+    case constantActions.SET_TEXT_TRANSFORM: {
+      return {
+        ...state,
+        text_transform: action.payload,
+      };
+    }
     case constantActions.SET_LINE_HEIGHT: {
       return {
         ...state,
@@ -68,10 +74,10 @@ const reducer = (state, action) => {
         align_center: action.payload,
       };
     }
-    case constantActions.SET_UPPER_CASE_LETTER: {
+    case constantActions.SET_TEXT_ALIGN: {
       return {
         ...state,
-        upper_case_letter: action.payload,
+        text_align: action.payload,
       };
     }
 
