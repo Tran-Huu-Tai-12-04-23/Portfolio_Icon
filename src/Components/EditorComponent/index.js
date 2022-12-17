@@ -327,6 +327,7 @@ function EditorComponent({ style }) {
             display: showEditColor ? "flex" : "none",
           }}
           onClick={(e) => {
+            e.preventDefault();
             e.stopPropagation();
           }}
         >
@@ -602,7 +603,6 @@ function EditorComponent({ style }) {
             style={{
               marginTop: 8,
             }}
-            s
           ></BiFontFamily>
         </TipSuggest>
         <FontAwesomeIcon

@@ -59,6 +59,9 @@ function Item({
   children,
   InfoIcon,
 }) {
+  if (icon) {
+    console.log(styleDefault);
+  }
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [value, setValue] = useState(valueItem ? valueItem : "Enter text !!!");
   const [linkItemTypeA, setLinkItemTypeA] = useState(href ? href.href : "");
@@ -376,7 +379,7 @@ function Item({
           </>
         </ReactResizableBox>
       );
-    } else if (icon) {
+    } else if (icon || inGrid === "false") {
       return (
         <Type
           onClick={resizable ? handleSelectItemToEdit : null}
@@ -387,8 +390,6 @@ function Item({
             ...stylesItem,
             opacity: isDragging ? "0.5" : "1",
             opacity: opacity ? "0.4" : "1",
-            // height: height,
-            // width: width,
             width: isMulti ? "100%" : "40px",
             height: "40px",
             ...styleDefault,
@@ -400,7 +401,7 @@ function Item({
           {children}
         </Type>
       );
-    } else {
+    } else if (type === "icon" && inGrid) {
       return (
         <ReactResizableBox
           width={40}
@@ -417,7 +418,7 @@ function Item({
               className={classNamesItem}
               target='_blank'
               href={linkIcon ? linkIcon : null}
-              styles={{
+              style={{
                 ...styleDefault,
               }}
             >

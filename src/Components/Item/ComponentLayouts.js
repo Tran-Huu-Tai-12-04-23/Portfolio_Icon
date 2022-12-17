@@ -64,6 +64,10 @@ function ComponentLayouts({ item, opacity, children }) {
             width={widthDisplayContent / 4}
             height={(heightDisplayContent / 3.5) * 2}
             draggable={false}
+            styleDefault={{
+              backgroundColor: "transparent",
+              border: "1px solid #000",
+            }}
             stylesItem={{
               position: "unset",
               maxWidth: "100%",
@@ -78,6 +82,12 @@ function ComponentLayouts({ item, opacity, children }) {
             height={40}
             draggable={false}
             type={item.type2}
+            styleDefault={{
+              backgroundColor: "transparent",
+              border: "1px solid #000",
+              color: "#757575",
+              marginTop: "6px",
+            }}
             stylesItem={{
               position: "unset",
               maxWidth: "100%",
@@ -123,6 +133,10 @@ function ComponentLayouts({ item, opacity, children }) {
             height={heightDisplayContent - 24}
             draggable={false}
             position='unset'
+            styleDefault={{
+              backgroundColor: "transparent",
+              border: "1px solid #000",
+            }}
             stylesItem={{
               position: "unset",
               maxWidth: "48%",
@@ -148,6 +162,10 @@ function ComponentLayouts({ item, opacity, children }) {
               type={item.type2}
               fontSize='24px'
               heading='true'
+              styleDefault={{
+                backgroundColor: "transparent",
+                border: "1px solid #000",
+              }}
               stylesItem={{
                 maxWidth: "100%",
                 position: "unset",
@@ -162,6 +180,10 @@ function ComponentLayouts({ item, opacity, children }) {
               height={40}
               position='unset'
               type={item.type3}
+              styleDefault={{
+                backgroundColor: "transparent",
+                border: "1px solid #000",
+              }}
               stylesItem={{
                 maxWidth: "100%",
                 position: "unset",
@@ -199,6 +221,10 @@ function ComponentLayouts({ item, opacity, children }) {
             width={widthDisplayContent / 4 - 12}
             height={heightDisplayContent - 24}
             draggable={false}
+            styleDefault={{
+              backgroundColor: "transparent",
+              border: "1px solid #000",
+            }}
             stylesItem={{
               position: "unset",
               margin: "12px",
@@ -213,6 +239,11 @@ function ComponentLayouts({ item, opacity, children }) {
             // height={heightDisplayContent - 24}
             draggable={false}
             type={item.type2}
+            styleDefault={{
+              backgroundColor: "transparent",
+              border: "1px solid #000",
+              color: "#757575",
+            }}
             stylesItem={{
               position: "unset",
               margin: "12px",
@@ -227,6 +258,10 @@ function ComponentLayouts({ item, opacity, children }) {
             height={heightDisplayContent - 24}
             draggable={false}
             type={item.type3}
+            styleDefault={{
+              backgroundColor: "transparent",
+              border: "1px solid #000",
+            }}
             stylesItem={{
               position: "unset",
               margin: "12px",
@@ -241,6 +276,11 @@ function ComponentLayouts({ item, opacity, children }) {
             // height={heightDisplayContent - 24}
             draggable={false}
             type={item.type4}
+            styleDefault={{
+              backgroundColor: "transparent",
+              border: "1px solid #000",
+              color: "#757575",
+            }}
             stylesItem={{
               position: "unset",
               margin: "12px",

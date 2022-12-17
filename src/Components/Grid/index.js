@@ -174,9 +174,9 @@ function Grid(props) {
   useEffect(() => {
     setBackgroundColor(
       isActive
-        ? "rgba(102, 102, 255, 0.5)"
+        ? "rgba(102, 102, 255, 0.1)"
         : canDrop
-        ? "rgba(255, 102, 153, 0.5)"
+        ? "rgba(255, 102, 153, 0.1)"
         : "#fff"
     );
   }, [{ isActive, canDrop }]);
@@ -217,6 +217,7 @@ function Grid(props) {
                   center={item.center}
                   href={item.href}
                   icon={false}
+                  styleDefault={item.styles}
                   InfoIcon={item.InfoIcon}
                   stylesItem={{
                     top: item.top,
@@ -225,7 +226,6 @@ function Grid(props) {
                     height: item.height,
                   }}
                   src={item.src}
-                  styleDefault={item.styles}
                   opacity={isDragging ? true : false}
                 ></Item>
               );

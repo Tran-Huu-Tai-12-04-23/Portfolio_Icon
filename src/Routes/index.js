@@ -6,6 +6,7 @@ import {
   Template3Content,
 } from "~/Components";
 import {
+  DefaultItemInGridTemplate1,
   DefaultItemInGridTemplate2,
   DefaultItemInGridTemplate3,
 } from "./ComponentDefaults";
@@ -18,7 +19,10 @@ export const publicRoutes = [
 
   {
     element: (
-      <CreatePortfolio>
+      <CreatePortfolio
+        DefaultComponent={DefaultItemInGridTemplate1}
+        heightDefault={2000}
+      >
         <Template1Content />
       </CreatePortfolio>
     ),

@@ -11,6 +11,45 @@ import {
 const leftDefaultText = 50;
 const leftDefaultTitle = 100;
 
+export const DefaultItemInGridTemplate1 = [
+  {
+    type: "box",
+    left: 0,
+    top: 0,
+    width: "100%",
+    height: 500,
+    id: uuid(),
+    inGrid: true,
+    isMulti: false,
+    valueItem: "<About>",
+    styles: {
+      backgroundColor: "#669999",
+    },
+  },
+  {
+    type: "input",
+    left: "50%",
+    top: 100,
+    width: 500,
+    height: 80,
+    id: uuid(),
+    inGrid: true,
+    isMulti: false,
+    valueItem: "[Header]",
+    center: true,
+    styles: {
+      backgroundColor: "transparent",
+      fontSize: 18,
+      textAlign: "center",
+      color: "#000",
+      fontFamily: "Poppins",
+      lineHeight: "26px",
+      textAlign: "center",
+      color: "#fff",
+    },
+  },
+];
+
 export const DefaultItemInGridTemplate2 = [
   //header
   {
@@ -677,7 +716,7 @@ export const DefaultItemInGridTemplate3 = [
     isMulti: false,
     valueItem: "<About>",
     center: true,
-    styles: {
+    styleDefault: {
       backgroundColor: "transparent",
       fontSize: 18,
       textAlign: "center",
@@ -1090,14 +1129,18 @@ export const DefaultItemInGridTemplate3 = [
     id: uuid(),
     inGrid: true,
     isMulti: false,
-
     styles: {
+      boxShadow: " 10px 10px 106px -33px rgba(240,43,53,1)",
+      border: "3px outset  rgb(255, 69, 0)",
+    },
+    styleDefault: {
       borderRadius: "24px",
       backgroundColor: "transparent",
       border: "none",
       borderRight: "1px double #ccc",
       borderTop: "1px double #ccc",
-      boxShadow: " 10px 10px 106px -33px rgba(240,43,53,1)",
+      border: "3px outset  rgb(255, 69, 0)",
+      boxShadow: "14px 17px 115px 0px rgb(255, 69, 0)",
     },
   },
   {
@@ -1109,14 +1152,14 @@ export const DefaultItemInGridTemplate3 = [
     id: uuid(),
     inGrid: true,
     isMulti: false,
-
     styles: {
+      boxShadow: " 10px 10px 106px -33px rgba(240,43,53,1)",
+      border: "3px outset  rgb(255, 69, 0)",
+    },
+    styleDefault: {
       borderRadius: "24px",
       backgroundColor: "transparent",
       border: "none",
-      borderRight: "1px double #ccc",
-      borderTop: "1px double #ccc",
-      boxShadow: " 10px 10px 106px -33px rgba(240,43,53,1)",
     },
   },
   {
@@ -1128,14 +1171,13 @@ export const DefaultItemInGridTemplate3 = [
     id: uuid(),
     inGrid: true,
     isMulti: false,
-
     styles: {
+      boxShadow: " 10px 10px 106px -33px rgba(240,43,53,1)",
+      border: "3px outset  rgb(255, 69, 0)",
+    },
+    styleDefault: {
       borderRadius: "24px",
       backgroundColor: "transparent",
-      border: "none",
-      borderRight: "1px double #ccc",
-      borderTop: "1px double #ccc",
-      boxShadow: " 10px 10px 106px -33px rgba(240,43,53,1)",
     },
   },
 
@@ -1198,7 +1240,7 @@ export const DefaultItemInGridTemplate3 = [
     isMulti: false,
     heading: true,
     valueItem: "<Describes>",
-    styles: {
+    styleDefault: {
       fontWeight: "bold",
       color: "#000",
       backgroundColor: "transparent",
@@ -1211,7 +1253,7 @@ export const DefaultItemInGridTemplate3 = [
       borderRadius: "12px",
     },
   },
-  //end your project
+  //end other project
   //begin footer
   {
     type: "input",
@@ -1312,15 +1354,8 @@ export const DefaultItemInGridTemplate3 = [
       Component: <GrFacebookOption />,
     },
     styles: {
-      left: 500,
-      top: 2670,
-      color: "#kkk",
+      color: "blue",
       backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      textAlign: "center",
-      minHeight: 50,
-      fontSize: 18,
-      textTransform: "uppercase",
       boxShadow: "10px 10px 106px -33px rgba(240,43,53,1)",
       borderRadius: "50px",
       border: "3px outset #DC143C",
@@ -1340,14 +1375,7 @@ export const DefaultItemInGridTemplate3 = [
       Component: <GrInstagram />,
     },
     styles: {
-      left: 500,
-      top: 2670,
-      color: "#kkk",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      textAlign: "center",
-      minHeight: 50,
-      fontSize: 18,
+      color: "#FF3399",
       textTransform: "uppercase",
       boxShadow: "10px 10px 106px -33px rgba(240,43,53,1)",
       borderRadius: "50px",
@@ -1368,15 +1396,6 @@ export const DefaultItemInGridTemplate3 = [
       Component: <GrGithub />,
     },
     styles: {
-      left: 500,
-      top: 2670,
-      color: "#kkk",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      textAlign: "center",
-      minHeight: 50,
-      fontSize: 18,
-      textTransform: "uppercase",
       boxShadow: "10px 10px 106px -33px rgba(240,43,53,1)",
       borderRadius: "50px",
       border: "3px outset #DC143C",
@@ -1396,15 +1415,7 @@ export const DefaultItemInGridTemplate3 = [
       Component: <GrYoutube />,
     },
     styles: {
-      left: 500,
-      top: 2670,
-      color: "#kkk",
-      backgroundColor: "transparent",
-      border: "1px solid #ccc",
-      textAlign: "center",
-      minHeight: 50,
-      fontSize: 18,
-      textTransform: "uppercase",
+      color: "red",
       boxShadow: "10px 10px 106px -33px rgba(240,43,53,1)",
       borderRadius: "50px",
       border: "3px outset #DC143C",

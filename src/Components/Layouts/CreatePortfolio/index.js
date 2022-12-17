@@ -14,6 +14,7 @@ import {
 } from "~/Store/Context";
 import Footer from "../Footer";
 import Preview from "../Preview";
+import Tag from "./Tag";
 
 function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
   const [items, setItems] = useState(DefaultComponent ? DefaultComponent : []);
@@ -32,7 +33,8 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
   const contentPortfolio = useRef();
   const wrapperTemplateContent = useRef();
   const inputAddHeight = useRef();
-
+  const [contentTag, setContentTag] = useState("Header");
+  const [showTag, setShowTag] = useState(false);
   //auto focus for users
   useEffect(() => {
     if (inputAddHeight && inputAddHeight.current) {
@@ -71,6 +73,19 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
 
   //go to top page
   const handleShowScroll = (e) => {
+    setShowTag(true);
+    if (e.currentTarget.scrollTop <= 0) {
+      setShowTag(false);
+    }
+    if (e.currentTarget.scrollTop < 200) {
+      setContentTag("Header");
+    }
+    if (e.currentTarget.scrollTop > 200) {
+      setContentTag("Content");
+    }
+    if (e.currentTarget.scrollTop > 2000) {
+      setContentTag("Footer");
+    }
     setGoToTop(e.currentTarget.scrollTop > 200 ? true : false);
   };
 
@@ -148,6 +163,10 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
                 </div>
               </div>
             </MenuUntil>
+            {showTag && widthMenu !== "0" ? (
+              <Tag content={contentTag}></Tag>
+            ) : null}
+
             <div
               ref={contentPortfolio}
               id={"content_portfolio"}
