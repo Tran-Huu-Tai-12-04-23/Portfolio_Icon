@@ -13,4 +13,7 @@ export const constantActions = {
   SET_TEXT_ALIGN: "set_align_center",
   SET_TEXT_TRANSFORM: "set_text_transform",
   SET_ID_ITEM: "set_id",
+  SET_SRC: "set_src",
+  SET_HREF: "set_href",
+  SET_VALUE: "set_value",
 };

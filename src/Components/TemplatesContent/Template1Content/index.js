@@ -1,4 +1,6 @@
 import clsx from "clsx";
+import ReactDOMServer from "react-dom/server";
+import Html from "~/Html";
 
 import styles from "./Template1Content.module.scss";
 import { Grid, Item } from "~/Components";

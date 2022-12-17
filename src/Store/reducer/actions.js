@@ -97,3 +97,24 @@ export const setIdItemSelected = (payload) => {
     payload,
   };
 };
+
+export const setHref = (payload) => {
+  return {
+    type: constantActions.SET_HREF,
+    payload,
+  };
+};
+
+export const setValue = (payload) => {
+  return {
+    type: constantActions.SET_VALUE,
+    payload,
+  };
+};
+
+export const setSRC = (payload) => {
+  return {
+    type: constantActions.SET_SRC,
+    payload,
+  };
+};

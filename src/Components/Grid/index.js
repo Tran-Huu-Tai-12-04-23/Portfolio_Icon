@@ -70,23 +70,25 @@ function Grid(props) {
         const valueScrollTop = contentPortfolio.current.scrollTop;
         const delta = monitor.getClientOffset();
         let top = delta.y - 116;
+        const idChild = [
+          uuid(),
+          uuid(),
+          uuid(),
+          uuid(),
+          uuid(),
+          uuid(),
+          uuid(),
+          uuid(),
+        ];
+        const typeChild = [item.type1, item.type2, item.type3, item.type4];
         addItemMulti(
-          item.type1,
-          item.type2,
-          item.type3,
-          item.type4,
           top + valueScrollTop,
           uuid(),
-          uuid(),
-          uuid(),
-          uuid(),
-          uuid(),
-          uuid(),
-          uuid(),
-          uuid(),
-          uuid(),
+          idChild,
+          typeChild,
           item.numberComponents,
-          item.styleDefault
+          item.styleDefault,
+          item.styleDefaultChild
         );
       }
     },
@@ -175,41 +177,39 @@ function Grid(props) {
   };
 
   const addItemMulti = (
-    type1,
-    type2,
-    type3,
-    type4,
     top,
     id,
-    idItem1,
-    idItem2,
-    idItem3,
-    idItem4,
-    idItem5,
-    idItem6,
-    idItem7,
-    idItem8,
+    idChild,
+    typeChild,
     numberComponents,
-    styleDefault
+    styleDefault,
+    styleDefaultChild
   ) => {
+    const listItems = Array.from(Array(numberComponents).keys());
+    listItems.forEach((it) => {
+      setItemMulti((prev) => {
+        return [
+          ...prev,
+          {
+            id: idChild[it],
+            idParent: id,
+            type: typeChild[it],
+            isChild: true,
+            inGrid: true,
+            styleDefault: styleDefaultChild[it] ? styleDefaultChild[it] : {},
+          },
+        ];
+      });
+    });
     setItems((prev) => {
       return [
         ...prev,
         {
-          type1,
-          type2,
-          type3,
-          type4,
-          idItem1,
-          idItem2,
-          idItem3,
-          idItem4,
-          idItem5,
-          idItem6,
-          idItem7,
-          idItem8,
+          idChild,
+          typeChild,
           numberComponents,
           styleDefault,
+          styleDefaultChild,
           right: 0,
           left: 0,
           top,
@@ -259,20 +259,28 @@ function Grid(props) {
   useEffect(() => {
     // console.log(state);
     // console.log("render");
+    const setStyle = (item) => {
+      item.styleDefault.color = state.color;
+      item.styleDefault.backgroundColor = state.background_color;
+      item.styleDefault.fontSize = state.font_size;
+      item.styleDefault.fontFamily = state.font_family;
+      item.styleDefault.borderRadius = state.border_radius;
+      item.styleDefault.borderStyle = state.border_style;
+      item.styleDefault.borderColor = state.border_color;
+      item.styleDefault.fontWeight = state.font_weight;
+      item.styleDefault.textAlign = state.text_align;
+      item.styleDefault.borderSize = state.border_size;
+      item.styleDefault.textTransform = state.text_transform;
+      item.styleDefault.lineHeight = state.line_height;
+    };
     items.map((item) => {
       if (item.id === state.id_item_selected) {
-        item.styleDefault.color = state.color;
-        item.styleDefault.backgroundColor = state.background_color;
-        item.styleDefault.fontSize = state.font_size;
-        item.styleDefault.fontFamily = state.font_family;
-        item.styleDefault.borderRadius = state.border_radius;
-        item.styleDefault.borderStyle = state.border_style;
-        item.styleDefault.borderColor = state.border_color;
-        item.styleDefault.fontWeight = state.font_weight;
-        item.styleDefault.textAlign = state.text_align;
-        item.styleDefault.borderSize = state.border_size;
-        item.styleDefault.textTransform = state.text_transform;
-        item.styleDefault.lineHeight = state.line_height;
+        setStyle(item);
+      }
+    });
+    itemMulti.map((item) => {
+      if (item.id === state.id_item_selected) {
+        setStyle(item);
       }
     });
   }, [state]);
@@ -296,6 +304,7 @@ function Grid(props) {
                   id={"multi_items"}
                   opacity={isDragging ? true : false}
                   styleDefault={item.styleDefault}
+                  styleDefaultChild={item.styleDefaultChild}
                   src={item.src}
                 ></ComponentLayouts>
               );

@@ -11,7 +11,6 @@ import {
 import uuid from "react-uuid";
 
 function ComponentLayouts({ item, opacity, children }) {
-  const [itemMulti, setItemMulti] = useContext(ContextItemsMultiIngrid);
   const [widthDisplayContent, setWidthDisplayContent] = useState();
   const [heightDisplayContent, setHeightDisplayContent] = useState();
   const [contentPortfolio, setShowTrash] = useContext(ElementContentPortfolio);
@@ -32,20 +31,20 @@ function ComponentLayouts({ item, opacity, children }) {
   const renderItem = () => {
     const arr = [
       {
-        idItem1: item.idItem1,
-        idItem2: item.idItem2,
+        idItem1: item.idChild[0],
+        idItem2: item.idChild[1],
       },
       {
-        idItem1: item.idItem3,
-        idItem2: item.idItem4,
+        idItem1: item.idChild[2],
+        idItem2: item.idChild[3],
       },
       {
-        idItem1: item.idItem5,
-        idItem2: item.idItem6,
+        idItem1: item.idChild[4],
+        idItem2: item.idChild[5],
       },
       {
-        idItem1: item.idItem7,
-        idItem2: item.idItem8,
+        idItem1: item.idChild[6],
+        idItem2: item.idChild[7],
       },
     ];
     return arr.map((temp, index) => {
@@ -65,14 +64,13 @@ function ComponentLayouts({ item, opacity, children }) {
             id={temp.idItem1}
             position='unset'
             inGrid={true}
-            type={item.type1}
+            type={item.typeChild[0]}
             width={widthDisplayContent / 4}
             height={(heightDisplayContent / 3.5) * 2}
             draggable={false}
-            styleDefault={{
-              backgroundColor: "transparent",
-              border: "1px solid #000",
-            }}
+            styleDefault={
+              item.styleDefaultChild[0] ? item.styleDefaultChild[0] : {}
+            }
             stylesItem={{
               position: "unset",
               maxWidth: "100%",
@@ -86,13 +84,10 @@ function ComponentLayouts({ item, opacity, children }) {
             width={widthDisplayContent / 4}
             height={40}
             draggable={false}
-            type={item.type2}
-            styleDefault={{
-              backgroundColor: "transparent",
-              border: "1px solid #000",
-              color: "#757575",
-              marginTop: "6px",
-            }}
+            type={item.typeChild[1]}
+            styleDefault={
+              item.styleDefaultChild[1] ? item.styleDefaultChild[1] : {}
+            }
             stylesItem={{
               position: "unset",
               maxWidth: "100%",
@@ -133,18 +128,17 @@ function ComponentLayouts({ item, opacity, children }) {
           }}
         >
           <Item
-            key={item.idItem1}
-            id={item.idItem1}
+            key={item.idChild[0]}
+            id={item.idChild[0]}
             inGrid={true}
-            type={item.type1}
+            type={item.typeChild[0]}
             width={widthDisplayContent / 2 - 24}
             height={heightDisplayContent - 24}
             draggable={false}
             position='unset'
-            styleDefault={{
-              backgroundColor: "transparent",
-              border: "1px solid #000",
-            }}
+            styleDefault={
+              item.styleDefaultChild ? item.styleDefaultChild[0] : {}
+            }
             stylesItem={{
               position: "unset",
               maxWidth: "48%",
@@ -160,38 +154,36 @@ function ComponentLayouts({ item, opacity, children }) {
             id={item.id}
           >
             <Item
-              key={item.idItem2}
-              id={item.idItem2}
+              key={item.idChild[1]}
+              id={item.idChild[1]}
               inGrid={true}
               width={widthDisplayContent / 2 - 24}
               height={40}
               draggable={false}
               position='unset'
-              type={item.type2}
+              type={item.typeChild[1]}
               fontSize='24px'
               heading='true'
-              styleDefault={{
-                backgroundColor: "transparent",
-                border: "1px solid #000",
-              }}
+              styleDefault={
+                item.styleDefaultChild ? item.styleDefaultChild[1] : {}
+              }
               stylesItem={{
                 maxWidth: "100%",
                 position: "unset",
               }}
             ></Item>
             <Item
-              key={item.idItem3}
-              id={item.idItem3}
+              key={item.idChild[2]}
+              id={item.idChild[2]}
               inGrid={true}
               draggable={false}
               width={widthDisplayContent / 2 - 24}
               height={40}
               position='unset'
-              type={item.type3}
-              styleDefault={{
-                backgroundColor: "transparent",
-                border: "1px solid #000",
-              }}
+              type={item.typeChild[2]}
+              styleDefault={
+                item.styleDefaultChild ? item.styleDefaultChild[2] : {}
+              }
               stylesItem={{
                 maxWidth: "100%",
                 position: "unset",
@@ -221,74 +213,68 @@ function ComponentLayouts({ item, opacity, children }) {
           }}
         >
           <Item
-            key={item.idItem1}
-            id={item.idItem1}
+            key={item.idChild[0]}
+            id={item.idChild[0]}
             position='unset'
             inGrid={true}
-            type={item.type1}
+            type={item.typeChild[0]}
             width={widthDisplayContent / 4 - 12}
             height={heightDisplayContent - 24}
             draggable={false}
-            styleDefault={{
-              backgroundColor: "transparent",
-              border: "1px solid #000",
-            }}
+            styleDefault={
+              item.styleDefaultChild ? item.styleDefaultChild[0] : {}
+            }
             stylesItem={{
               position: "unset",
               margin: "12px",
             }}
           ></Item>
           <Item
-            key={item.idItem2}
-            id={item.idItem2}
+            key={item.idChild[1]}
+            id={item.idChild[1]}
             position='unset'
             inGrid={true}
             width={widthDisplayContent / 4 - 12}
             // height={heightDisplayContent - 24}
             draggable={false}
-            type={item.type2}
-            styleDefault={{
-              backgroundColor: "transparent",
-              border: "1px solid #000",
-              color: "#757575",
-            }}
+            type={item.typeChild[1]}
+            styleDefault={
+              item.styleDefaultChild ? item.styleDefaultChild[1] : {}
+            }
             stylesItem={{
               position: "unset",
               margin: "12px",
             }}
           ></Item>
           <Item
-            key={item.idItem3}
-            id={item.idItem3}
+            key={item.idChild[2]}
+            id={item.idChild[2]}
             position='unset'
             inGrid={true}
             width={widthDisplayContent / 4 - 12}
             height={heightDisplayContent - 24}
             draggable={false}
-            type={item.type3}
-            styleDefault={{
-              backgroundColor: "transparent",
-              border: "1px solid #000",
-            }}
+            type={item.typeChild[2]}
+            styleDefault={
+              item.styleDefaultChild ? item.styleDefaultChild[2] : {}
+            }
             stylesItem={{
               position: "unset",
               margin: "12px",
             }}
           ></Item>
           <Item
-            key={item.idItem4}
-            id={item.idItem4}
+            key={item.idChild[3]}
+            id={item.idChild[3]}
             position='unset'
             inGrid={true}
             width={widthDisplayContent / 4 - 12}
             // height={heightDisplayContent - 24}
             draggable={false}
-            type={item.type4}
-            styleDefault={{
-              backgroundColor: "transparent",
-              border: "1px solid #000",
-              color: "#757575",
-            }}
+            type={item.typeChild[3]}
+            styleDefault={
+              item.styleDefaultChild ? item.styleDefaultChild[3] : {}
+            }
             stylesItem={{
               position: "unset",
               margin: "12px",

@@ -16,6 +16,8 @@ import MultiItem from "./Item/MultiItem";
 import Template1Content from "./TemplatesContent/Template1Content";
 import Template2Content from "./TemplatesContent/Template2Content";
 import Template3Content from "./TemplatesContent/Template3Content";
+import Template4Content from "./TemplatesContent/Template4Content";
+import Template5Content from "./TemplatesContent/Template5Content";
 
 export {
   Home,
@@ -27,6 +29,8 @@ export {
   Template1Content,
   Template2Content,
   Template3Content,
+  Template4Content,
+  Template5Content,
   Item,
   BoxMenu,
   Overlay,

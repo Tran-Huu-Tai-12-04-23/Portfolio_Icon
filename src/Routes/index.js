@@ -4,10 +4,14 @@ import {
   Template1Content,
   Template2Content,
   Template3Content,
+  Template4Content,
+  Template5Content,
 } from "~/Components";
 import { DefaultItemInGridTemplate1 } from "~/Routes/ComponentDefault/ComponentDefaults1";
 import { DefaultItemInGridTemplate2 } from "~/Routes/ComponentDefault/ComponentDefaults2";
 import { DefaultItemInGridTemplate3 } from "~/Routes/ComponentDefault/ComponentDefaults3";
+import { DefaultItemInGridTemplate4 } from "~/Routes/ComponentDefault/ComponentDefaults4";
+import { DefaultItemInGridTemplate5 } from "~/Routes/ComponentDefault/ComponentDefaults5";
 
 export const publicRoutes = [
   {
@@ -40,12 +44,34 @@ export const publicRoutes = [
   {
     element: (
       <CreatePortfolio
-        DefaultComponent={DefaultItemInGridTemplate3}
+        DefaultComponent={DefaultItemInGridTemplate4}
         heightDefault={3000}
       >
         <Template3Content />
       </CreatePortfolio>
     ),
     path: "/template3",
+  },
+  {
+    element: (
+      <CreatePortfolio
+        DefaultComponent={DefaultItemInGridTemplate3}
+        heightDefault={3000}
+      >
+        <Template4Content />
+      </CreatePortfolio>
+    ),
+    path: "/template4",
+  },
+  {
+    element: (
+      <CreatePortfolio
+        DefaultComponent={DefaultItemInGridTemplate3}
+        heightDefault={3000}
+      >
+        <Template5Content />
+      </CreatePortfolio>
+    ),
+    path: "/template5",
   },
 ];

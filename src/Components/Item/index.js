@@ -14,6 +14,7 @@ import {
   HeightHeading,
   ContextShowEditorComponent,
   ElementContentPortfolio,
+  ContextItemsMultiIngrid,
 } from "~/Store/Context";
 import {
   setBackgroundColor,
@@ -52,14 +53,17 @@ function Item({
   position = "absolute",
   opacity = false,
   styleDefault = {},
+  styleDefaultChild = {},
   src,
   href,
   valueItem,
   center = false,
+  isChild = false,
   children,
   InfoIcon,
 }) {
   const [items, setItems] = useContext(ContextItemsIngrid);
+  const [itemMulti, setItemMulti] = useContext(ContextItemsMultiIngrid);
   const [value, setValue] = useState(valueItem ? valueItem : "Enter text !!!");
   const [linkItemTypeA, setLinkItemTypeA] = useState(href ? href.href : "");
   const [nameItemLink, setNameItemLink] = useState(href ? href.name : "");
@@ -133,6 +137,7 @@ function Item({
         href,
         valueItem,
         stylesItem,
+        styleDefaultChild,
       },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
@@ -236,9 +241,11 @@ function Item({
 
   const handleEditorComponent = (e) => {
     e.stopPropagation();
-    console.log(e.target);
-    console.log(styleDefault);
-    loadStyleComponentInInitState(findItem(getId(e)));
+    // console.log(e.target);
+    // console.log(styleDefault);
+    if (findItem(getId(e))) {
+      loadStyleComponentInInitState(findItem(getId(e)));
+    }
     dispatch(setIdItemSelected(e.target.id));
     setEditorComponent(true);
   };
@@ -271,12 +278,20 @@ function Item({
         item = element;
       }
     });
+    itemMulti.map((element) => {
+      if (element.id === id) {
+        item = element;
+      }
+    });
     return item;
   };
+
   const handleSelectItemToEdit = (e) => {
     // e.preventDefault();
     e.stopPropagation();
-    loadStyleComponentInInitState(findItem(getId(e)));
+    if (findItem(getId(e))) {
+      loadStyleComponentInInitState(findItem(getId(e)));
+    }
     handleEditorComponent(e);
     dispatch(setIdItemSelected(getId(e)));
     // loadStyleComponentInInitState(getParent(e));
@@ -367,7 +382,7 @@ function Item({
   // render item
 
   const renderItem = () => {
-    if (resizable && type !== "icon") {
+    if (resizable && type !== "icon" && isChild === false) {
       return (
         <ReactResizableBox
           width={widthContents ? parseInt(widthContents) : parseInt(width)}
@@ -423,7 +438,10 @@ function Item({
           </>
         </ReactResizableBox>
       );
-    } else if (icon || inGrid === "false") {
+    } else if (
+      (icon && isChild === false) ||
+      (inGrid === "false" && isChild === false)
+    ) {
       return (
         <Type
           onClick={resizable ? handleSelectItemToEdit : null}
@@ -445,7 +463,7 @@ function Item({
           {children}
         </Type>
       );
-    } else if (type === "icon" && inGrid) {
+    } else if (type === "icon" && inGrid && isChild === false) {
       return (
         <ReactResizableBox
           width={40}

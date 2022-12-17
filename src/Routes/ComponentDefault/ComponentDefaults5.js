@@ -10,7 +10,7 @@ import {
 const leftDefaultText = 50;
 const leftDefaultTitle = 100;
 
-export const DefaultItemInGridTemplate4 = [
+export const DefaultItemInGridTemplate5 = [
   //header
 
   //about

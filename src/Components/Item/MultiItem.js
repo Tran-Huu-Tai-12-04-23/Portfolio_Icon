@@ -16,9 +16,14 @@ import {
   setTextAlign,
   setBorderSize,
   setTextTransform,
-  setTop,
+  setFontWeight,
+  setLineHeight,
 } from "~/Store/reducer/actions";
-import { ContextItemsIngrid, ShowOverlay } from "~/Store/Context";
+import {
+  ContextItemsIngrid,
+  ShowOverlay,
+  ContextItemsMultiIngrid,
+} from "~/Store/Context";
 
 function MultiItem({
   stylesItem,
@@ -29,8 +34,10 @@ function MultiItem({
   isMulti,
   setHeightDisplayContent,
   styleDefault,
+  styleDefaultChild,
 }) {
   const [items, setItems] = useContext(ContextItemsIngrid);
+  const [itemMulti, setItemMulti] = useContext(ContextItemsMultiIngrid);
   const [heightWrapperContent, setHeightWrapperContent] = useState(200);
   const [topWrapperContent, setTopWrapperContent] = useState(top);
   const [state, dispatch] = useContext(ContextReducer);
@@ -42,7 +49,15 @@ function MultiItem({
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: "MULTI_ITEM",
-      item: { id, top, inGrid, isMulti, items, styleDefault },
+      item: {
+        id,
+        top,
+        inGrid,
+        isMulti,
+        items,
+        styleDefault,
+        styleDefaultChild,
+      },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
         opacity: monitor.isDragging() ? 0.4 : 1,
@@ -50,26 +65,97 @@ function MultiItem({
     }),
     [id, top, inGrid, isMulti]
   );
+
+  //get id if component multi layer
+  const getId = (e) => {
+    let item = e.target;
+    while (item.parentNode) {
+      if (item.id) {
+        return item.id;
+      }
+      item = item.parentElement;
+    }
+  };
+  // find item
+  const findItem = (id) => {
+    var item;
+    items.forEach((element) => {
+      if (element.id === id) {
+        item = element;
+      }
+    });
+    itemMulti.map((element) => {
+      if (element.id === id) {
+        item = element;
+      }
+    });
+    return item;
+  };
   const handleSelectItemToEdit = (e) => {
     e.stopPropagation();
-    loadStyleComponentInInitState(e.target);
+    // console.log(e.target);
+    // console.log(styleDefault);
+    if (findItem(getId(e))) {
+      loadStyleComponentInInitState(findItem(getId(e)));
+    }
     dispatch(setIdItemSelected(e.target.id));
-    setEditorComponent(!showEditorComponent);
+    setEditorComponent(true);
   };
   const loadStyleComponentInInitState = (item) => {
-    dispatch(setColor(item.style.color));
-    dispatch(setBackgroundColor(item.style.backgroundColor));
-    dispatch(setFontSize(item.style.fontSize));
-    dispatch(setFontFamily(item.style.fontFamily));
-    dispatch(setBorderRadius(item.style.borderRadius));
-    dispatch(setBorderStyle(item.style.borderStyle));
-    dispatch(setBorderColor(item.style.borderColor));
-    dispatch(setBorderColor(item.style.fontWeight));
-    const alignText = item.style.textAlign === "center" ? true : false;
-    dispatch(setTextAlign(alignText));
-    dispatch(setBorderSize(item.style.borderWidth));
-    const upperCase = item.style.textTransform === "uppercase" ? true : false;
-    dispatch(setTextTransform(upperCase));
+    if (item) {
+      if (item.styleDefault) {
+        dispatch(
+          setColor(item.styleDefault.color ? item.styleDefault.color : "")
+        );
+        dispatch(
+          setBackgroundColor(
+            item.styleDefault.backgroundColor
+              ? item.styleDefault.backgroundColor
+              : ""
+          )
+        );
+        dispatch(
+          setFontSize(
+            item.styleDefault.fontSize ? item.styleDefault.fontSize : ""
+          )
+        );
+        dispatch(
+          setFontFamily(
+            item.styleDefault.fontFamily ? item.styleDefault.fontFamily : ""
+          )
+        );
+        dispatch(
+          setBorderRadius(
+            item.styleDefault.borderRadius ? item.styleDefault.borderRadius : ""
+          )
+        );
+        dispatch(
+          setBorderStyle(
+            item.styleDefault.borderStyle ? item.styleDefault.borderStyle : ""
+          )
+        );
+        dispatch(
+          setBorderColor(
+            item.styleDefault.borderColor ? item.styleDefault.borderColor : ""
+          )
+        );
+        dispatch(setFontWeight(item.styleDefault.fontWeight ? true : false));
+        dispatch(setTextAlign(item.styleDefault.textAlign ? true : false));
+        dispatch(
+          setBorderSize(
+            item.styleDefault.borderWidth ? item.styleDefault.borderWidth : ""
+          )
+        );
+        dispatch(
+          setTextTransform(item.styleDefault.textTransform ? true : false)
+        );
+        dispatch(
+          setLineHeight(
+            item.styleDefault.lineHeight ? item.styleDefault.lineHeight : ""
+          )
+        );
+      }
+    }
   };
 
   //set style for component
@@ -100,7 +186,6 @@ function MultiItem({
   useEffect(() => {
     setTopWrapperContent(top);
   }, [top]);
-
   // get useState showOverlay
   let showOverlay, setShowOverlay;
   useEffect(() => {

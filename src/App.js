@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import clsx from "clsx";
-// import ReactDOM from "react-dom";
-// import ReactDOMServer from "react-dom/server";
+import ReactDOM from "react-dom";
+import ReactDOMServer from "react-dom/server";
 
 import { publicRoutes } from "./Routes";
 import styles from "./App.module.scss";
+
 
 function App() {
   return (

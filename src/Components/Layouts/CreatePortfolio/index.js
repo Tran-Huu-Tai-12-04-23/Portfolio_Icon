@@ -40,9 +40,9 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
 
   // save data in localStorage
   useEffect(() => {
-    localStorage.clear();
-    localStorage.setItem("items", JSON.stringify(items));
-    const data = localStorage.getItem("items");
+    // localStorage.clear();
+    // localStorage.setItem("items", JSON.stringify(items));
+    // const data = localStorage.getItem("items");
     // console.log(data);
   }, [items]);
   //auto focus for users
@@ -56,7 +56,7 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
   useEffect(() => {
     if (wrapperTemplateContent.current) {
       setWidthContent(wrapperTemplateContent.current.offsetWidth);
-      console.log(wrapperTemplateContent.current.offsetWidth);
+      // console.log(wrapperTemplateContent.current.offsetWidth);
     }
   }, []);
 
@@ -234,7 +234,11 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
               display: showPreview ? "block" : "none",
             }}
           >
-            <Preview setShowPreview={setShowPreview} items={items}></Preview>
+            <Preview
+              setShowPreview={setShowPreview}
+              showPreview={showPreview}
+              items={items}
+            ></Preview>
           </div>
         </ContextItemsMultiIngrid.Provider>
       </ContextShowEditorComponent.Provider>

@@ -90,7 +90,7 @@ function BoxMenu() {
             fontWeight: "600",
           }}
         >
-          Single item
+          Single items
         </span>
         <TipSuggest
           content='Text'
@@ -226,6 +226,20 @@ function BoxMenu() {
           isMulti='true'
           draggable='true'
           className={clsx(styles.item_button)}
+          styleDefaultChild={[
+            {
+              backgroundColor: "transparent",
+            },
+            {
+              backgroundColor: "transparent",
+              fontSize: 18,
+              color: "#fff",
+            },
+            {
+              backgroundColor: "transparent",
+              fontSize: 14,
+            },
+          ]}
           icon
           stylesItem={{
             position: "unset",
@@ -263,6 +277,24 @@ function BoxMenu() {
           draggable='true'
           className={clsx(styles.item_button)}
           icon
+          styleDefaultChild={[
+            {
+              backgroundColor: "transparent",
+            },
+            {
+              backgroundColor: "transparent",
+              fontSize: 14,
+              color: "#fff",
+            },
+            {
+              backgroundColor: "transparent",
+            },
+            {
+              backgroundColor: "transparent",
+              fontSize: 14,
+              color: "#fff",
+            },
+          ]}
           stylesItem={{
             position: "unset",
             border: "none",
@@ -309,6 +341,16 @@ function BoxMenu() {
           draggable='true'
           className={clsx(styles.item_button)}
           icon
+          styleDefaultChild={[
+            {
+              backgroundColor: "transparent",
+            },
+            {
+              backgroundColor: "transparent",
+              fontSize: 16,
+              color: "#fff",
+            },
+          ]}
           stylesItem={{
             position: "unset",
             border: "none",
