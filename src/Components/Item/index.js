@@ -300,17 +300,6 @@ function Item({
     }
   }, [state]);
 
-  //handle hidden and show edit component when i click display
-  useEffect(() => {
-    const handleShowEditorComponent = () => {
-      setEditorComponent(false);
-    };
-    window.addEventListener("click", handleShowEditorComponent);
-    return () => {
-      window.removeEventListener("click", handleShowEditorComponent);
-    };
-  }, []);
-
   let contentPortfolio, setShowTrash, widthContent;
   //get width wrapper content
   useEffect(() => {
@@ -440,7 +429,9 @@ function Item({
                 e.stopPropagation();
                 inputEditLinkIcon.current.focus();
                 setShowEditLinkIcon(true);
-                setEditorComponent(true);
+                if (inputEditLinkIcon) {
+                  setEditorComponent(true);
+                }
               }}
             >
               <TipSuggest content='Add link '>

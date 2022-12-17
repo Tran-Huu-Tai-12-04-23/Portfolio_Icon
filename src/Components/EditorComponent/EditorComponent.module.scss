@@ -3,9 +3,9 @@
   align-items: center;
   position: absolute;
   left: 20vw;
-  top: 10px;
+  top: 15px;
   max-width: 70vw;
-  min-height: 60px;
+  min-height: 50px;
   padding: 0 24px;
   background-color: #ccc;
   border-radius: 12px;
@@ -65,13 +65,18 @@
       text-align: center;
     }
   }
-
+  .icon_upper_letter {
+    margin: 0;
+    padding: 0;
+  }
   .icon_font_style {
     width: 200px;
     border-radius: 6px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border: 1px solid #000;
+    height: 30px;
     input {
       width: 100px;
     }
@@ -87,14 +92,6 @@
       padding: 12px;
       border-radius: 12px;
       display: none;
-
-      li {
-        font-size: 16px;
-        border-radius: 12px;
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.2);
-        }
-      }
     }
   }
   .icon_border_size,
@@ -103,6 +100,7 @@
   .icon_border_color,
   .icon_background_color {
     position: relative;
+    z-index: 1000;
   }
 
   .color_options,
@@ -129,6 +127,7 @@
       border-radius: 12px;
       margin: 4px;
       border: 1px solid #000;
+      z-index: 100;
       &:hover {
         border-color: #6699ff;
       }
@@ -163,7 +162,8 @@
     border: 1px solid #000;
     min-width: 80px;
     margin: 0 6px;
-    height: 100%;
+    height: 30px;
+    // height: 100%;
     overflow: hidden;
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -184,8 +184,7 @@
     svg {
       border-left: 1px solid #000;
       border-right: 1px solid #000;
-      height: 100%;
-      width: 50px;
+      width: 30px;
     }
   }
   .border_size_options {
@@ -207,48 +206,52 @@
       width: 100%;
       height: 16px;
       margin-bottom: 10px;
-      background-color: #ccc;
+      background-color: #757575;
     }
   }
 }
 
-.icon_color {
-  &:hover .color_options {
-    display: flex;
-  }
-}
+// .icon_color {
+//   &:hover .color_options {
+//     display: flex;
+//   }
+// }
 
 .icon_font_style {
   border: 1px solid #000;
-  input:focus ~ .font_style_options,
-  &:hover .font_style_options {
+  input:focus ~ .font_style_options {
     display: block;
+  }
+  li {
+    font-size: 16px;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 4px 6px;
+      border-radius: 6px;
+    }
   }
 }
 
-.icon_border_color {
-  &:hover .border_color_options {
-    display: flex;
-  }
-}
-.icon_background_color {
-  &:hover .background_color_options {
-    display: flex;
-  }
-}
+// .icon_border_color {
+//   &:hover .border_color_options {
+//     display: flex;
+//   }
+// }
+// .icon_background_color {
+//   &:hover .background_color_options {
+//     display: flex;
+//   }
+// }
 
 .icon_border_style {
-  &:hover .border_style_options {
-    display: block;
-  }
+  // &:hover .border_style_options {
+  //   display: block;
+  // }
 }
 .icon_border_size {
-  &:hover .border_size_options {
-    display: block;
-  }
   div {
-    padding: 8px;
-    background-color: rgba(0, 0, 0, 0.6);
+    padding-top: 8px;
+    // background-color: rgba(0, 0, 0, 0.6);
     &:hover {
       opacity: 0.7;
     }
@@ -261,6 +264,7 @@
 .border_color_options,
 .font_style_options,
 .font_size_options {
+  z-index: 10;
   &::-webkit-resizer,
   &::-webkit-scrollbar-corner,
   &::-webkit-scrollbar-thumb,
@@ -277,7 +281,7 @@ svg {
   color: #000000;
 }
 .icon__arrow_down {
-  color: #ccc;
+  color: #000;
   font-weight: 400;
   font-size: 16px !important;
 }
@@ -299,13 +303,14 @@ svg {
   left: -50px;
   height: 100%;
   width: 50px;
-  transform: translateY(-50%);
+  transform: translate(-0%, -30%);
   padding: 10px;
   border-radius: 50%;
   background-color: var(--primary);
   color: #fff;
   text-align: center;
   background-color: transparent;
+  z-index: 100;
 
   svg {
     color: #000;
@@ -318,6 +323,18 @@ svg {
   }
 }
 
+.icon_background_color,
+.icon_color,
+.icon_border_color,
+.font_size_options,
+.line_height_options,
+.border_radius_options,
+.icon_border_size,
+.icon_border_style,
+.icon_font_weight,
+.icon_align_center {
+  margin-right: 6px;
+}
 @keyframes wiggle {
   0% {
     transform: translateY(-100px);

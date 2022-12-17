@@ -45,6 +45,12 @@ function EditorComponent({ style }) {
   const [showEditorComponent, setEditorComponent] = useContext(
     ContextShowEditorComponent
   );
+  const [showSetBackground, setShowSetBackground] = useState(false);
+  const [showEditColor, setShowEditColor] = useState(false);
+  const [showEditBorderColor, setShowEditBorderColor] = useState(false);
+  const [showEditBorderSize, setShowEditBorderSize] = useState(false);
+  const [showEditBorderStyle, setShowEditBorderStyle] = useState(false);
+  const [showEditFontStyle, setShowEditFontStyle] = useState(false);
 
   const [valueBorderRadius, setValueBorderRadius] = useState(
     state.border_radius
@@ -223,6 +229,24 @@ function EditorComponent({ style }) {
       });
     });
   };
+
+  useEffect(() => {
+    const handleHiddenEditor = () => {
+      setShowSetBackground(false);
+      setShowEditColor(false);
+      setShowEditBorderColor(false);
+      setShowEditBorderSize(false);
+      setShowEditBorderStyle(false);
+      setShowEditFontStyle(false);
+      setEditorComponent(false);
+    };
+    window.addEventListener("click", handleHiddenEditor);
+    return () => {
+      window.removeEventListener("click", handleHiddenEditor);
+    };
+  }, []);
+  //handle hidden and show edit component when i click display
+
   return (
     <div
       className={clsx(styles.wrapper)}
@@ -240,13 +264,26 @@ function EditorComponent({ style }) {
           setEditorComponent(!showEditorComponent);
         }}
       >
-        <TipSuggest content='Close editor'>
+        <TipSuggest content='Close editor' position='left'>
           <TfiClose className={clsx(styles.icon_close)}></TfiClose>
         </TipSuggest>
       </div>
 
-      <div className={clsx(styles.icon, styles.icon_background_color)}>
-        <BiColorFill></BiColorFill>
+      <div
+        className={clsx(styles.icon, styles.icon_background_color)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowSetBackground(!showSetBackground);
+          setShowEditBorderStyle(false);
+          setShowEditFontStyle(false);
+          setShowEditBorderColor(false);
+          setShowEditColor(false);
+          setShowEditBorderSize(false);
+        }}
+      >
+        <TipSuggest content='Edit background color' position='bottom'>
+          <BiColorFill></BiColorFill>
+        </TipSuggest>
         <FontAwesomeIcon
           className={clsx(styles.icon__arrow_down)}
           icon={faChevronDown}
@@ -254,22 +291,63 @@ function EditorComponent({ style }) {
         <ul
           className={clsx(styles.background_color_options)}
           id='background_color_options'
+          style={{
+            display: showSetBackground ? "flex" : "none",
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
         >
           {renderOptionBackGroundColor()}
         </ul>
       </div>
-      <div className={clsx(styles.icon, styles.icon_color)}>
-        <AiOutlineFontColors></AiOutlineFontColors>
+      <div
+        className={clsx(styles.icon, styles.icon_color)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowEditColor(!showEditColor);
+          setShowSetBackground(false);
+          setShowEditBorderStyle(false);
+          setShowEditFontStyle(false);
+          setShowEditBorderColor(false);
+          setShowEditBorderSize(false);
+        }}
+      >
+        <TipSuggest content='Edit color' position='bottom'>
+          <AiOutlineFontColors></AiOutlineFontColors>
+        </TipSuggest>
         <FontAwesomeIcon
           className={clsx(styles.icon__arrow_down)}
           icon={faChevronDown}
         ></FontAwesomeIcon>
-        <ul className={clsx(styles.color_options)} id='color_options'>
+        <ul
+          className={clsx(styles.color_options)}
+          id='color_options'
+          style={{
+            display: showEditColor ? "flex" : "none",
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           {renderOptionColors()}
         </ul>
       </div>
-      <div className={clsx(styles.icon, styles.icon_border_color)}>
-        <AiOutlineBorder></AiOutlineBorder>
+      <div
+        className={clsx(styles.icon, styles.icon_border_color)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowEditBorderColor(!showEditBorderColor);
+          setShowEditColor(false);
+          setShowSetBackground(false);
+          setShowEditBorderStyle(false);
+          setShowEditFontStyle(false);
+          setShowEditBorderSize(false);
+        }}
+      >
+        <TipSuggest content='Edit border color' position='bottom'>
+          <AiOutlineBorder></AiOutlineBorder>
+        </TipSuggest>
         <FontAwesomeIcon
           className={clsx(styles.icon__arrow_down)}
           icon={faChevronDown}
@@ -277,16 +355,24 @@ function EditorComponent({ style }) {
         <ul
           className={clsx(styles.border_color_options)}
           id='border_color_options'
+          style={{
+            display: showEditBorderColor ? "flex" : "none",
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
         >
           {renderOptionBorderColors()}
         </ul>
       </div>
       <div className={clsx(styles.icon, styles.font_size_options)}>
-        <GoTextSize
-          style={{
-            border: "none",
-          }}
-        ></GoTextSize>
+        <TipSuggest content='Edit fontsize'>
+          <GoTextSize
+            style={{
+              border: "none",
+            }}
+          ></GoTextSize>
+        </TipSuggest>
         <AiOutlineMinus
           onClick={(e) => {
             setFontSizeItem((prev) => {
@@ -305,6 +391,9 @@ function EditorComponent({ style }) {
           value={fontSize}
         ></input>
         <IoIosAdd
+          style={{
+            borderRight: "none",
+          }}
           onClick={(e) => {
             setFontSizeItem((prev) => {
               return parseInt(prev) + 1;
@@ -313,11 +402,13 @@ function EditorComponent({ style }) {
         />
       </div>
       <div className={clsx(styles.icon, styles.line_height_options)}>
-        <RxLineHeight
-          style={{
-            border: "none",
-          }}
-        ></RxLineHeight>
+        <TipSuggest content='Edit line height'>
+          <RxLineHeight
+            style={{
+              border: "none",
+            }}
+          ></RxLineHeight>
+        </TipSuggest>
         <AiOutlineMinus
           onClick={(e) => {
             setLineHeightItem((prev) => {
@@ -336,6 +427,9 @@ function EditorComponent({ style }) {
           value={lineHeight}
         ></input>
         <IoIosAdd
+          style={{
+            borderRight: "none",
+          }}
           onClick={(e) => {
             setLineHeightItem((prev) => {
               return parseInt(prev) + 1;
@@ -345,11 +439,13 @@ function EditorComponent({ style }) {
       </div>
 
       <div className={clsx(styles.icon, styles.border_radius_options)}>
-        <TbBorderRadius
-          style={{
-            border: "none",
-          }}
-        ></TbBorderRadius>
+        <TipSuggest content='Edit border radius' position='bottom'>
+          <TbBorderRadius
+            style={{
+              border: "none",
+            }}
+          ></TbBorderRadius>
+        </TipSuggest>
         <AiOutlineMinus
           onClick={(e) => {
             setValueBorderRadius((prev) => {
@@ -368,6 +464,9 @@ function EditorComponent({ style }) {
           value={valueBorderRadius}
         ></input>
         <IoIosAdd
+          style={{
+            borderRight: "none",
+          }}
           onClick={(e) => {
             setValueBorderRadius((prev) => {
               return parseInt(prev) + 1;
@@ -375,8 +474,21 @@ function EditorComponent({ style }) {
           }}
         />
       </div>
-      <div className={clsx(styles.icon, styles.icon_border_size)}>
-        <BsBorderWidth></BsBorderWidth>
+      <div
+        className={clsx(styles.icon, styles.icon_border_size)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowEditBorderSize(!showEditBorderSize);
+          setShowEditBorderColor(false);
+          setShowEditColor(false);
+          setShowSetBackground(false);
+          setShowEditBorderStyle(false);
+          setShowEditFontStyle(false);
+        }}
+      >
+        <TipSuggest content='Edit border size'>
+          <BsBorderWidth></BsBorderWidth>
+        </TipSuggest>
         <FontAwesomeIcon
           className={clsx(styles.icon__arrow_down)}
           icon={faChevronDown}
@@ -384,12 +496,36 @@ function EditorComponent({ style }) {
         <ul
           className={clsx(styles.border_size_options)}
           id='border_size_options'
+          style={{
+            display: showEditBorderSize ? "block" : "none",
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
         >
           {renderOptionBorderSize()}
         </ul>
       </div>
-      <div className={clsx(styles.icon, styles.icon_border_style)}>
-        <RxBorderStyle></RxBorderStyle>
+      <div
+        className={clsx(styles.icon, styles.icon_border_style)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowEditBorderStyle(!showEditBorderStyle);
+          setShowEditBorderColor(false);
+          setShowEditColor(false);
+          setShowSetBackground(false);
+          setShowEditFontStyle(false);
+          setShowEditBorderSize(false);
+        }}
+      >
+        <TipSuggest content='Edit border style'>
+          <RxBorderStyle
+            style={{
+              marginTop: "8px",
+            }}
+          ></RxBorderStyle>
+        </TipSuggest>
+
         <FontAwesomeIcon
           className={clsx(styles.icon__arrow_down)}
           icon={faChevronDown}
@@ -397,6 +533,12 @@ function EditorComponent({ style }) {
         <ul
           className={clsx(styles.border_style_options)}
           id='border_style_options'
+          style={{
+            display: showEditBorderStyle ? "block" : "none",
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
         >
           {renderBorderStyle()}
         </ul>
@@ -412,15 +554,18 @@ function EditorComponent({ style }) {
       </div>
       <div
         className={clsx(styles.icon, styles.icon_align_center)}
-        style={{
-          marginRight: 12,
-        }}
         onClick={(e) => {
           e.stopPropagation();
           dispatch(setAlignCenter(!state.align_center));
         }}
       >
-        <FiAlignCenter></FiAlignCenter>
+        <TipSuggest content='Text center'>
+          <FiAlignCenter
+            style={{
+              marginTop: "8px",
+            }}
+          ></FiAlignCenter>
+        </TipSuggest>
       </div>
       <div
         className={clsx(styles.icon, styles.icon_upper_letter)}
@@ -432,16 +577,48 @@ function EditorComponent({ style }) {
           dispatch(setUppercase(!state.upper_case_letter));
         }}
       >
-        <TbLetterCaseUpper></TbLetterCaseUpper>
+        <TipSuggest content='Letter uppercase'>
+          <TbLetterCaseUpper
+            style={{
+              marginTop: 8,
+            }}
+          ></TbLetterCaseUpper>
+        </TipSuggest>
       </div>
 
-      <div className={clsx(styles.icon, styles.icon_font_style)}>
-        <BiFontFamily></BiFontFamily>
+      <div
+        className={clsx(styles.icon, styles.icon_font_style)}
+        onClick={(e) => {
+          setShowEditFontStyle(!showEditFontStyle);
+          setShowEditBorderColor(false);
+          setShowEditColor(false);
+          setShowSetBackground(false);
+          setShowEditBorderStyle(false);
+          setShowEditBorderSize(false);
+        }}
+      >
+        <TipSuggest content='Edit font styles'>
+          <BiFontFamily
+            style={{
+              marginTop: 8,
+            }}
+            s
+          ></BiFontFamily>
+        </TipSuggest>
         <FontAwesomeIcon
           className={clsx(styles.icon__arrow_down)}
           icon={faChevronDown}
         ></FontAwesomeIcon>
-        <ul className={clsx(styles.font_style_options)} id='font_style_options'>
+        <ul
+          className={clsx(styles.font_style_options)}
+          id='font_style_options'
+          style={{
+            display: showEditFontStyle ? "block" : "none",
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           {renderFontFamily()}
         </ul>
       </div>
