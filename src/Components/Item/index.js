@@ -1,6 +1,13 @@
 import clsx from "clsx";
 import { useDrag } from "react-dnd";
-import { useState, useEffect, useContext, useRef, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  useCallback,
+  useLayoutEffect,
+} from "react";
 import { ResizableBox as ReactResizableBox } from "react-resizable";
 import { RiEdit2Fill } from "react-icons/ri";
 import { IoIosAdd } from "react-icons/io";
@@ -47,7 +54,7 @@ function Item({
   heading = false,
   icon = false,
   width = 200,
-  height = 50,
+  height = 100,
   resizable = true,
   draggable = true,
   position = "absolute",
@@ -79,8 +86,9 @@ function Item({
   const data = useContext(HeightHeading);
   const elementContentPortfolio = useContext(ElementContentPortfolio);
   const [widthContents, setWidthContents] = useState(width);
-  const [heightWrapperReSizeable, setHeightWrapperReSizeable] =
-    useState(height);
+  const [heightWrapperReSizeable, setHeightWrapperReSizeable] = useState(
+    height + 24
+  );
   const [scrollHeight, setScrollHeight] = useState(0);
   const inputEditLinkIcon = useRef();
   const [linkIcon, setLinkIcon] = useState("");
@@ -108,6 +116,9 @@ function Item({
     },
     {
       [styles.icon_ingrid]: type === "icon" && inGrid,
+    },
+    {
+      [styles.button]: type === "button" && inGrid,
     }
   );
 
@@ -153,7 +164,7 @@ function Item({
     console.log(e.target.scrollHeight);
     console.log(e.target.offsetHeight);
     if (e.target.scrollHeight > e.target.offsetHeight) {
-      e.target.style.height = e.target.scrollHeight + "px";
+      e.target.style.height = e.target.scrollHeight + 6 + "px";
     }
     setHeightWrapperReSizeable(e.target.offsetHeight);
     if (data) {
@@ -239,33 +250,12 @@ function Item({
     }
   };
 
-  const handleEditorComponent = (e) => {
-    e.stopPropagation();
-    // console.log(e.target);
-    // console.log(styleDefault);
-    if (findItem(getId(e))) {
-      loadStyleComponentInInitState(findItem(getId(e)));
-    }
-    dispatch(setIdItemSelected(e.target.id));
-    setEditorComponent(true);
-  };
-
   //get id if component multi layer
   const getId = (e) => {
     let item = e.target;
     while (item.parentNode) {
       if (item.id) {
         return item.id;
-      }
-      item = item.parentElement;
-    }
-  };
-  //get element parent cho item
-  const getParent = (e) => {
-    let item = e.target;
-    while (item.parentNode) {
-      if (item.id) {
-        return item;
       }
       item = item.parentElement;
     }
@@ -292,9 +282,8 @@ function Item({
     if (findItem(getId(e))) {
       loadStyleComponentInInitState(findItem(getId(e)));
     }
-    handleEditorComponent(e);
     dispatch(setIdItemSelected(getId(e)));
-    // loadStyleComponentInInitState(getParent(e));
+    setEditorComponent(true);
   };
 
   const handleEditLink = (e) => {
@@ -358,26 +347,6 @@ function Item({
       setWidthContents(widthContent);
     }
   });
-  //load styles
-  useEffect(() => {
-    // console.log(state);
-    const itemDom = document.getElementById(state.id_item_selected);
-    if (itemDom) {
-      itemDom.style.color = state.color;
-      itemDom.style.backgroundColor = state.background_color;
-      itemDom.style.fontSize = state.font_size;
-      itemDom.style.fontFamily = state.font_family;
-      itemDom.style.borderRadius = state.border_radius;
-      itemDom.style.borderStyle = state.border_style;
-      itemDom.style.borderColor = state.border_color;
-      itemDom.style.fontWeight = state.font_weight ? "bold" : "normal";
-      itemDom.style.textAlign = state.text_align ? "center" : "";
-
-      itemDom.style.borderWidth = state.border_size;
-      itemDom.style.textTransform = state.text_transform ? "uppercase" : "";
-      itemDom.style.lineHeight = state.line_height;
-    }
-  }, [state]);
 
   // render item
 
@@ -389,9 +358,9 @@ function Item({
           height={type === "input" ? heightWrapperReSizeable : height}
           // onClick={handleSelectItemToEdit}
           style={{
+            height: 100,
             ...stylesItem,
             transform: center ? "translateX(-50%)" : "none",
-            minHeight: 42,
           }}
         >
           <>
@@ -408,15 +377,14 @@ function Item({
               target={linkItemTypeA ? "_blank" : null}
               onBlur={handleBlurInput}
               style={{
-                opacity: isDragging ? "0.5" : "1",
                 textAlign: type === "button" ? "center" : "",
                 backgroundColor: type === "a" ? "#1E90FF" : "#fff",
                 fontSize: fontSize,
-                padding: type !== "img" ? "12px 0" : "",
                 position: position,
                 lineHeight: heading ? "24px" : "16px",
-                opacity: isDragging ? "0.5" : "1",
+                opacity: isDragging ? "0.9" : "1",
                 opacity: opacity ? "0.4" : "1",
+                backgroundColor: "transparent",
                 ...styleDefault,
               }}
               type={type === "img" ? "file" : "text"}
@@ -454,6 +422,7 @@ function Item({
             opacity: opacity ? "0.4" : "1",
             width: isMulti ? "100%" : "40px",
             height: "40px",
+            backgroundColor: "transparent",
             ...styleDefault,
           }}
           value={value}
@@ -481,6 +450,7 @@ function Item({
               target='_blank'
               href={linkIcon ? linkIcon : null}
               style={{
+                backgroundColor: "transparent",
                 ...styleDefault,
               }}
             >
@@ -556,7 +526,7 @@ function Item({
           <div
             className={clsx(styles.modal_enter_link)}
             style={{
-              top: `${300 + scrollHeight}px`,
+              top: `${200 + scrollHeight}px`,
             }}
           >
             <h5>Add link</h5>

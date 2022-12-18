@@ -641,7 +641,7 @@ export const DefaultItemInGridTemplate3 = [
     left: leftDefaultText,
     top: 2680,
     width: 250,
-    height: 284,
+    height: 230,
     id: uuid(),
     inGrid: true,
     isMulti: false,

@@ -114,7 +114,6 @@ function ComponentLayouts({ item, opacity, children }) {
           top={item.top}
           className={clsx(styles.wrapper_multi_items)}
           key={item.id}
-          styleDefault={item.styleDefault}
           stylesItem={{
             display: "flex",
             alignItems: "center",
@@ -201,7 +200,6 @@ function ComponentLayouts({ item, opacity, children }) {
           id={item.id}
           className={clsx(styles.wrapper_multi_items)}
           key={item.id}
-          styleDefault={item.styleDefault}
           stylesItem={{
             display: "flex",
             alignItems: "center",
@@ -291,7 +289,6 @@ function ComponentLayouts({ item, opacity, children }) {
           id={item.id}
           className={clsx(styles.wrapper_multi_items)}
           key={item.id}
-          styleDefault={item.styleDefault}
           stylesItem={{
             display: "flex",
             alignItems: "center",

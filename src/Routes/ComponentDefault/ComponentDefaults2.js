@@ -25,6 +25,10 @@ export const DefaultItemInGridTemplate2 = [
     src: "https://images.unsplash.com/photo-1497864149936-d3163f0c0f4b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80",
     styleDefault: {
       backgroundColor: "rgba(0,0,0,0,.3)",
+      padding: 0,
+      borderWidth: 0,
+      borderStyle: "none",
+      borderColor: "transparent",
     },
   },
   //about
@@ -40,7 +44,9 @@ export const DefaultItemInGridTemplate2 = [
     valueItem: "<Name page>",
     styleDefault: {
       backgroundColor: "#182d47",
-      border: "none",
+      borderWidth: 0,
+      borderStyle: "none",
+      borderColor: "transparent",
     },
   },
   //service
@@ -56,6 +62,9 @@ export const DefaultItemInGridTemplate2 = [
     styleDefault: {
       backgroundColor: "#091d35",
       border: "none",
+      borderWidth: 0,
+      borderStyle: "none",
+      borderColor: "transparent",
     },
   },
   //feedback
@@ -71,7 +80,9 @@ export const DefaultItemInGridTemplate2 = [
     valueItem: "<Name page>",
     styleDefault: {
       backgroundColor: "#182d47",
-      border: "none",
+      borderWidth: 0,
+      borderStyle: "none",
+      borderColor: "transparent",
     },
   },
   // your project
@@ -86,7 +97,9 @@ export const DefaultItemInGridTemplate2 = [
     isMulti: false,
     styleDefault: {
       backgroundColor: "#091d35",
-      border: "none",
+      borderWidth: 0,
+      borderStyle: "none",
+      borderColor: "transparent",
     },
   },
   //footer
@@ -101,7 +114,9 @@ export const DefaultItemInGridTemplate2 = [
     isMulti: false,
     styleDefault: {
       backgroundColor: "#182d47",
-      border: "none",
+      borderWidth: 0,
+      borderStyle: "none",
+      borderColor: "transparent",
     },
   },
   //end open each part in portfolio
@@ -515,8 +530,9 @@ export const DefaultItemInGridTemplate2 = [
   {
     type: "input",
     left: leftDefaultText,
-    top: 2880,
+    top: 2780,
     width: 300,
+    height: 100,
     id: uuid(),
     inGrid: true,
     isMulti: false,
@@ -536,6 +552,7 @@ export const DefaultItemInGridTemplate2 = [
     left: "70%",
     top: 2600,
     width: 200,
+    height: 30,
     id: uuid(),
     inGrid: true,
     isMulti: false,

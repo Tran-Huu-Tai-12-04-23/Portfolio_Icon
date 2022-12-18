@@ -66,7 +66,7 @@ function BoxMenu() {
             id={uuid()}
             type='icon'
             InfoIcon={Icon}
-            stylesItem={{
+            styleDefault={{
               position: "unset",
               border: "none",
               backgroundColor: "var(--primary_color_component)",
@@ -107,8 +107,9 @@ function BoxMenu() {
             type='input'
             className={clsx(styles.item_text)}
             icon
-            stylesItem={{
+            styleDefault={{
               position: "unset",
+              backgroundColor: "var(primary_color_component)",
             }}
           >
             <BsCardText />
@@ -129,8 +130,9 @@ function BoxMenu() {
             draggable='true'
             className={clsx(styles.item_link)}
             icon
-            stylesItem={{
+            styleDefault={{
               position: "unset",
+              backgroundColor: "var(primary_color_component)",
             }}
           >
             <FontAwesomeIcon icon={faLink} />
@@ -152,10 +154,9 @@ function BoxMenu() {
             draggable='true'
             className={clsx(styles.item_img)}
             icon
-            stylesItem={{
+            styleDefault={{
               position: "unset",
-              border: "none",
-              backgroundColor: "var(--primary_color_component)",
+              backgroundColor: "var(primary_color_component)",
             }}
           >
             <BsFileImage />
@@ -176,11 +177,9 @@ function BoxMenu() {
             draggable='true'
             className={clsx(styles.item_button)}
             icon
-            stylesItem={{
+            styleDefault={{
               position: "unset",
-              border: "none",
-              backgroundColor: "var(--primary_color_component)",
-              textAlign: "center",
+              backgroundColor: "var(primary_color_component)",
             }}
           >
             <BsFillMenuButtonWideFill />
@@ -194,11 +193,9 @@ function BoxMenu() {
             draggable='true'
             className={clsx(styles.item_button)}
             icon
-            stylesItem={{
+            styleDefault={{
               position: "unset",
-              border: "none",
-              backgroundColor: "var(--primary_color_component)",
-              textAlign: "center",
+              backgroundColor: "var(primary_color_component)",
             }}
           >
             <BsBoxSeam />
@@ -241,11 +238,9 @@ function BoxMenu() {
             },
           ]}
           icon
-          stylesItem={{
+          styleDefault={{
             position: "unset",
-            border: "none",
-            backgroundColor: "var(--primary_color_component)",
-            textAlign: "center",
+            backgroundColor: "var(primary)",
           }}
         >
           <TipSuggest content='Image + text'>
@@ -295,11 +290,9 @@ function BoxMenu() {
               color: "#fff",
             },
           ]}
-          stylesItem={{
+          styleDefault={{
             position: "unset",
-            border: "none",
-            backgroundColor: "var(--primary_color_component)",
-            textAlign: "center",
+            backgroundColor: "var(primary)",
           }}
         >
           <TipSuggest content='Feedback client, etc'>
@@ -351,11 +344,9 @@ function BoxMenu() {
               color: "#fff",
             },
           ]}
-          stylesItem={{
+          styleDefault={{
             position: "unset",
-            border: "none",
-            backgroundColor: "var(--primary_color_component)",
-            textAlign: "center",
+            backgroundColor: "var(primary)",
           }}
         >
           <TipSuggest content='Show projects,etc'>

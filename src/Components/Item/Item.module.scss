@@ -5,10 +5,11 @@
   height: 100%;
   font-size: 14px;
   line-height: 16px;
+  padding: 12px;
   cursor: grab;
   // resize: auto;\
   &::-webkit-scrollbar {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -17,9 +18,13 @@
   border: none;
   height: 100%;
   width: 100%;
-  padding: 0 12px;
   cursor: text;
   word-wrap: break-all;
+}
+
+.box {
+  border: 1px solid #ccc;
+  background-color: rgb(175, 67, 67);
 }
 
 .link {
@@ -32,6 +37,8 @@
   align-items: center;
   color: #fff;
   text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-color: #4285f4;
 
   &:focus {
     border: 1px solid var(--primary);
@@ -72,20 +79,17 @@
 // css when item have prop icon
 
 .wrapper {
-  border-style: solid;
-  border-color: transparent;
-  border: 1px solid #ccc;
+  // border-style: solid;
+  // border-color: transparent;
   // border-width: 1px;
 
   &:hover {
-    border-color: #0000ff !important;
+    border: 2px dotted #0000ff !important;
     // border-style: solid !important;
     // border-width: 1px !important;
   }
 }
-.box {
-  border: 1px solid #ccc;
-}
+
 .icon {
   // width: 100%;
   // height: 100%;
@@ -103,7 +107,14 @@
     color: #fff;
   }
 }
-
+.button {
+  text-align: center;
+  background-color: rgb(108, 226, 239);
+  border-radius: 12px;
+  border: 2px outset rgb(15, 121, 133);
+  color: #ccc;
+  text-transform: uppercase;
+}
 .modal {
   width: 100%;
   height: 100%;
@@ -116,7 +127,7 @@
     position: absolute;
     left: 50vh;
     min-width: 300px;
-    min-height: 180px;
+    min-height: 160px;
     // display: flex;
     transform: translate(-20%, -20%);
     align-items: center;

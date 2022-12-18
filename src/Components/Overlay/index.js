@@ -16,13 +16,13 @@ function Overlay() {
         // console.log(`top: ${top} : left ${left}`);
         // console.log(`id : ${id}`);
         if (left > 100) {
-          top += 8.333333333;
+          top += 60;
           left = 0;
         }
 
         return (
           <Item
-            top={`${top - 8.333333333333}%`}
+            top={`${top - 60}px`}
             left={`${left - 8.33333333333}%`}
             key={id}
           ></Item>

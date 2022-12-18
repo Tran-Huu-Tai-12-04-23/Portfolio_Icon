@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useLayoutEffect } from "react";
 import { useDrop, useDragDropManager } from "react-dnd";
 import uuid from "react-uuid";
 
@@ -238,6 +238,22 @@ function Grid(props) {
     setShowTrash(isDragging ? true : false);
   }, [isDragging]);
 
+  // find item in grid
+  const findItem = (id) => {
+    var item;
+    items.forEach((element) => {
+      if (element.id === id) {
+        item = element;
+      }
+    });
+    itemMulti.map((element) => {
+      if (element.id === id) {
+        item = element;
+      }
+    });
+    return item;
+  };
+
   const isActive = canDrop && isOver;
   //set style when drop
   useEffect(() => {
@@ -284,6 +300,84 @@ function Grid(props) {
       }
     });
   }, [state]);
+
+  //load styles
+  useLayoutEffect(() => {
+    const item = findItem(state.id_item_selected);
+    const itemDomReal = document.getElementById(state.id_item_selected);
+    if (item) {
+      item.styleDefault.color = state.color;
+      item.styleDefault.backgroundColor = state.background_color;
+      item.styleDefault.fontSize = state.font_size;
+      item.styleDefault.fontFamily = state.font_family;
+      item.styleDefault.borderRadius = state.border_radius;
+      item.styleDefault.borderStyle = state.border_style;
+      item.styleDefault.borderColor = state.border_color;
+      item.styleDefault.fontWeight = state.font_weight ? "bold" : "normal";
+      item.styleDefault.textAlign = state.text_align ? "center" : "";
+      item.styleDefault.borderWidth = state.border_size;
+      item.styleDefault.textTransform = state.text_transform ? "uppercase" : "";
+      item.styleDefault.lineHeight = state.line_height;
+      //
+      itemDomReal.style.fontSize = state.font_size;
+      itemDomReal.style.fontFamily = state.font_family;
+      itemDomReal.style.borderRadius = state.border_radius;
+      itemDomReal.style.borderStyle = state.border_style;
+      itemDomReal.style.borderColor = state.border_color;
+      itemDomReal.style.fontWeight = state.font_weight ? "bold" : "normal";
+      itemDomReal.style.textAlign = state.text_align ? "center" : "";
+      itemDomReal.style.borderWidth = state.border_size;
+      itemDomReal.style.textTransform = state.text_transform ? "uppercase" : "";
+      itemDomReal.style.lineHeight = state.line_height;
+      itemDomReal.style.color = state.color;
+      itemDomReal.style.backgroundColor = state.background_color;
+    }
+  });
+
+  const renderItem = () => {
+    if (items) {
+      return items.map((item, index) => {
+        if (item.isMulti) {
+          return (
+            <ComponentLayouts
+              key={item.id}
+              item={item}
+              id={"multi_items"}
+              opacity={isDragging ? true : false}
+              styleDefault={item.styleDefault}
+              styleDefaultChild={item.styleDefaultChild}
+              src={item.src}
+            ></ComponentLayouts>
+          );
+        } else {
+          return (
+            <Item
+              key={item.id}
+              id={item.id}
+              inGrid={true}
+              type={item.type}
+              width={item.width}
+              height={item.height}
+              valueItem={item.valueItem}
+              center={item.center}
+              href={item.href}
+              icon={false}
+              styleDefault={item.styleDefault}
+              InfoIcon={item.InfoIcon}
+              stylesItem={{
+                top: item.top,
+                left: item.left,
+                width: item.width,
+                height: item.height,
+              }}
+              src={item.src}
+              opacity={isDragging ? true : false}
+            ></Item>
+          );
+        }
+      });
+    }
+  };
   return (
     <ShowOverlay.Provider value={[showOverlay, setShowOverlay]}>
       <div
@@ -294,47 +388,7 @@ function Grid(props) {
         className={clsx(styles.wrapper)}
         id={props.id}
       >
-        {items &&
-          items.map((item, index) => {
-            if (item.isMulti) {
-              return (
-                <ComponentLayouts
-                  key={item.id}
-                  item={item}
-                  id={"multi_items"}
-                  opacity={isDragging ? true : false}
-                  styleDefault={item.styleDefault}
-                  styleDefaultChild={item.styleDefaultChild}
-                  src={item.src}
-                ></ComponentLayouts>
-              );
-            } else {
-              return (
-                <Item
-                  key={item.id}
-                  id={item.id}
-                  inGrid={true}
-                  type={item.type}
-                  width={item.width}
-                  height={item.height}
-                  valueItem={item.valueItem}
-                  center={item.center}
-                  href={item.href}
-                  icon={false}
-                  styleDefault={item.styleDefault}
-                  InfoIcon={item.InfoIcon}
-                  stylesItem={{
-                    top: item.top,
-                    left: item.left,
-                    width: item.width,
-                    height: item.height,
-                  }}
-                  src={item.src}
-                  opacity={isDragging ? true : false}
-                ></Item>
-              );
-            }
-          })}
+        {renderItem()}
         {props.children}
         <Overlay></Overlay>
       </div>

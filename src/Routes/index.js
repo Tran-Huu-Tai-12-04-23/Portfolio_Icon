@@ -44,7 +44,7 @@ export const publicRoutes = [
   {
     element: (
       <CreatePortfolio
-        DefaultComponent={DefaultItemInGridTemplate4}
+        DefaultComponent={DefaultItemInGridTemplate3}
         heightDefault={3000}
       >
         <Template3Content />
@@ -55,7 +55,7 @@ export const publicRoutes = [
   {
     element: (
       <CreatePortfolio
-        DefaultComponent={DefaultItemInGridTemplate3}
+        DefaultComponent={DefaultItemInGridTemplate4}
         heightDefault={3000}
       >
         <Template4Content />
@@ -66,7 +66,7 @@ export const publicRoutes = [
   {
     element: (
       <CreatePortfolio
-        DefaultComponent={DefaultItemInGridTemplate3}
+        DefaultComponent={DefaultItemInGridTemplate5}
         heightDefault={3000}
       >
         <Template5Content />

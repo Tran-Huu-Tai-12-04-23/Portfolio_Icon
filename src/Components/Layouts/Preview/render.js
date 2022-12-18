@@ -2,7 +2,6 @@ import domtoimage from "dom-to-image";
 
 async function render() {
   const item = document.getElementById("wrapper_template_content");
-  console.log(item.ou);
   if (item) {
     await domtoimage
       .toPng(item)

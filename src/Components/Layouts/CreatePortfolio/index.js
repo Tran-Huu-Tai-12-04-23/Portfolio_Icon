@@ -120,129 +120,133 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
   };
 
   return (
-    <ContextItemsIngrid.Provider value={[items, setItems]}>
-      <ContextShowEditorComponent.Provider
-        value={[showEditorComponent, setEditorComponent]}
-      >
-        <ContextItemsMultiIngrid.Provider value={[itemMulti, setItemMulti]}>
-          <div className={clsx(styles.wrapper)}>
-            {showEditorComponent === false ? (
-              <Header setShowPreview={setShowPreview} />
-            ) : (
-              ""
-            )}
+    <>
+      <ContextItemsIngrid.Provider value={[items, setItems]}>
+        <ContextShowEditorComponent.Provider
+          value={[showEditorComponent, setEditorComponent]}
+        >
+          <ContextItemsMultiIngrid.Provider value={[itemMulti, setItemMulti]}>
+            <div className={clsx(styles.wrapper)}>
+              {showEditorComponent === false ? (
+                <Header setShowPreview={setShowPreview} />
+              ) : (
+                ""
+              )}
 
-            <div className={clsx(styles.content)}>
-              <MenuUntil state={setWidthMenu} valueState={widthMenu}>
-                <div className={clsx(styles.wrapper_icon_add_height_content)}>
-                  <TipSuggest
-                    content='Add height page, click'
-                    position={"top"}
-                    styles={{
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  >
-                    <VscAdd
-                      className={clsx(styles.icon_add_height_content)}
-                      onClick={(e) => {
-                        setShowAddHeight(!showAddHeight);
+              <div className={clsx(styles.content)}>
+                <MenuUntil state={setWidthMenu} valueState={widthMenu}>
+                  <div className={clsx(styles.wrapper_icon_add_height_content)}>
+                    <TipSuggest
+                      content='Add height page, click'
+                      position={"top"}
+                      styles={{
+                        width: "100%",
+                        height: "100%",
                       }}
-                    ></VscAdd>
-                  </TipSuggest>
+                    >
+                      <VscAdd
+                        className={clsx(styles.icon_add_height_content)}
+                        onClick={(e) => {
+                          setShowAddHeight(!showAddHeight);
+                        }}
+                      ></VscAdd>
+                    </TipSuggest>
+                    <div
+                      className={clsx(styles.form_enter_height)}
+                      style={{
+                        display: showAddHeight ? "block" : "none",
+                      }}
+                    >
+                      <input
+                        ref={inputAddHeight}
+                        type='number'
+                        onChange={(e) => {
+                          setHeightContentChange(e.target.value);
+                        }}
+                        onKeyPress={(e) => {
+                          if (e.which === 13) {
+                            handleSetHeightPage();
+                          }
+                        }}
+                        value={heightContentChange}
+                        placeholder='Please enter number !!'
+                      />
+                      <button onClick={handleSetHeightPage}>Enter</button>
+                    </div>
+                  </div>
+                </MenuUntil>
+                {showTag && widthMenu !== "0" ? (
+                  <Tag content={contentTag}></Tag>
+                ) : null}
+
+                <div
+                  ref={contentPortfolio}
+                  id={"content_portfolio"}
+                  className={clsx(styles.wrapper_template)}
+                  style={{
+                    minWidth: "76%",
+                    transform: `translateX(${transactionContent})`,
+                  }}
+                  onScroll={handleShowScroll}
+                >
                   <div
-                    className={clsx(styles.form_enter_height)}
-                    style={{
-                      display: showAddHeight ? "block" : "none",
-                    }}
+                    ref={wrapperTemplateContent}
+                    className={clsx(styles.wrapper_template_content)}
+                    id='wrapper_template_content'
                   >
-                    <input
-                      ref={inputAddHeight}
-                      type='number'
-                      onChange={(e) => {
-                        setHeightContentChange(e.target.value);
-                      }}
-                      onKeyPress={(e) => {
-                        if (e.which === 13) {
-                          handleSetHeightPage();
-                        }
-                      }}
-                      value={heightContentChange}
-                      placeholder='Please enter number !!'
-                    />
-                    <button onClick={handleSetHeightPage}>Enter</button>
+                    <ElementContentPortfolio.Provider
+                      value={[contentPortfolio, setShowTrash, widthContent]}
+                    >
+                      {children}
+                    </ElementContentPortfolio.Provider>
+                    {/* <Grid space={2} gap='12px' backgroundColor='#ccc'></Grid> */}
                   </div>
                 </div>
-              </MenuUntil>
-              {showTag && widthMenu !== "0" ? (
-                <Tag content={contentTag}></Tag>
-              ) : null}
 
-              <div
-                ref={contentPortfolio}
-                id={"content_portfolio"}
-                className={clsx(styles.wrapper_template)}
-                style={{
-                  minWidth: "76%",
-                  transform: `translateX(${transactionContent})`,
-                }}
-                onScroll={handleShowScroll}
-              >
+                <EditorComponent
+                  style={{
+                    display: showEditorComponent ? "flex" : "none",
+                    transform: widthMenu === "0" ? "translateX(-11%)" : "",
+                  }}
+                ></EditorComponent>
+
+                <Trash
+                  display={showTrash ? "flex" : "none"}
+                  id={"trash"}
+                ></Trash>
+
                 <div
-                  ref={wrapperTemplateContent}
-                  className={clsx(styles.wrapper_template_content)}
-                  id='wrapper_template_content'
+                  className={clsx(styles.go_to_top)}
+                  style={{
+                    display: goToTop ? "block" : "none",
+                    transform: widthMenu === "0" ? "translateX(-100px)" : "",
+                  }}
                 >
-                  <ElementContentPortfolio.Provider
-                    value={[contentPortfolio, setShowTrash, widthContent]}
-                  >
-                    {children}
-                  </ElementContentPortfolio.Provider>
-                  {/* <Grid space={2} gap='12px' backgroundColor='#ccc'></Grid> */}
+                  <TipSuggest content='Go to top'>
+                    <MdKeyboardArrowUp
+                      onClick={handleGoToTop}
+                    ></MdKeyboardArrowUp>
+                  </TipSuggest>
                 </div>
               </div>
-
-              <EditorComponent
-                style={{
-                  display: showEditorComponent ? "flex" : "none",
-                  transform: widthMenu === "0" ? "translateX(-11%)" : "",
-                }}
-              ></EditorComponent>
-
-              <Trash display={showTrash ? "flex" : "none"} id={"trash"}></Trash>
-
-              <div
-                className={clsx(styles.go_to_top)}
-                style={{
-                  display: goToTop ? "block" : "none",
-                  transform: widthMenu === "0" ? "translateX(-100px)" : "",
-                }}
-              >
-                <TipSuggest content='Go to top'>
-                  <MdKeyboardArrowUp
-                    onClick={handleGoToTop}
-                  ></MdKeyboardArrowUp>
-                </TipSuggest>
-              </div>
             </div>
-          </div>
-          <Footer backgroundColor='#fff'></Footer>
-
-          <div
-            style={{
-              display: "none",
-              display: showPreview ? "block" : "none",
-            }}
-          >
-            <Preview
-              setShowPreview={setShowPreview}
-              showPreview={showPreview}
-              items={items}
-            ></Preview>
-          </div>
-        </ContextItemsMultiIngrid.Provider>
-      </ContextShowEditorComponent.Provider>
-    </ContextItemsIngrid.Provider>
+            <Footer backgroundColor='#fff'></Footer>
+          </ContextItemsMultiIngrid.Provider>
+        </ContextShowEditorComponent.Provider>
+      </ContextItemsIngrid.Provider>
+      <div
+        style={{
+          display: "none",
+          display: showPreview ? "block" : "none",
+        }}
+      >
+        <Preview
+          setShowPreview={setShowPreview}
+          showPreview={showPreview}
+          items={items}
+        ></Preview>
+      </div>
+    </>
   );
 }
 
