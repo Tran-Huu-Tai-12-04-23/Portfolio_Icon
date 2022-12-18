@@ -35,7 +35,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
+  // color: #fff;
   text-transform: uppercase;
   text-decoration: underline;
   text-decoration-color: #4285f4;
@@ -105,11 +105,12 @@
   border-style: none;
   svg {
     color: #fff;
+    
   }
 }
 .button {
   text-align: center;
-  background-color: rgb(108, 226, 239);
+  background-color: transparent;
   border-radius: 12px;
   border: 2px outset rgb(15, 121, 133);
   color: #ccc;
@@ -188,7 +189,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 800;
+  // font-weight: 800;
   background-color: #f90a3a;
   position: absolute;
   top: -16px;
@@ -245,7 +246,7 @@
 
 .add_height_bottom {
   bottom: -8px;
-  left: 50%;
+  left: 70%;
 }
 
 //get link for icon

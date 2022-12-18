@@ -10,7 +10,6 @@ import {
 } from "react";
 import { ResizableBox as ReactResizableBox } from "react-resizable";
 import { RiEdit2Fill } from "react-icons/ri";
-import { IoIosAdd } from "react-icons/io";
 
 import "./resizeable.css";
 import styles from "./Item.module.scss";
@@ -38,6 +37,7 @@ import {
   setLineHeight,
   setFontWeight,
 } from "~/Store/reducer/actions";
+import { TbRipple } from "react-icons/tb";
 
 function Item({
   type,
@@ -53,8 +53,8 @@ function Item({
   fontSize = "14px",
   heading = false,
   icon = false,
-  width = 200,
-  height = 100,
+  width = 250,
+  height = 250,
   resizable = true,
   draggable = true,
   position = "absolute",
@@ -152,7 +152,7 @@ function Item({
       },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
-        opacity: monitor.isDragging() ? 0.4 : 1,
+        opacity: monitor.isDragging() ? 0.6 : 1,
       }),
     }),
     [id, left, top, inGrid, isMulti]
@@ -161,8 +161,8 @@ function Item({
   let heightHeadingText, setHeightHeadingText;
   const handleChangeValue = (e) => {
     setValue(e.target.value);
-    console.log(e.target.scrollHeight);
-    console.log(e.target.offsetHeight);
+    // console.log(e.target.scrollHeight);
+    // console.log(e.target.offsetHeight);
     if (e.target.scrollHeight > e.target.offsetHeight) {
       e.target.style.height = e.target.scrollHeight + 6 + "px";
     }
@@ -194,59 +194,58 @@ function Item({
   };
 
   const loadStyleComponentInInitState = (item) => {
-    if (item) {
-      if (item.styleDefault) {
-        dispatch(
-          setColor(item.styleDefault.color ? item.styleDefault.color : "")
-        );
-        dispatch(
-          setBackgroundColor(
-            item.styleDefault.backgroundColor
-              ? item.styleDefault.backgroundColor
-              : ""
-          )
-        );
-        dispatch(
-          setFontSize(
-            item.styleDefault.fontSize ? item.styleDefault.fontSize : ""
-          )
-        );
-        dispatch(
-          setFontFamily(
-            item.styleDefault.fontFamily ? item.styleDefault.fontFamily : ""
-          )
-        );
-        dispatch(
-          setBorderRadius(
-            item.styleDefault.borderRadius ? item.styleDefault.borderRadius : ""
-          )
-        );
-        dispatch(
-          setBorderStyle(
-            item.styleDefault.borderStyle ? item.styleDefault.borderStyle : ""
-          )
-        );
-        dispatch(
-          setBorderColor(
-            item.styleDefault.borderColor ? item.styleDefault.borderColor : ""
-          )
-        );
-        dispatch(setFontWeight(item.styleDefault.fontWeight ? true : false));
-        dispatch(setTextAlign(item.styleDefault.textAlign ? true : false));
-        dispatch(
-          setBorderSize(
-            item.styleDefault.borderWidth ? item.styleDefault.borderWidth : ""
-          )
-        );
-        dispatch(
-          setTextTransform(item.styleDefault.textTransform ? true : false)
-        );
-        dispatch(
-          setLineHeight(
-            item.styleDefault.lineHeight ? item.styleDefault.lineHeight : ""
-          )
-        );
-      }
+    const itemDomReal = document.getElementById(item.id);
+    if (itemDomReal) {
+      dispatch(
+        setColor(itemDomReal.style.color ? itemDomReal.style.color : "")
+      );
+      dispatch(
+        setBackgroundColor(
+          itemDomReal.style.backgroundColor
+            ? itemDomReal.style.backgroundColor
+            : ""
+        )
+      );
+      dispatch(
+        setFontSize(
+          itemDomReal.style.fontSize ? itemDomReal.style.fontSize : ""
+        )
+      );
+      dispatch(
+        setFontFamily(
+          itemDomReal.style.fontFamily ? itemDomReal.style.fontFamily : ""
+        )
+      );
+      dispatch(
+        setBorderRadius(
+          itemDomReal.style.borderRadius ? itemDomReal.style.borderRadius : ""
+        )
+      );
+      dispatch(
+        setBorderStyle(
+          itemDomReal.style.borderStyle ? itemDomReal.style.borderStyle : ""
+        )
+      );
+      dispatch(
+        setBorderColor(
+          itemDomReal.style.borderColor ? itemDomReal.style.borderColor : ""
+        )
+      );
+      dispatch(setFontWeight(itemDomReal.style.fontWeight ? true : false));
+      dispatch(setTextAlign(itemDomReal.style.textAlign ? true : false));
+      dispatch(
+        setBorderSize(
+          itemDomReal.style.borderWidth ? itemDomReal.style.borderWidth : ""
+        )
+      );
+      dispatch(
+        setTextTransform(itemDomReal.style.textTransform ? true : false)
+      );
+      dispatch(
+        setLineHeight(
+          itemDomReal.style.lineHeight ? itemDomReal.style.lineHeight : ""
+        )
+      );
     }
   };
 
@@ -341,7 +340,7 @@ function Item({
       setScrollHeight(contentPortfolio.current.scrollTop);
     }
   }, [elementContentPortfolio]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (elementContentPortfolio && width === "100%") {
       [contentPortfolio, setShowTrash, widthContent] = elementContentPortfolio;
       setWidthContents(widthContent);
@@ -383,8 +382,8 @@ function Item({
                 position: position,
                 lineHeight: heading ? "24px" : "16px",
                 opacity: isDragging ? "0.9" : "1",
-                opacity: opacity ? "0.4" : "1",
-                backgroundColor: "transparent",
+                opacity: opacity ? "0.7" : "1",
+                // backgroundColor: "transparent",
                 ...styleDefault,
               }}
               type={type === "img" ? "file" : "text"}

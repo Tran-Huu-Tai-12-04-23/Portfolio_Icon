@@ -226,11 +226,12 @@ function BoxMenu() {
           styleDefaultChild={[
             {
               backgroundColor: "transparent",
+              color: "#ccc",
             },
             {
               backgroundColor: "transparent",
               fontSize: 18,
-              color: "#fff",
+              color: "#ccc",
             },
             {
               backgroundColor: "transparent",
@@ -279,7 +280,7 @@ function BoxMenu() {
             {
               backgroundColor: "transparent",
               fontSize: 14,
-              color: "#fff",
+              color: "#ccc",
             },
             {
               backgroundColor: "transparent",
@@ -287,7 +288,7 @@ function BoxMenu() {
             {
               backgroundColor: "transparent",
               fontSize: 14,
-              color: "#fff",
+              color: "#ccc",
             },
           ]}
           styleDefault={{
@@ -341,7 +342,31 @@ function BoxMenu() {
             {
               backgroundColor: "transparent",
               fontSize: 16,
-              color: "#fff",
+              color: "#ccc",
+            },
+            {
+              backgroundColor: "transparent",
+            },
+            {
+              backgroundColor: "transparent",
+              fontSize: 16,
+              color: "#ccc",
+            },
+            {
+              backgroundColor: "transparent",
+            },
+            {
+              backgroundColor: "transparent",
+              fontSize: 16,
+              color: "#ccc",
+            },
+            {
+              backgroundColor: "transparent",
+            },
+            {
+              backgroundColor: "transparent",
+              fontSize: 16,
+              color: "#ccc",
             },
           ]}
           styleDefault={{

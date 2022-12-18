@@ -99,46 +99,46 @@ function Grid(props) {
   }));
 
   //set default styles for components
-  const setStyleDefault = (item) => {
-    if (item.styleDefault) {
-      item.styleDefault.color = item.styleDefault.color
-        ? item.styleDefault.color
-        : "";
-      item.styleDefault.backgroundColor = item.styleDefault.backgroundColor
-        ? item.styleDefault.backgroundColor
-        : "";
-      item.styleDefault.fontSize = item.styleDefault.fontSize
-        ? item.styleDefault.fontSize
-        : "";
-      item.styleDefault.fontFamily = item.styleDefault.fontFamily
-        ? item.styleDefault.fontFamily
-        : "";
-      item.styleDefault.borderRadius = item.styleDefault.borderRadius
-        ? item.styleDefault.borderRadius
-        : "";
-      item.styleDefault.borderStyle = item.styleDefault.borderStyle
-        ? item.styleDefault.borderStyle
-        : "";
-      item.styleDefault.borderColor = item.styleDefault.borderColor
-        ? item.styleDefault.borderColor
-        : "";
-      item.styleDefault.fontWeight = item.styleDefault.fontWeight
-        ? item.styleDefault.fontWeight
-        : "";
-      item.styleDefault.textAlign = item.styleDefault.textAlign
-        ? item.styleDefault.textAlign
-        : "";
-      item.styleDefault.borderWidth = item.styleDefault.borderWidth
-        ? item.styleDefault.borderWidth
-        : "";
-      item.styleDefault.textTransform = item.styleDefault.textTransform
-        ? item.styleDefault.textTransform
-        : "";
-      item.styleDefault.lineHeight = item.styleDefault.lineHeight
-        ? item.styleDefault.lineHeight
-        : "";
-    }
-  };
+  // const setStyleDefault = (item) => {
+  //   if (item.styleDefault) {
+  //     item.styleDefault.color = item.styleDefault.color
+  //       ? item.styleDefault.color
+  //       : "";
+  //     item.styleDefault.backgroundColor = item.styleDefault.backgroundColor
+  //       ? item.styleDefault.backgroundColor
+  //       : "";
+  //     item.styleDefault.fontSize = item.styleDefault.fontSize
+  //       ? item.styleDefault.fontSize
+  //       : "";
+  //     item.styleDefault.fontFamily = item.styleDefault.fontFamily
+  //       ? item.styleDefault.fontFamily
+  //       : "";
+  //     item.styleDefault.borderRadius = item.styleDefault.borderRadius
+  //       ? item.styleDefault.borderRadius
+  //       : "";
+  //     item.styleDefault.borderStyle = item.styleDefault.borderStyle
+  //       ? item.styleDefault.borderStyle
+  //       : "";
+  //     item.styleDefault.borderColor = item.styleDefault.borderColor
+  //       ? item.styleDefault.borderColor
+  //       : "";
+  //     item.styleDefault.fontWeight = item.styleDefault.fontWeight
+  //       ? item.styleDefault.fontWeight
+  //       : "";
+  //     item.styleDefault.textAlign = item.styleDefault.textAlign
+  //       ? item.styleDefault.textAlign
+  //       : "";
+  //     item.styleDefault.borderWidth = item.styleDefault.borderWidth
+  //       ? item.styleDefault.borderWidth
+  //       : "";
+  //     item.styleDefault.textTransform = item.styleDefault.textTransform
+  //       ? item.styleDefault.textTransform
+  //       : "";
+  //     item.styleDefault.lineHeight = item.styleDefault.lineHeight
+  //       ? item.styleDefault.lineHeight
+  //       : "";
+  //   }
+  // };
   const addItem = (
     type,
     left = "200px",
@@ -150,9 +150,9 @@ function Grid(props) {
     href,
     valueItem,
     width = 200,
-    height = 40
+    height = 100
   ) => {
-    setStyleDefault(styleDefault);
+    // setStyleDefault(styleDefault);
 
     setItems((prev) => {
       return [
@@ -167,7 +167,7 @@ function Grid(props) {
           inGrid: true,
           isMulti: false,
           InfoIcon,
-          styleDefault,
+          styleDefault: {},
           src,
           href,
           valueItem,
@@ -256,19 +256,15 @@ function Grid(props) {
 
   const isActive = canDrop && isOver;
   //set style when drop
-  useEffect(() => {
-    setBackgroundColor(
-      isActive
-        ? "rgba(102, 102, 255, 0.1)"
-        : canDrop
-        ? "rgba(255, 102, 153, 0.1)"
-        : "#fff"
-    );
-  }, [{ isActive, canDrop }]);
+  // useEffect(() => {
+  //   // setBackgroundColor(
+  //   //   isActive ? "rgba(0,0,0,0.2)" : canDrop ? "rgba(238 ,44, 44, 1)" : "#fff"
+  //   // );
+  // }, [{ isActive, canDrop }]);
   //load style default cho items
   useEffect(() => {
     items.map((item) => {
-      setStyleDefault(item);
+      // setStyleDefault(item);
     });
   }, [items]);
   // load style default
@@ -306,18 +302,18 @@ function Grid(props) {
     const item = findItem(state.id_item_selected);
     const itemDomReal = document.getElementById(state.id_item_selected);
     if (item) {
-      item.styleDefault.color = state.color;
-      item.styleDefault.backgroundColor = state.background_color;
-      item.styleDefault.fontSize = state.font_size;
-      item.styleDefault.fontFamily = state.font_family;
-      item.styleDefault.borderRadius = state.border_radius;
-      item.styleDefault.borderStyle = state.border_style;
-      item.styleDefault.borderColor = state.border_color;
-      item.styleDefault.fontWeight = state.font_weight ? "bold" : "normal";
-      item.styleDefault.textAlign = state.text_align ? "center" : "";
-      item.styleDefault.borderWidth = state.border_size;
-      item.styleDefault.textTransform = state.text_transform ? "uppercase" : "";
-      item.styleDefault.lineHeight = state.line_height;
+      // item.styleDefault.color = state.color;
+      // item.styleDefault.backgroundColor = state.background_color;
+      // item.styleDefault.fontSize = state.font_size;
+      // item.styleDefault.fontFamily = state.font_family;
+      // item.styleDefault.borderRadius = state.border_radius;
+      // item.styleDefault.borderStyle = state.border_style;
+      // item.styleDefault.borderColor = state.border_color;
+      // item.styleDefault.fontWeight = state.font_weight ? "bold" : "normal";
+      // item.styleDefault.textAlign = state.text_align ? "center" : "";
+      // item.styleDefault.borderWidth = state.border_size;
+      // item.styleDefault.textTransform = state.text_transform ? "uppercase" : "";
+      // item.styleDefault.lineHeight = state.line_height;
       //
       itemDomReal.style.fontSize = state.font_size;
       itemDomReal.style.fontFamily = state.font_family;
@@ -343,7 +339,7 @@ function Grid(props) {
               key={item.id}
               item={item}
               id={"multi_items"}
-              opacity={isDragging ? true : false}
+              // opacity={isDragging ? true : false}
               styleDefault={item.styleDefault}
               styleDefaultChild={item.styleDefaultChild}
               src={item.src}
@@ -388,9 +384,10 @@ function Grid(props) {
         className={clsx(styles.wrapper)}
         id={props.id}
       >
+        <Overlay></Overlay>
+
         {renderItem()}
         {props.children}
-        <Overlay></Overlay>
       </div>
     </ShowOverlay.Provider>
   );

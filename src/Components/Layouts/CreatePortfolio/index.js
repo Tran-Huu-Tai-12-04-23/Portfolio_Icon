@@ -1,8 +1,9 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useLayoutEffect } from "react";
 import clsx from "clsx";
 import styles from "./CreatePortfolio.module.scss";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { VscAdd } from "react-icons/vsc";
+import { FiEdit2 } from "react-icons/fi";
 
 import Header from "./Header";
 import MenuUntil from "~/Components/MenuUntil";
@@ -59,6 +60,17 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
       // console.log(wrapperTemplateContent.current.offsetWidth);
     }
   }, []);
+  //set size when window resize
+  useLayoutEffect(() => {
+    const handleResizeWindow = () => {
+      // console.log(wrapperTemplateContent.current.offsetWidth);
+      setWidthContent(wrapperTemplateContent.current.offsetWidth);
+    };
+    window.addEventListener("resize", handleResizeWindow);
+    return () => {
+      window.removeEventListener("resize", handleResizeWindow);
+    };
+  });
 
   //hidden edit component when none item in grid
   useEffect(() => {
@@ -206,7 +218,7 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
                 <EditorComponent
                   style={{
                     display: showEditorComponent ? "flex" : "none",
-                    transform: widthMenu === "0" ? "translateX(-11%)" : "",
+                    // transform: widthMenu === "0" ? "translateX(-11%)" : "",
                   }}
                 ></EditorComponent>
 

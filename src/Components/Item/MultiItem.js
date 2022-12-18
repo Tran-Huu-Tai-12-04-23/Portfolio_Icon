@@ -102,59 +102,58 @@ function MultiItem({
     setEditorComponent(true);
   };
   const loadStyleComponentInInitState = (item) => {
-    if (item) {
-      if (item.styleDefault) {
-        dispatch(
-          setColor(item.styleDefault.color ? item.styleDefault.color : "")
-        );
-        dispatch(
-          setBackgroundColor(
-            item.styleDefault.backgroundColor
-              ? item.styleDefault.backgroundColor
-              : ""
-          )
-        );
-        dispatch(
-          setFontSize(
-            item.styleDefault.fontSize ? item.styleDefault.fontSize : ""
-          )
-        );
-        dispatch(
-          setFontFamily(
-            item.styleDefault.fontFamily ? item.styleDefault.fontFamily : ""
-          )
-        );
-        dispatch(
-          setBorderRadius(
-            item.styleDefault.borderRadius ? item.styleDefault.borderRadius : ""
-          )
-        );
-        dispatch(
-          setBorderStyle(
-            item.styleDefault.borderStyle ? item.styleDefault.borderStyle : ""
-          )
-        );
-        dispatch(
-          setBorderColor(
-            item.styleDefault.borderColor ? item.styleDefault.borderColor : ""
-          )
-        );
-        dispatch(setFontWeight(item.styleDefault.fontWeight ? true : false));
-        dispatch(setTextAlign(item.styleDefault.textAlign ? true : false));
-        dispatch(
-          setBorderSize(
-            item.styleDefault.borderWidth ? item.styleDefault.borderWidth : ""
-          )
-        );
-        dispatch(
-          setTextTransform(item.styleDefault.textTransform ? true : false)
-        );
-        dispatch(
-          setLineHeight(
-            item.styleDefault.lineHeight ? item.styleDefault.lineHeight : ""
-          )
-        );
-      }
+    const itemDomReal = document.getElementById(item.id);
+    if (itemDomReal) {
+      dispatch(
+        setColor(itemDomReal.style.color ? itemDomReal.style.color : "")
+      );
+      dispatch(
+        setBackgroundColor(
+          itemDomReal.style.backgroundColor
+            ? itemDomReal.style.backgroundColor
+            : ""
+        )
+      );
+      dispatch(
+        setFontSize(
+          itemDomReal.style.fontSize ? itemDomReal.style.fontSize : ""
+        )
+      );
+      dispatch(
+        setFontFamily(
+          itemDomReal.style.fontFamily ? itemDomReal.style.fontFamily : ""
+        )
+      );
+      dispatch(
+        setBorderRadius(
+          itemDomReal.style.borderRadius ? itemDomReal.style.borderRadius : ""
+        )
+      );
+      dispatch(
+        setBorderStyle(
+          itemDomReal.style.borderStyle ? itemDomReal.style.borderStyle : ""
+        )
+      );
+      dispatch(
+        setBorderColor(
+          itemDomReal.style.borderColor ? itemDomReal.style.borderColor : ""
+        )
+      );
+      dispatch(setFontWeight(itemDomReal.style.fontWeight ? true : false));
+      dispatch(setTextAlign(itemDomReal.style.textAlign ? true : false));
+      dispatch(
+        setBorderSize(
+          itemDomReal.style.borderWidth ? itemDomReal.style.borderWidth : ""
+        )
+      );
+      dispatch(
+        setTextTransform(itemDomReal.style.textTransform ? true : false)
+      );
+      dispatch(
+        setLineHeight(
+          itemDomReal.style.lineHeight ? itemDomReal.style.lineHeight : ""
+        )
+      );
     }
   };
 

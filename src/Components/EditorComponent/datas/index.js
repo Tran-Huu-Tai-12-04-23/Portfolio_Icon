@@ -48,6 +48,9 @@ export const colors = [
   "#8B008B",
   "#4B0082",
   "#7B68EE",
+  "#ffd230",
+  "#012241",
+  "#012241",
 ];
 export const fontFamilys = [
   "Poppins",
