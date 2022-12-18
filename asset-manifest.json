@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/Portfolio_Icon/static/css/main.bfdf46c0.css",
+    "main.js": "/Portfolio_Icon/static/js/main.c3cf1fcc.js",
+    "static/js/787.674770d0.chunk.js": "/Portfolio_Icon/static/js/787.674770d0.chunk.js",
+    "static/media/template1.png": "/Portfolio_Icon/static/media/template1.d1220c1a466bcf9d3ec3.png",
+    "static/media/backGroundHeader02.png": "/Portfolio_Icon/static/media/backGroundHeader02.f95cadcdb5fa3cb8e2e0.png",
+    "static/media/template2.png": "/Portfolio_Icon/static/media/template2.584a4a492c92b8be94b0.png",
+    "static/media/iconFinal.png": "/Portfolio_Icon/static/media/iconFinal.1edd26a481acc5ea0ec3.png",
+    "static/media/template3.png": "/Portfolio_Icon/static/media/template3.867fb527b9fda239b9ac.png",
+    "static/media/guide1.png": "/Portfolio_Icon/static/media/guide1.6746303e89b293553fbb.png",
+    "static/media/guide2.png": "/Portfolio_Icon/static/media/guide2.3ba4872495c518f5d6e7.png",
+    "static/media/template4.png": "/Portfolio_Icon/static/media/template4.b40c5d40a7c94c6ad761.png",
+    "static/media/logoHuutai.png": "/Portfolio_Icon/static/media/logoHuutai.4043226b5951fd4b742f.png",
+    "index.html": "/Portfolio_Icon/index.html",
+    "main.bfdf46c0.css.map": "/Portfolio_Icon/static/css/main.bfdf46c0.css.map",
+    "main.c3cf1fcc.js.map": "/Portfolio_Icon/static/js/main.c3cf1fcc.js.map",
+    "787.674770d0.chunk.js.map": "/Portfolio_Icon/static/js/787.674770d0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bfdf46c0.css",
+    "static/js/main.c3cf1fcc.js"
+  ]
+}
