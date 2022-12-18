@@ -52,7 +52,7 @@ function Grid(props) {
         const data = monitor.getDifferenceFromInitialOffset();
         console.log(data);
         console.log(delta);
-        let left = item.type === "icon" ? delta.x - 350 : delta.x - 400;
+        let left = delta.x - 400;
         let top = delta.y - 100;
         console.log(item);
         addItem(
@@ -384,7 +384,7 @@ function Grid(props) {
         className={clsx(styles.wrapper)}
         id={props.id}
       >
-        <Overlay></Overlay>
+        {/* <Overlay></Overlay> */}
 
         {renderItem()}
         {props.children}
